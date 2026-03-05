@@ -462,7 +462,7 @@ export function findCatalogMatches(query: string) {
       entry.title,
       ...entry.genres,
       ...entry.actors,
-      ...entry.searchTerms ?? [],
+      ...(entry.searchTerms ?? []),
       String(entry.year),
       entry.language,
       entry.type
