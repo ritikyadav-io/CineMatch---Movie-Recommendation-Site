@@ -18,7 +18,7 @@ export function CineMatchNav() {
       <div className="container flex flex-col gap-4 py-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-3">
-            <div className="flex size-11 items-center justify-center rounded-full bg-gradient-spotlight shadow-glow">
+            <div className="flex size-11 items-center justify-center rounded-full bg-spotlight shadow-glow">
               <Clapperboard className="size-5 text-primary-foreground" />
             </div>
             <div>
