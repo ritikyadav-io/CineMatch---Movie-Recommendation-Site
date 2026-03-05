@@ -7,7 +7,7 @@ export function CineFooter() {
       <div className="container grid gap-10 py-12 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-full bg-gradient-spotlight shadow-glow">
+            <div className="flex size-10 items-center justify-center rounded-full bg-spotlight shadow-glow">
               <Film className="size-5 text-primary-foreground" />
             </div>
             <p className="font-display text-2xl uppercase tracking-[0.25em] text-primary">CineMatch</p>

@@ -99,7 +99,7 @@
   }
 
   .spotlight-orb {
-    @apply h-52 w-52 rounded-full bg-gradient-spotlight opacity-40 blur-3xl animate-spotlight;
+    @apply h-52 w-52 rounded-full bg-spotlight opacity-40 blur-3xl animate-spotlight;
   }
 
   .section-shell {

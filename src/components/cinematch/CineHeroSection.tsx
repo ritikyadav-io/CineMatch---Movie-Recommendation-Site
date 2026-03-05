@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 export function CineHeroSection() {
   return (
     <section className="relative overflow-hidden border-b border-border/50">
-      <div className="absolute inset-0 bg-gradient-hero" aria-hidden />
+      <div className="absolute inset-0 bg-hero" aria-hidden />
       <div className="absolute inset-0 bg-cover bg-center opacity-45" style={{ backgroundImage: `url(${heroImage})` }} aria-hidden />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,transparent_15%,hsl(var(--background))_78%)]" aria-hidden />
       <div className="spotlight-orb absolute left-[8%] top-16 hidden lg:block" aria-hidden />

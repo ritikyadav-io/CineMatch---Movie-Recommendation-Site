@@ -23,7 +23,7 @@ export function CineMovieCard({ item, priority = false }: CineMovieCardProps) {
           loading={priority ? "eager" : "lazy"}
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-card-sheen opacity-0 transition duration-700 group-hover:opacity-100" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-card-sheen opacity-0 transition duration-700 group-hover:opacity-100" />
       </div>
 
       <div className="flex flex-1 flex-col gap-4 p-4">
