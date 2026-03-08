@@ -272,7 +272,7 @@ const Index = () => {
           className="rounded-xl bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-3 py-6 sm:px-5 sm:py-14 text-center space-y-3 sm:space-y-6"
         >
           <h2 className="text-base sm:text-4xl font-black tracking-tight text-foreground">
-            Movie <span className="text-primary">DNA</span> in Numbers
+            Movies <span className="text-primary">DNA</span> in Numbers
           </h2>
           <StatsGrid />
           <p className="text-[10px] sm:text-sm text-muted-foreground max-w-md mx-auto">
