@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Film, Star, Tv } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useState } from "react";
