@@ -266,28 +266,35 @@ const MovieDetailPage = () => {
               </Button>
             )}
           </div>
-          {showPlayer && movie.imdbID && !movie.imdbID.startsWith("tmdb-") ? (
+          {showPlayer && (
             <div className="space-y-2">
               <div className="relative aspect-video overflow-hidden rounded-lg border border-border bg-black">
-                <iframe
-                  src={`https://vidsrc.xyz/embed/movie/${movie.imdbID}`}
-                  className="h-full w-full"
-                  allowFullScreen
-                  allow="autoplay; encrypted-media; fullscreen"
-                  title={`Watch ${movie.title}`}
-                  referrerPolicy="origin"
-                />
+                {(() => {
+                  const hasImdb = movie.imdbID && !movie.imdbID.startsWith("tmdb-");
+                  const playerSrc = hasImdb
+                    ? `https://vidsrc.xyz/embed/movie/${movie.imdbID}`
+                    : `https://vidsrc.xyz/embed/movie/${movie.tmdbId}?tmdb=1`;
+                  return (
+                    <iframe
+                      src={playerSrc}
+                      className="h-full w-full"
+                      allowFullScreen
+                      allow="autoplay; encrypted-media; fullscreen"
+                      title={`Watch ${movie.title}`}
+                      referrerPolicy="origin"
+                      sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                    />
+                  );
+                })()}
               </div>
-              <button onClick={() => setShowPlayer(false)} className="text-[10px] sm:text-xs text-muted-foreground hover:text-foreground transition">
-                ✕ Close Player
-              </button>
+              <div className="flex items-center gap-3">
+                <button onClick={() => setShowPlayer(false)} className="text-[10px] sm:text-xs text-muted-foreground hover:text-foreground transition">
+                  ✕ Close Player
+                </button>
+                <span className="text-[8px] sm:text-[10px] text-muted-foreground">If player doesn't load, try the links below</span>
+              </div>
             </div>
-          ) : showPlayer ? (
-            <div className="rounded-lg bg-card border border-border p-4 text-center space-y-2">
-              <p className="text-xs text-muted-foreground">Player not available for this title. Try the links below:</p>
-              <button onClick={() => setShowPlayer(false)} className="text-[10px] text-muted-foreground hover:text-foreground transition">✕ Close</button>
-            </div>
-          ) : null}
+          )}
         </section>
 
         {/* ═══ Watch Online Links ═══ */}
