@@ -13,7 +13,7 @@ import {
   fetchTmdbSeries,
   fetchTmdbNowPlaying,
 } from "@/lib/tmdb";
-import { MediaCardData } from "@/types/cinematch";
+import type { MediaCardData } from "@/types/cinematch";
 
 interface RowConfig {
   title: string;
@@ -34,34 +34,6 @@ const rows: RowConfig[] = [
   { title: "📺 Trending Series", queryKey: "tmdb-series", fetcher: fetchTmdbSeries, link: "/browse?cat=series" },
 ];
 
-function SimpleMovieCard({ item }: { item: MediaCardData }) {
-  return (
-    <Link
-      to={`/movie/${item.imdbID}`}
-      className="group block w-[140px] sm:w-[160px] flex-shrink-0"
-    >
-      <div className="relative overflow-hidden rounded-md bg-muted" style={{ aspectRatio: '2/3' }}>
-        <img
-          src={item.poster}
-          alt={item.title}
-          className="block h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
-        />
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background to-transparent p-2">
-          <div className="flex items-center gap-1 text-xs text-foreground">
-            <Star className="size-3 fill-yellow-500 text-yellow-500" />
-            {item.rating}
-          </div>
-        </div>
-      </div>
-      <div className="mt-1.5 px-0.5">
-        <h3 className="truncate text-xs font-semibold text-foreground">{item.title}</h3>
-        <p className="text-[10px] text-muted-foreground">{item.year}</p>
-      </div>
-    </Link>
-  );
-}
-
 function MovieRow({ config }: { config: RowConfig }) {
   const { data, isLoading } = useQuery({
     queryKey: [config.queryKey],
@@ -71,11 +43,11 @@ function MovieRow({ config }: { config: RowConfig }) {
 
   if (isLoading) {
     return (
-      <div className="space-y-3">
-        <div className="h-5 w-40 animate-pulse rounded bg-muted" />
-        <div className="flex gap-3 overflow-hidden">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="w-[140px] sm:w-[160px] flex-shrink-0 rounded-md bg-muted" style={{ aspectRatio: '2/3' }} />
+      <div>
+        <div className="h-5 w-40 animate-pulse rounded bg-muted mb-3" />
+        <div style={{ display: 'flex', gap: 12, overflowX: 'auto' }}>
+          {[1,2,3,4,5,6].map(i => (
+            <div key={i} style={{ width: 150, height: 225, flexShrink: 0, borderRadius: 8, background: 'var(--muted, #333)' }} />
           ))}
         </div>
       </div>
@@ -85,8 +57,8 @@ function MovieRow({ config }: { config: RowConfig }) {
   if (!data?.length) return null;
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between">
+    <div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
         <h2 className="text-lg font-bold text-foreground">{config.title}</h2>
         <Link
           to={config.link}
@@ -95,12 +67,31 @@ function MovieRow({ config }: { config: RowConfig }) {
           See All <ChevronRight className="size-4" />
         </Link>
       </div>
-      <div
-        className="flex gap-3 overflow-x-auto pb-2"
-        style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-      >
+      <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 8 }}>
         {data.slice(0, 10).map((item) => (
-          <SimpleMovieCard key={item.imdbID} item={item} />
+          <Link
+            key={item.imdbID}
+            to={`/movie/${item.imdbID}`}
+            style={{ width: 150, flexShrink: 0, textDecoration: 'none' }}
+            className="group"
+          >
+            <div style={{ width: 150, height: 225, borderRadius: 8, overflow: 'hidden', position: 'relative' }} className="bg-muted">
+              <img
+                src={item.poster}
+                alt={item.title}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                loading="lazy"
+              />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 6, background: 'linear-gradient(transparent, rgba(0,0,0,0.8))' }}>
+                <span className="flex items-center gap-1 text-xs text-foreground">
+                  <Star className="size-3" style={{ color: '#eab308', fill: '#eab308' }} />
+                  {item.rating}
+                </span>
+              </div>
+            </div>
+            <p className="text-xs font-semibold text-foreground mt-1.5 truncate">{item.title}</p>
+            <p className="text-[10px] text-muted-foreground">{item.year}</p>
+          </Link>
         ))}
       </div>
     </div>
@@ -109,10 +100,12 @@ function MovieRow({ config }: { config: RowConfig }) {
 
 export function TmdbRows() {
   return (
-    <section className="container space-y-8 py-8 lg:py-12">
-      {rows.map((config) => (
-        <MovieRow key={config.queryKey} config={config} />
-      ))}
+    <section style={{ padding: '32px 0' }}>
+      <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+        {rows.map((config) => (
+          <MovieRow key={config.queryKey} config={config} />
+        ))}
+      </div>
     </section>
   );
 }
