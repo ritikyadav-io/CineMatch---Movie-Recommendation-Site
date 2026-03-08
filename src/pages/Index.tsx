@@ -171,7 +171,7 @@ const Index = () => {
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="max-w-xl space-y-2 sm:space-y-5"
           >
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/15 border border-primary/20 px-3 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/15 border border-primary/20 px-2 py-0.5 text-[8px] sm:text-xs font-bold uppercase tracking-wider text-primary">
               <span className="size-1.5 rounded-full bg-primary animate-pulse" />
               Now Streaming
             </div>
