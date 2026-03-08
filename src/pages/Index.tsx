@@ -193,7 +193,7 @@ const Index = () => {
               Discover Your<br />
               <span className="text-primary">Favourite Movies</span>
             </h1>
-            <p className="max-w-md text-[10px] sm:text-sm leading-relaxed text-secondary-foreground hidden sm:block">
+            <p className="max-w-md text-[10px] sm:text-sm lg:text-base leading-relaxed text-secondary-foreground hidden sm:block">
               Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more — plus full details, trailers, and where to watch.
             </p>
             <div className="flex items-center gap-2 sm:gap-3">
