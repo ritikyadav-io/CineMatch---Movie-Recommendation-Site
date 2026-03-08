@@ -105,7 +105,7 @@ const MovieDetailPage = () => {
 
       {/* Backdrop */}
       {movie.backdrop_path && (
-        <div className="relative h-[50vh] overflow-hidden">
+        <div className="relative h-[30vh] sm:h-[40vh] lg:h-[50vh] overflow-hidden">
           <img
             src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
             alt=""
