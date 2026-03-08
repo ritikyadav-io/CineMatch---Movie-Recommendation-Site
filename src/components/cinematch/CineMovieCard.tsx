@@ -1,7 +1,7 @@
 import { Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 import { MediaCardData } from "@/types/cinematch";
 import { WatchlistButton } from "@/components/moviedna/WatchlistButton";
@@ -14,6 +14,7 @@ interface CineMovieCardProps {
 
 export function CineMovieCard({ item, priority = false }: CineMovieCardProps) {
   const queryClient = useQueryClient();
+  const [loaded, setLoaded] = useState(false);
 
   const prefetch = useCallback(() => {
     const tmdbId = item.imdbID.startsWith("tmdb-") ? Number(item.imdbID.replace("tmdb-", "")) : null;
@@ -34,13 +35,18 @@ export function CineMovieCard({ item, priority = false }: CineMovieCardProps) {
       className="group relative flex flex-col overflow-hidden rounded-md bg-card transition-all duration-300 hover:scale-[1.03] hover:ring-1 hover:ring-muted-foreground/30"
     >
       <div className="relative aspect-[2/3] overflow-hidden bg-muted">
+        {/* Shimmer placeholder */}
+        {!loaded && (
+          <div className="absolute inset-0 bg-muted animate-pulse" />
+        )}
         <img
           src={item.poster}
           alt={`${item.title} poster`}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className={`h-full w-full object-cover transition-all duration-300 group-hover:scale-105 ${loaded ? "opacity-100" : "opacity-0"}`}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
           fetchPriority={priority ? "high" : "low"}
+          onLoad={() => setLoaded(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
         <div className="absolute top-1 right-1 sm:top-2 sm:right-2 opacity-0 group-hover:opacity-100 transition-opacity">
