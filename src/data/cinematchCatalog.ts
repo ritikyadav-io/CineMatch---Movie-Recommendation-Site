@@ -452,6 +452,12 @@ export function filterCatalogByQuiz(answers: QuizAnswers) {
       ) score += 2;
       if (entry.runtime === answers.runtime) score += 2;
       if (entry.complexity === answers.complexity) score += 3;
+      // Bollywood vibe bonus
+      if (answers.bollywoodVibe !== "Any" && entry.bollywoodVibe && entry.bollywoodVibe === answers.bollywoodVibe) score += 3;
+      // Superhero preference bonus
+      if (answers.superheroPreference !== "Any" && entry.superheroStyle && entry.superheroStyle === answers.superheroPreference) score += 3;
+      // Anime style bonus
+      if (answers.animeStyle !== "Any" && entry.animeStyle && entry.animeStyle === answers.animeStyle) score += 3;
       if (entry.hiddenGem) score += 0.3;
       return { ...entry, score };
     })
