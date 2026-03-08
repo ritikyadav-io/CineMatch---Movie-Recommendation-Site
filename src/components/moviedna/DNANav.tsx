@@ -96,7 +96,7 @@ export function DNANav() {
           </div>
 
           {/* Logo */}
-          <Link to="/" className="shrink-0 text-lg font-black tracking-tight text-foreground">
+          <Link to="/" className="shrink-0 text-sm sm:text-lg font-black tracking-tight text-foreground">
             Movie <span className="text-primary">DNA</span>
           </Link>
 
