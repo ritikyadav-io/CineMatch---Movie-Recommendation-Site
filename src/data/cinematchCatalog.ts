@@ -1209,22 +1209,22 @@ export const sectionMap: Record<DiscoverSectionKey, { title: string; description
   trending: {
     title: "Trending Movies",
     description: "Big-screen energy, undeniable buzz, and premium crowd-pleasers.",
-    ids: ["tt1160419", "tt6710474", "tt1375666", "tt0816692", "tt6751668", "tt2543164"]
+    ids: ["tt1160419", "tt6710474", "tt1375666", "tt1745960", "tt1630029", "tt1517268"]
   },
   "top-rated": {
     title: "Top Rated Movies",
     description: "Critically adored films with standout ratings and serious replay value.",
-    ids: ["tt0468569", "tt6751668", "tt1375666", "tt0816692", "tt2543164", "tt5311514"]
+    ids: ["tt0111161", "tt0068646", "tt0468569", "tt6751668", "tt0110912", "tt0133093"]
   },
   "hidden-gems": {
     title: "Hidden Gems",
     description: "Less obvious picks with elite taste-maker appeal.",
-    ids: ["tt3799694", "tt2194499", "tt12477480", "tt0457430", "tt5074352", "tt5311514"]
+    ids: ["tt3799694", "tt2194499", "tt12477480", "tt0457430", "tt0455944", "tt5311514"]
   },
   series: {
     title: "Popular Series",
     description: "Prestige binge material, breakout hits, and addictive episode hooks.",
-    ids: ["tt0903747", "tt5753856", "tt4574334", "tt11280740", "tt11126994", "tt14452776"]
+    ids: ["tt0903747", "tt0944947", "tt6263850", "tt11280740", "tt11126994", "tt14452776"]
   }
 };
 
