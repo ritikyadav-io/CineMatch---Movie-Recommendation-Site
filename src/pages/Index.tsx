@@ -185,10 +185,6 @@ const Index = () => {
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="max-w-xl space-y-2 sm:space-y-5"
           >
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/15 border border-primary/20 px-2 py-0.5 text-[8px] sm:text-xs font-bold uppercase tracking-wider text-primary">
-              <span className="size-1.5 rounded-full bg-primary animate-pulse" />
-              Now Streaming
-            </div>
             <h1 className="text-2xl sm:text-5xl lg:text-7xl font-black leading-[1.05] tracking-tight text-foreground">
               Discover Your<br />
               <span className="text-primary">Favourite Movies</span>
