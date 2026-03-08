@@ -88,8 +88,8 @@ export function DNANav() {
           </div>
 
           {/* Logo */}
-          <Link to="/" className="shrink-0">
-            <img src={logo} alt="Movie DNA" className="h-8 w-auto" />
+          <Link to="/" className="shrink-0 text-lg font-black tracking-tight text-foreground">
+            Movie <span className="text-primary">DNA</span>
           </Link>
 
           {/* Desktop nav links */}
@@ -188,7 +188,7 @@ export function DNANav() {
           <div className="absolute right-0 top-0 bottom-0 w-72 bg-card shadow-2xl animate-slide-in-right flex flex-col">
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-border">
-              <img src={logo} alt="Movie DNA" className="h-7 w-auto" />
+              <span className="text-lg font-black tracking-tight text-foreground">Movie <span className="text-primary">DNA</span></span>
               <button
                 onClick={() => setMobileOpen(false)}
                 className="p-2 rounded-full hover:bg-muted text-foreground"
