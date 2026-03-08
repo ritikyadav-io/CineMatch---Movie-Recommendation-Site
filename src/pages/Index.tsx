@@ -87,12 +87,11 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Main content — outside of hero to avoid collapse */}
-      <main className="container space-y-12 py-10 lg:py-14">
-        {/* Category Bar */}
-        <CategoryBar />
+      {/* Category Bar — outside main container */}
+      <CategoryBar />
 
-        {/* Movie Sections */}
+      {/* Main content with movie grids */}
+      <main className="container space-y-12 py-10 lg:py-14">
         {sections.map((section) => (
           <div key={section.title}>
             <div className="flex items-center justify-between mb-4">
