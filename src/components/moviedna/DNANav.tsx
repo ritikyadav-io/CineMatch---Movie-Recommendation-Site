@@ -153,7 +153,17 @@ export function DNANav() {
               </Button>
             )}
 
-            {user ? (
+            <Button
+              onClick={() => setShowDonate(true)}
+              variant="hero"
+              size="sm"
+              className="hidden sm:flex"
+            >
+              <Heart className="size-3.5" />
+              Donate
+            </Button>
+
+            {user && (
               <Link
                 to="/profile"
                 className="flex size-9 items-center justify-center rounded-full bg-primary/20 text-primary transition hover:bg-primary hover:text-primary-foreground"
@@ -161,13 +171,6 @@ export function DNANav() {
               >
                 <User className="size-4" />
               </Link>
-            ) : (
-              <Button asChild variant="hero" size="sm" className="hidden sm:flex">
-                <Link to="/auth">
-                  <LogIn className="size-3.5" />
-                  Sign In
-                </Link>
-              </Button>
             )}
 
             {/* Mobile hamburger (shown on non-home pages too) */}
