@@ -21,6 +21,7 @@ import { toast } from "sonner";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
+import { MovieDetailSkeleton } from "@/components/moviedna/MovieDetailSkeleton";
 import { Button } from "@/components/ui/button";
 import { WatchlistButton } from "@/components/moviedna/WatchlistButton";
 import { fetchTmdbFullDetail, fetchTmdbFullDetailByImdb, TmdbFullDetail } from "@/lib/tmdb-detail";
@@ -97,12 +98,7 @@ const MovieDetailPage = () => {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <DNANav />
-        <main className="container pt-20 pb-8">
-          <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground text-xs">
-            <Loader2 className="size-4 animate-spin text-primary" />
-            Loading...
-          </div>
-        </main>
+        <MovieDetailSkeleton />
       </div>
     );
   }
