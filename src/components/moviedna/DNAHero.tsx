@@ -77,7 +77,7 @@ export function DNAHero() {
             <Button asChild variant="hero" size="xl">
               <Link to="/quiz">
                 <Play className="size-5 fill-current" />
-                Start Quiz
+                Discover By Mood
               </Link>
             </Button>
             <Button

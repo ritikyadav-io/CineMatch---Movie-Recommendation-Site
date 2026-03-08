@@ -24,7 +24,7 @@ export function CTASection() {
           </p>
           <Button asChild variant="hero" size="xl" className="group">
             <Link to="/quiz">
-              Start the Quiz
+              Discover By Mood
               <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
           </Button>
