@@ -263,24 +263,24 @@ const Index = () => {
       </section>
 
       {/* ═══════════ FUN STATS ═══════════ */}
-      <section className="container px-3 sm:px-6 pb-6 sm:pb-16">
+      <section className="container px-3 sm:px-6 pb-4 sm:pb-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="rounded-xl bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-3 py-6 sm:px-5 sm:py-14 text-center space-y-3 sm:space-y-6"
+          className="rounded-lg bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-3 py-4 sm:px-4 sm:py-8 text-center space-y-2 sm:space-y-4"
         >
-          <h2 className="text-base sm:text-4xl font-black tracking-tight text-foreground">
+          <h2 className="text-sm sm:text-2xl font-black tracking-tight text-foreground">
             Movies <span className="text-primary">DNA</span> in Numbers
           </h2>
           <StatsGrid />
-          <p className="text-[10px] sm:text-sm text-muted-foreground max-w-md mx-auto">
+          <p className="text-[8px] sm:text-xs text-muted-foreground max-w-sm mx-auto">
             Your perfect movie is one quiz away. Stop scrolling, start watching. 🍿
           </p>
-          <Button asChild variant="hero" size="sm" className="group sm:!h-11 sm:!px-6 sm:!text-sm">
+          <Button asChild variant="hero" size="sm" className="group sm:!h-9 sm:!px-5 sm:!text-xs">
             <Link to="/quiz">
-              Take the Quiz <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+              Take the Quiz <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
         </motion.div>
