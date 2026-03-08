@@ -20,6 +20,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const PrivacyPage = lazy(() => import("./pages/Privacy"));
 const ProfilePage = lazy(() => import("./pages/Profile"));
 const QuizPage = lazy(() => import("./pages/Quiz"));
+const ActressesPage = lazy(() => import("./pages/Actresses"));
 const SearchPage = lazy(() => import("./pages/Search"));
 const TrailersPage = lazy(() => import("./pages/Trailers"));
 
@@ -70,6 +71,7 @@ const App = () => (
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/quiz" element={<QuizPage />} />
               <Route path="/discover" element={<DiscoverPage />} />
+              <Route path="/actresses" element={<ActressesPage />} />
               <Route path="/browse" element={<BrowsePage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/movie/:imdbID" element={<MovieDetailKeyWrapper />} />
