@@ -244,18 +244,18 @@ const Index = () => {
       </main>
 
       {/* ═══════════ PERSONALITY TYPES ═══════════ */}
-      <section className="container px-3 sm:px-6 py-6 sm:py-16">
+      <section className="container px-3 sm:px-6 lg:px-8 py-6 sm:py-16 lg:py-20">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-4 sm:mb-8"
+          className="text-center mb-4 sm:mb-8 lg:mb-12"
         >
-          <h2 className="text-base sm:text-3xl font-black text-foreground">What's Your Movie Type?</h2>
-          <p className="text-[10px] sm:text-sm text-muted-foreground mt-0.5">Explore genres that match your vibe</p>
+          <h2 className="text-base sm:text-3xl lg:text-4xl font-black text-foreground">What's Your Movie Type?</h2>
+          <p className="text-[10px] sm:text-sm lg:text-base text-muted-foreground mt-0.5 lg:mt-2">Explore genres that match your vibe</p>
         </motion.div>
-        <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 lg:gap-5">
           {personalities.map((p, i) => (
             <motion.div
               key={p.title}
@@ -266,10 +266,10 @@ const Index = () => {
             >
               <Link
                 to={p.link}
-                className={`group flex flex-col items-center gap-1 sm:gap-2 rounded-xl bg-gradient-to-b ${p.color} border p-2 sm:p-5 text-center transition-all hover:scale-105`}
+                className={`group flex flex-col items-center gap-1 sm:gap-2 lg:gap-3 rounded-xl bg-gradient-to-b ${p.color} border p-2 sm:p-5 lg:p-8 text-center transition-all hover:scale-105`}
               >
-                <p.icon className={`size-4 sm:size-8 ${p.iconColor}`} />
-                <span className="text-[8px] sm:text-xs font-bold text-foreground">{p.title}</span>
+                <p.icon className={`size-4 sm:size-8 lg:size-12 ${p.iconColor}`} />
+                <span className="text-[8px] sm:text-xs lg:text-sm font-bold text-foreground">{p.title}</span>
               </Link>
             </motion.div>
           ))}
@@ -277,24 +277,24 @@ const Index = () => {
       </section>
 
       {/* ═══════════ FUN STATS ═══════════ */}
-      <section className="container px-3 sm:px-6 pb-4 sm:pb-10">
+      <section className="container px-3 sm:px-6 lg:px-8 pb-4 sm:pb-10 lg:pb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="rounded-lg bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-3 py-4 sm:px-4 sm:py-8 text-center space-y-2 sm:space-y-4"
+          className="rounded-lg lg:rounded-2xl bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-3 py-4 sm:px-4 sm:py-8 lg:px-8 lg:py-14 text-center space-y-2 sm:space-y-4 lg:space-y-6"
         >
-          <h2 className="text-sm sm:text-2xl font-black tracking-tight text-foreground">
+          <h2 className="text-sm sm:text-2xl lg:text-4xl font-black tracking-tight text-foreground">
             Movies <span className="text-primary">DNA</span> in Numbers
           </h2>
           <StatsGrid />
-          <p className="text-[8px] sm:text-xs text-muted-foreground max-w-sm mx-auto">
+          <p className="text-[8px] sm:text-xs lg:text-sm text-muted-foreground max-w-sm lg:max-w-lg mx-auto">
             Your perfect movie is one quiz away. Stop scrolling, start watching. 🍿
           </p>
-          <Button asChild variant="hero" size="sm" className="group sm:!h-9 sm:!px-5 sm:!text-xs">
+          <Button asChild variant="hero" size="sm" className="group sm:!h-9 sm:!px-5 sm:!text-xs lg:!h-12 lg:!px-8 lg:!text-sm">
             <Link to="/quiz">
-              Take the Quiz <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+              Take the Quiz <ArrowRight className="size-3.5 lg:size-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
         </motion.div>
