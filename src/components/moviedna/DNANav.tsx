@@ -8,11 +8,11 @@ import { CineSearchBar } from "@/components/cinematch/CineSearchBar";
 
 const navItems = [
   { to: "/", label: "Home" },
+  { to: "/browse", label: "Browse" },
   { to: "/discover", label: "Discover" },
   { to: "/quiz", label: "Quiz" },
-  { to: "/discover?section=trending", label: "Trending" },
-  { to: "/discover?section=series", label: "Series" },
-  { to: "/discover?section=top-rated", label: "Top Rated" },
+  { to: "/browse?cat=bollywood", label: "Bollywood" },
+  { to: "/browse?cat=anime", label: "Anime" },
 ];
 
 export function DNANav() {

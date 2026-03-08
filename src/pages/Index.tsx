@@ -6,6 +6,7 @@ import { DNANav } from "@/components/moviedna/DNANav";
 import { FeatureCards } from "@/components/moviedna/FeatureCards";
 import { MoviePersonality } from "@/components/moviedna/MoviePersonality";
 import { QuizPreview } from "@/components/moviedna/QuizPreview";
+import { TmdbRows } from "@/components/moviedna/TmdbRows";
 import { TrailerPreview } from "@/components/moviedna/TrailerPreview";
 import { UniverseShowcase } from "@/components/moviedna/UniverseShowcase";
 
@@ -15,6 +16,7 @@ const Index = () => {
       <DNANav />
       <main>
         <DNAHero />
+        <TmdbRows />
         <FeatureCards />
         <QuizPreview />
         <UniverseShowcase />
