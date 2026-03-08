@@ -23,7 +23,6 @@ import { Button } from "@/components/ui/button";
 import { CineSearchBar } from "@/components/cinematch/CineSearchBar";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { useAuth } from "@/hooks/use-auth";
-import { usePwaInstall } from "@/hooks/use-pwa-install";
 
 const navItems = [
   { to: "/", label: "Home", icon: Home },
