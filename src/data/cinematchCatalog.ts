@@ -1203,7 +1203,7 @@ export const sectionMap: Record<DiscoverSectionKey, { title: string; description
   "hidden-gems": {
     title: "Hidden Gems",
     description: "Less obvious picks with elite taste-maker appeal.",
-    get ids() {
+    ids: (() => {
       const pool = [
         "tt3799694", "tt2194499", "tt12477480", "tt0457430", "tt0455944", "tt5311514",
         "tt1954470", "tt0790636", "tt0347149", "tt1131729", "tt0469494",
@@ -1214,10 +1214,9 @@ export const sectionMap: Record<DiscoverSectionKey, { title: string; description
         "tt0114814", "tt0353969", "tt0477347", "tt0118799", "tt0317248",
         "tt0211915", "tt0268978", "tt0186566", "tt0364569", "tt0978762",
       ];
-      // Shuffle and return 10 random picks
       const shuffled = [...pool].sort(() => Math.random() - 0.5);
       return shuffled.slice(0, 10);
-    }
+    })()
   },
   series: {
     title: "Popular Series",
