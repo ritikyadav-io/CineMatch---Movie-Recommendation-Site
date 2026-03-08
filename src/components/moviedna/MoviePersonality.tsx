@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Flame, Heart, Rocket, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const personalities = [
   {
@@ -7,24 +8,28 @@ const personalities = [
     title: "Action Addict",
     description: "You live for explosions, car chases, and adrenaline. Your movie nights are loud.",
     color: "bg-orange-500/15 text-orange-400",
+    link: "/browse?cat=action",
   },
   {
     icon: Heart,
     title: "Romantic Dreamer",
     description: "Love stories are your thing. Sweeping gestures, beautiful cinematography, happy endings.",
     color: "bg-pink-500/15 text-pink-400",
+    link: "/browse?cat=romance",
   },
   {
     icon: Rocket,
     title: "Sci-Fi Explorer",
     description: "Alien worlds, time travel, and mind-bending concepts. The further from reality, the better.",
     color: "bg-accent/15 text-accent",
+    link: "/browse?cat=scifi",
   },
   {
     icon: Sparkles,
     title: "Anime Enthusiast",
     description: "The artistry of animation, epic arcs, and storytelling only anime can deliver.",
     color: "bg-violet-500/15 text-violet-400",
+    link: "/browse?cat=anime",
   },
 ];
 
@@ -50,13 +55,17 @@ export function MoviePersonality() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.08 }}
-            className="group rounded-lg bg-card p-6 transition-all duration-300 hover:bg-secondary hover:scale-[1.02]"
           >
-            <div className={`mb-3 flex size-10 items-center justify-center rounded-lg ${type.color}`}>
-              <type.icon className="size-5" />
-            </div>
-            <h3 className="text-sm font-bold text-foreground mb-1">{type.title}</h3>
-            <p className="text-xs leading-relaxed text-muted-foreground">{type.description}</p>
+            <Link
+              to={type.link}
+              className="group block rounded-lg bg-card p-6 transition-all duration-300 hover:bg-secondary hover:scale-[1.02]"
+            >
+              <div className={`mb-3 flex size-10 items-center justify-center rounded-lg ${type.color}`}>
+                <type.icon className="size-5" />
+              </div>
+              <h3 className="text-sm font-bold text-foreground mb-1">{type.title}</h3>
+              <p className="text-xs leading-relaxed text-muted-foreground">{type.description}</p>
+            </Link>
           </motion.div>
         ))}
       </div>

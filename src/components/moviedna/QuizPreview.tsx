@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
+import { Button } from "@/components/ui/button";
 
 const sliders = [
   { label: "Romance", color: "bg-primary" },
@@ -99,6 +102,11 @@ export function QuizPreview() {
               Your high action and mind-bending preferences perfectly align with this dream-heist masterpiece.
             </p>
           </div>
+          <Button asChild variant="hero" size="sm" className="w-fit">
+            <Link to="/quiz">
+              Take the Quiz <ArrowRight className="size-3.5" />
+            </Link>
+          </Button>
         </motion.div>
       </div>
     </section>

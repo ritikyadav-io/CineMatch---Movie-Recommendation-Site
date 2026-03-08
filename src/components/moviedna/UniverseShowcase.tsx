@@ -12,25 +12,25 @@ const universes = [
     title: "Hollywood Blockbusters",
     subtitle: "Action • Drama • Sci-Fi",
     image: hollywoodImg,
-    link: "/discover?section=trending",
+    link: "/browse?cat=trending",
   },
   {
     title: "Bollywood Romance & Drama",
     subtitle: "Romance • Musical • Thriller",
     image: bollywoodImg,
-    link: "/discover?section=hidden-gems",
+    link: "/browse?cat=bollywood",
   },
   {
     title: "Superhero Movies",
     subtitle: "Marvel • DC • Animated",
     image: superheroImg,
-    link: "/discover?section=top-rated",
+    link: "/browse?cat=superhero",
   },
   {
     title: "Anime Adventures",
     subtitle: "Shonen • Fantasy • Psychological",
     image: animeImg,
-    link: "/discover?section=hidden-gems",
+    link: "/browse?cat=anime",
   },
 ];
 
