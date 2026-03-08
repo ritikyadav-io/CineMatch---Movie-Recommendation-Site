@@ -212,7 +212,7 @@ export function DNANav() {
             </div>
 
             {/* Nav links */}
-            <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+            <nav className="flex-1 overflow-y-auto p-3 space-y-0.5">
               {navItems.map((item) => {
                 const isActive =
                   location.pathname === item.to ||
@@ -224,26 +224,26 @@ export function DNANav() {
                     to={item.to}
                     onClick={() => setMobileOpen(false)}
                     className={[
-                      "flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition",
+                      "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-medium transition",
                       isActive
                         ? "bg-primary text-primary-foreground"
                         : "text-foreground hover:bg-muted",
                     ].join(" ")}
                   >
-                    <item.icon className="size-5" />
+                    <item.icon className="size-4" />
                     {item.label}
                   </Link>
                 );
               })}
 
-              <div className="border-t border-border my-3" />
+              <div className="border-t border-border my-2" />
 
               <Link
                 to="/search"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-foreground hover:bg-muted transition"
+                className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-medium text-foreground hover:bg-muted transition"
               >
-                <Search className="size-5" />
+                <Search className="size-4" />
                 Search
               </Link>
               {user && (
