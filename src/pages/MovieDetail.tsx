@@ -116,9 +116,9 @@ const MovieDetailPage = () => {
         </div>
       )}
 
-      <main className={`container space-y-8 pb-12 ${movie.backdrop_path ? "-mt-40 relative z-10" : "pt-24"}`}>
+      <main className={`container px-3 sm:px-4 lg:px-8 space-y-6 sm:space-y-8 pb-8 sm:pb-12 ${movie.backdrop_path ? "-mt-24 sm:-mt-40 relative z-10" : "pt-20 sm:pt-24"}`}>
         {/* Top section: Poster + Info */}
-        <section className="grid gap-6 lg:grid-cols-[280px_1fr]">
+        <section className="grid gap-4 sm:gap-6 grid-cols-[120px_1fr] sm:grid-cols-[180px_1fr] lg:grid-cols-[280px_1fr]">
           <div className="space-y-3">
             <img
               src={movie.poster}
