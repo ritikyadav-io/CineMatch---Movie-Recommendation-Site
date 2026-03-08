@@ -1,15 +1,18 @@
 import {
   ArrowLeft,
   Bell,
+  Bookmark,
   Clapperboard,
   Compass,
   Download,
   Film,
   Flame,
   Home,
+  LogIn,
   Menu,
   Search,
   Sparkles,
+  User,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -18,6 +21,8 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "@/assets/moviedna-logo.png";
 import { Button } from "@/components/ui/button";
 import { CineSearchBar } from "@/components/cinematch/CineSearchBar";
+import { usePwaInstall } from "@/hooks/use-pwa-install";
+import { useAuth } from "@/hooks/use-auth";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 
 const navItems = [
