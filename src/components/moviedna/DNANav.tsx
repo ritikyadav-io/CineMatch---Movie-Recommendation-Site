@@ -198,16 +198,16 @@ export function DNANav() {
           />
 
           {/* Drawer */}
-          <div className="absolute right-0 top-0 bottom-0 w-72 bg-card shadow-2xl animate-slide-in-right flex flex-col">
+          <div className="absolute right-0 top-0 bottom-0 w-60 bg-card shadow-2xl animate-slide-in-right flex flex-col">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-border">
-              <span className="text-lg font-black tracking-tight text-foreground">Movies <span className="text-primary">DNA</span></span>
+            <div className="flex items-center justify-between p-3 border-b border-border">
+              <span className="text-sm font-black tracking-tight text-foreground">Movies <span className="text-primary">DNA</span></span>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="p-2 rounded-full hover:bg-muted text-foreground"
+                className="p-1.5 rounded-full hover:bg-muted text-foreground"
                 aria-label="Close menu"
               >
-                <X className="size-5" />
+                <X className="size-4" />
               </button>
             </div>
 
