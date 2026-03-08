@@ -56,12 +56,12 @@ const personalities = [
 /* ── Skeleton row placeholder ── */
 function SkeletonRow() {
   return (
-    <div className="flex gap-1.5 sm:gap-3 lg:gap-4 overflow-hidden pb-2">
+    <div className="flex gap-2.5 sm:gap-3 lg:gap-4 overflow-hidden pb-2">
       {Array.from({ length: 8 }).map((_, i) => (
-        <div key={i} className="shrink-0 w-[80px] sm:w-[120px] lg:w-[170px] xl:w-[190px]">
+        <div key={i} className="shrink-0 w-[110px] sm:w-[130px] lg:w-[170px] xl:w-[190px]">
           <Skeleton className="aspect-[2/3] w-full rounded-md" />
-          <Skeleton className="h-3 w-3/4 mt-1 rounded" />
-          <Skeleton className="h-2 w-1/2 mt-0.5 rounded" />
+          <Skeleton className="h-3.5 w-3/4 mt-1.5 rounded" />
+          <Skeleton className="h-2.5 w-1/2 mt-1 rounded" />
         </div>
       ))}
     </div>
