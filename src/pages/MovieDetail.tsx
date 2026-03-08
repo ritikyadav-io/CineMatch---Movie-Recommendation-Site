@@ -30,12 +30,21 @@ import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { getWatchSearchUrl } from "@/lib/omdb";
 import { supabase } from "@/integrations/supabase/client";
 
-const WATCH_LINKS = [
-  { name: "JioCinema", url: (t: string) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`, color: "bg-pink-600" },
-  { name: "Netflix", url: (t: string) => `https://www.netflix.com/search?q=${encodeURIComponent(t)}`, color: "bg-red-600" },
-  { name: "Prime Video", url: (t: string) => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`, color: "bg-blue-500" },
-  { name: "Hotstar", url: (t: string) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`, color: "bg-blue-700" },
-];
+const PROVIDER_URLS: Record<string, (t: string) => string> = {
+  "Netflix": (t) => `https://www.netflix.com/search?q=${encodeURIComponent(t)}`,
+  "Amazon Prime Video": (t) => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`,
+  "Disney Plus": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
+  "Disney+ Hotstar": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
+  "Hotstar": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
+  "JioCinema": (t) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`,
+  "Jio Cinema": (t) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`,
+  "Apple TV": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
+  "Apple TV Plus": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
+  "Hulu": (t) => `https://www.hulu.com/search?q=${encodeURIComponent(t)}`,
+  "Zee5": (t) => `https://www.zee5.com/search?q=${encodeURIComponent(t)}`,
+  "SonyLIV": (t) => `https://www.sonyliv.com/search?q=${encodeURIComponent(t)}`,
+  "MX Player": (t) => `https://www.mxplayer.in/search?q=${encodeURIComponent(t)}`,
+};
 
 const MovieDetailPage = () => {
   const { imdbID = "" } = useParams();
