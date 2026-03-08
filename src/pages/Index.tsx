@@ -177,7 +177,7 @@ const Index = () => {
             </div>
             <h1 className="text-2xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-foreground">
               Discover Your<br />
-              <span className="text-primary">Movies DNA</span>
+              <span className="text-primary">Favourite Movies</span>
             </h1>
             <p className="max-w-md text-[10px] sm:text-sm leading-relaxed text-secondary-foreground hidden sm:block">
               Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more — plus full details, trailers, and where to watch.

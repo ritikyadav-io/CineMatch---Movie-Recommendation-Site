@@ -367,28 +367,46 @@ const MovieDetailPage = () => {
 
       <DNAFooter />
 
-      {/* Trailer Modal */}
+      {/* Trailer Modal — YouTube-style top layout */}
       {showTrailer && movie.trailer && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-sm"
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col"
           onClick={() => setShowTrailer(false)}
         >
-          <button
-            onClick={() => setShowTrailer(false)}
-            className="absolute right-4 top-4 z-50 rounded-full bg-secondary p-2 text-foreground hover:bg-muted"
-            aria-label="Close"
-          >
-            <X className="size-5" />
-          </button>
-          <div className="w-full max-w-5xl px-4" onClick={(e) => e.stopPropagation()}>
-            <div className="relative aspect-video overflow-hidden rounded-lg">
-              <iframe
-                src={`https://www.youtube.com/embed/${movie.trailer}?autoplay=1&rel=0`}
-                className="h-full w-full"
-                allowFullScreen
-                allow="autoplay; encrypted-media"
-                title={`${movie.title} trailer`}
-              />
+          {/* Top bar */}
+          <div className="flex items-center justify-between px-3 sm:px-6 py-2 sm:py-3 bg-black/80" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center gap-2 min-w-0">
+              <PlayCircle className="size-4 sm:size-5 text-primary shrink-0" />
+              <h3 className="text-xs sm:text-sm font-bold text-white truncate">{movie.title} — Trailer</h3>
+            </div>
+            <button
+              onClick={() => setShowTrailer(false)}
+              className="shrink-0 rounded-full bg-white/10 p-1.5 sm:p-2 text-white hover:bg-white/20 transition"
+              aria-label="Close"
+            >
+              <X className="size-4 sm:size-5" />
+            </button>
+          </div>
+
+          {/* Video */}
+          <div className="flex-1 flex items-start justify-center pt-0 sm:pt-4 px-0 sm:px-6" onClick={(e) => e.stopPropagation()}>
+            <div className="w-full max-w-5xl">
+              <div className="relative aspect-video overflow-hidden sm:rounded-lg bg-black">
+                <iframe
+                  src={`https://www.youtube.com/embed/${movie.trailer}?autoplay=1&rel=0&modestbranding=1`}
+                  className="h-full w-full"
+                  allowFullScreen
+                  allow="autoplay; encrypted-media"
+                  title={`${movie.title} trailer`}
+                />
+              </div>
+              {/* Info below video */}
+              <div className="px-3 sm:px-0 py-3 space-y-1">
+                <h4 className="text-sm sm:text-lg font-bold text-white">{movie.title}</h4>
+                <p className="text-[10px] sm:text-xs text-white/60">
+                  {movie.year} • {movie.genres?.join(", ")} • IMDb {movie.rating}
+                </p>
+              </div>
             </div>
           </div>
         </div>
