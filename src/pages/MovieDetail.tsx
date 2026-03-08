@@ -30,12 +30,21 @@ import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { getWatchSearchUrl } from "@/lib/omdb";
 import { supabase } from "@/integrations/supabase/client";
 
-const WATCH_LINKS = [
-  { name: "JioCinema", url: (t: string) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`, color: "bg-pink-600" },
-  { name: "Netflix", url: (t: string) => `https://www.netflix.com/search?q=${encodeURIComponent(t)}`, color: "bg-red-600" },
-  { name: "Prime Video", url: (t: string) => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`, color: "bg-blue-500" },
-  { name: "Hotstar", url: (t: string) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`, color: "bg-blue-700" },
-];
+const PROVIDER_URLS: Record<string, (t: string) => string> = {
+  "Netflix": (t) => `https://www.netflix.com/search?q=${encodeURIComponent(t)}`,
+  "Amazon Prime Video": (t) => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`,
+  "Disney Plus": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
+  "Disney+ Hotstar": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
+  "Hotstar": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
+  "JioCinema": (t) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`,
+  "Jio Cinema": (t) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`,
+  "Apple TV": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
+  "Apple TV Plus": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
+  "Hulu": (t) => `https://www.hulu.com/search?q=${encodeURIComponent(t)}`,
+  "Zee5": (t) => `https://www.zee5.com/search?q=${encodeURIComponent(t)}`,
+  "SonyLIV": (t) => `https://www.sonyliv.com/search?q=${encodeURIComponent(t)}`,
+  "MX Player": (t) => `https://www.mxplayer.in/search?q=${encodeURIComponent(t)}`,
+};
 
 const MovieDetailPage = () => {
   const { imdbID = "" } = useParams();
@@ -255,24 +264,46 @@ const MovieDetailPage = () => {
         </section>
 
 
-        {/* ═══ Watch Online Links ═══ */}
-        <section className="space-y-2 sm:space-y-3">
-          <h2 className="text-sm sm:text-lg font-bold text-foreground">🔗 Watch Online</h2>
-          <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
-            {WATCH_LINKS.map((w) => (
-              <a
-                key={w.name}
-                href={w.url(movie.title)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${w.color} rounded-md p-1.5 sm:p-2 text-center text-white transition hover:opacity-80`}
-              >
-                <ExternalLink className="size-2.5 sm:size-3 mx-auto mb-0.5" />
-                <p className="text-[7px] sm:text-[10px] font-bold">{w.name}</p>
-              </a>
-            ))}
-          </div>
-        </section>
+        {/* ═══ Watch Online — only actual providers ═══ */}
+        {uniqueProviders.length > 0 && (
+          <section className="space-y-2 sm:space-y-3">
+            <h2 className="text-sm sm:text-lg font-bold text-foreground">🔗 Watch Online</h2>
+            <div className="flex flex-wrap gap-2">
+              {uniqueProviders.map((p) => {
+                const urlFn = PROVIDER_URLS[p.provider_name];
+                return urlFn ? (
+                  <a
+                    key={p.provider_id}
+                    href={urlFn(movie.title)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 rounded-md bg-card border border-border px-2.5 py-1.5 transition hover:border-primary hover:bg-secondary"
+                  >
+                    {p.logo_path ? (
+                      <img src={`https://image.tmdb.org/t/p/w92${p.logo_path}`} alt={p.provider_name} className="size-6 rounded" />
+                    ) : (
+                      <div className="flex size-6 items-center justify-center rounded bg-muted"><Tv className="size-3 text-muted-foreground" /></div>
+                    )}
+                    <span className="text-[10px] sm:text-xs font-medium text-foreground">{p.provider_name}</span>
+                    <ExternalLink className="size-2.5 text-muted-foreground" />
+                  </a>
+                ) : (
+                  <div
+                    key={p.provider_id}
+                    className="flex items-center gap-1.5 rounded-md bg-card border border-border px-2.5 py-1.5"
+                  >
+                    {p.logo_path ? (
+                      <img src={`https://image.tmdb.org/t/p/w92${p.logo_path}`} alt={p.provider_name} className="size-6 rounded" />
+                    ) : (
+                      <div className="flex size-6 items-center justify-center rounded bg-muted"><Tv className="size-3 text-muted-foreground" /></div>
+                    )}
+                    <span className="text-[10px] sm:text-xs font-medium text-foreground">{p.provider_name}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* ═══ Movie Summary ═══ */}
         <section className="space-y-2 sm:space-y-3">
@@ -316,23 +347,6 @@ const MovieDetailPage = () => {
           )}
         </section>
 
-        {uniqueProviders.length > 0 && (
-          <section className="space-y-2">
-            <h2 className="text-sm sm:text-lg font-bold text-foreground">📺 Available On</h2>
-            <div className="flex flex-wrap gap-2">
-              {uniqueProviders.map((p) => (
-                <div key={p.provider_id} className="flex items-center gap-1.5 rounded-md bg-card border border-border px-2 py-1.5">
-                  {p.logo_path ? (
-                    <img src={`https://image.tmdb.org/t/p/w92${p.logo_path}`} alt={p.provider_name} className="size-6 rounded" />
-                  ) : (
-                    <div className="flex size-6 items-center justify-center rounded bg-muted"><Tv className="size-3 text-muted-foreground" /></div>
-                  )}
-                  <span className="text-[10px] font-medium text-foreground">{p.provider_name}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
 
         {/* Trailer thumbnail */}
         {movie.trailer && !showTrailer && (
