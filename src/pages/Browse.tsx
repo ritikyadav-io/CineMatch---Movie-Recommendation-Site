@@ -102,7 +102,7 @@ const BrowsePage = () => {
             Loading movies...
           </div>
         ) : data?.length ? (
-          <div className="grid gap-1 sm:gap-1.5 grid-cols-4 sm:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
+          <div className="grid gap-1.5 sm:gap-1.5 grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
             {data.map((item) => (
               <CineMovieCard key={item.imdbID} item={item} />
             ))}

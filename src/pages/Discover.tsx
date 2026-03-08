@@ -94,7 +94,7 @@ const DiscoverPage = () => {
         </div>
       </div>
 
-      <main className="container space-y-4 sm:space-y-8 pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pb-16 px-3 sm:px-6">
+      <main className="container space-y-4 sm:space-y-8 pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pb-16 px-4 sm:px-6">
         {recommendationsQuery.isLoading ? (
           <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground text-xs">
             <Loader2 className="size-4 animate-spin text-primary" />

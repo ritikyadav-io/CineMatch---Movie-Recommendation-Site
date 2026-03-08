@@ -185,7 +185,7 @@ const Index = () => {
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="max-w-xl space-y-3 sm:space-y-5"
           >
-            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black leading-[1.05] tracking-tight text-foreground">
+            <h1 className="text-2xl sm:text-5xl lg:text-7xl font-black leading-[1.05] tracking-tight text-foreground">
               Discover Your<br />
               <span className="text-primary">Favourite Movies</span>
             </h1>
