@@ -136,10 +136,10 @@ export function DNANav() {
               </button>
             )}
             <button
-              className="p-2 text-muted-foreground transition hover:text-foreground hidden sm:block"
+              className="p-1 sm:p-2 text-muted-foreground transition hover:text-foreground hidden sm:block"
               aria-label="Notifications"
             >
-              <Bell className="size-5" />
+              <Bell className="size-4 sm:size-5" />
             </button>
 
             {canInstall && !isInstalled && (
