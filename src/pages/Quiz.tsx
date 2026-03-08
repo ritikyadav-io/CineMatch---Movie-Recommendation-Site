@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/moviedna-hero.jpg";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
+import { TmdbMiniRow } from "@/components/moviedna/TmdbRows";
 import { Button } from "@/components/ui/button";
 import { defaultQuizAnswers, quizFieldsets } from "@/data/cinematchCatalog";
 import { useAuth } from "@/hooks/use-auth";
@@ -97,7 +98,10 @@ const QuizPage = () => {
               <Sparkles className="size-4" />
               Show Recommendations
             </Button>
-          </div>
+         </div>
+        </div>
+        <div className="container pb-12">
+          <TmdbMiniRow category="trending" />
         </div>
       </main>
       <DNAFooter />

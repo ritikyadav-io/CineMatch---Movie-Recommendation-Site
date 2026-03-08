@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { ChevronRight, Star } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import {
   fetchTmdbTrending,
   fetchTmdbBollywood,
@@ -35,28 +36,19 @@ const rows: RowConfig[] = [
 ];
 
 function MovieRow({ config }: { config: RowConfig }) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [config.queryKey],
     queryFn: () => config.fetcher(1),
     staleTime: 1000 * 60 * 30,
   });
 
-  if (error) {
-    return (
-      <div style={{ padding: '16px 0' }}>
-        <h2 className="text-lg font-bold text-foreground">{config.title}</h2>
-        <p className="text-sm text-destructive">Failed to load movies</p>
-      </div>
-    );
-  }
-
   if (isLoading) {
     return (
-      <div style={{ marginBottom: 24 }}>
-        <div className="h-5 w-40 animate-pulse rounded bg-muted" style={{ marginBottom: 12 }} />
-        <div style={{ display: 'flex', gap: 12, overflowX: 'auto' }}>
-          {[1,2,3,4,5,6].map(i => (
-            <div key={i} className="bg-muted rounded-md" style={{ width: 150, height: 225, flexShrink: 0 }} />
+      <div className="space-y-3">
+        <div className="h-5 w-40 animate-pulse rounded bg-muted" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="aspect-[2/3] rounded-md bg-muted animate-pulse" />
           ))}
         </div>
       </div>
@@ -66,8 +58,8 @@ function MovieRow({ config }: { config: RowConfig }) {
   if (!data?.length) return null;
 
   return (
-    <div style={{ marginBottom: 32 }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold text-foreground">{config.title}</h2>
         <Link
           to={config.link}
@@ -76,22 +68,9 @@ function MovieRow({ config }: { config: RowConfig }) {
           See All <ChevronRight className="size-4" />
         </Link>
       </div>
-      <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 8, scrollbarWidth: 'none' }}>
-        {data.slice(0, 10).map((item) => (
-          <Link
-            key={item.imdbID}
-            to={`/movie/${item.imdbID}`}
-            style={{ width: 150, flexShrink: 0, display: 'block', textDecoration: 'none', color: 'inherit' }}
-          >
-            <img
-              src={item.poster}
-              alt={item.title}
-              style={{ width: 150, height: 225, objectFit: 'cover', display: 'block', borderRadius: 8 }}
-              loading="lazy"
-            />
-            <p className="text-xs font-semibold text-foreground truncate" style={{ marginTop: 6 }}>{item.title}</p>
-            <p className="text-muted-foreground" style={{ fontSize: 10 }}>{item.year} · ⭐ {item.rating}</p>
-          </Link>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {data.slice(0, 5).map((item) => (
+          <CineMovieCard key={item.imdbID} item={item} />
         ))}
       </div>
     </div>
@@ -100,10 +79,42 @@ function MovieRow({ config }: { config: RowConfig }) {
 
 export function TmdbRows() {
   return (
-    <div style={{ maxWidth: 1440, margin: '0 auto', padding: '32px 16px' }}>
+    <section className="container space-y-10 py-10 lg:py-14">
       {rows.map((config) => (
         <MovieRow key={config.queryKey} config={config} />
       ))}
-    </div>
+    </section>
+  );
+}
+
+/** Compact version: shows a single row of trending movies, useful for non-home pages */
+export function TmdbMiniRow({ category = "trending" }: { category?: string }) {
+  const config = rows.find((r) => r.queryKey === `tmdb-${category}`) || rows[0];
+  
+  const { data, isLoading } = useQuery({
+    queryKey: [config.queryKey],
+    queryFn: () => config.fetcher(1),
+    staleTime: 1000 * 60 * 30,
+  });
+
+  if (isLoading || !data?.length) return null;
+
+  return (
+    <section className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-bold text-foreground">{config.title}</h2>
+        <Link
+          to={config.link}
+          className="flex items-center gap-0.5 text-xs font-semibold text-muted-foreground transition hover:text-foreground"
+        >
+          See All <ChevronRight className="size-4" />
+        </Link>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {data.slice(0, 5).map((item) => (
+          <CineMovieCard key={item.imdbID} item={item} />
+        ))}
+      </div>
+    </section>
   );
 }

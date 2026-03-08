@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
+import { TmdbMiniRow } from "@/components/moviedna/TmdbRows";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { findCatalogMatches } from "@/data/cinematchCatalog";
 import { fetchOmdbBatch, searchOmdbTitles } from "@/lib/omdb";
@@ -181,6 +182,9 @@ const SearchPage = () => {
             </>
           )}
         </section>
+        <div className="container pb-12">
+          <TmdbMiniRow category="toprated" />
+        </div>
       </main>
       <DNAFooter />
     </div>
