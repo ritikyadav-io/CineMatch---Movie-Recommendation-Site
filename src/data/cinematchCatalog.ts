@@ -1218,7 +1218,7 @@ export const quizFieldsets = [
   { key: "language", label: "Language", options: ["English", "Korean", "Japanese", "Spanish", "Hindi", "Any"] },
   { key: "mood", label: "Mood", options: ["Light and fun", "Dark and intense", "Emotional", "Mind-bending"] },
   { key: "violence", label: "Violence / Gore Level", options: ["None", "Moderate", "Extreme"] },
-  { key: "nudity", label: "Nudity Level", options: ["None", "Some", "Doesn't matter"] },
+  { key: "nudity", label: "Nudity Level", options: ["None", "Some", "Full Nude", "Doesn't matter"] },
   { key: "releasePeriod", label: "Release Period", options: ["2020+", "2010-2020", "Before 2010"] },
   { key: "runtime", label: "Runtime Preference", options: ["Short (<100 minutes)", "Medium", "Long epic"] },
   { key: "complexity", label: "Story Complexity", options: ["Simple entertainment", "Thought-provoking", "Mind-bending"] },
@@ -1243,9 +1243,10 @@ export const defaultQuizAnswers: QuizAnswers = {
 };
 
 const violenceRank = { None: 0, Moderate: 1, Extreme: 2 };
-const nudityRank = { None: 0, Some: 1, "Doesn't matter": 2 };
+const nudityRank = { None: 0, Some: 1, "Full Nude": 2, "Doesn't matter": 3 };
 
 export function filterCatalogByQuiz(answers: QuizAnswers) {
+  const seen = new Set<string>();
   return cineMatchCatalog
     .filter((entry) => entry.type === answers.contentType)
     .map((entry) => {
@@ -1262,17 +1263,18 @@ export function filterCatalogByQuiz(answers: QuizAnswers) {
       ) score += 2;
       if (entry.runtime === answers.runtime) score += 2;
       if (entry.complexity === answers.complexity) score += 3;
-      // Bollywood vibe bonus
       if (answers.bollywoodVibe !== "Any" && entry.bollywoodVibe && entry.bollywoodVibe === answers.bollywoodVibe) score += 3;
-      // Superhero preference bonus
       if (answers.superheroPreference !== "Any" && entry.superheroStyle && entry.superheroStyle === answers.superheroPreference) score += 3;
-      // Anime style bonus
       if (answers.animeStyle !== "Any" && entry.animeStyle && entry.animeStyle === answers.animeStyle) score += 3;
       if (entry.hiddenGem) score += 0.3;
       return { ...entry, score };
     })
     .sort((a, b) => b.score - a.score)
-    .filter((entry) => entry.score >= 6);
+    .filter((entry) => {
+      if (entry.score < 6 || seen.has(entry.imdbID)) return false;
+      seen.add(entry.imdbID);
+      return true;
+    });
 }
 
 export function findCatalogMatches(query: string) {
