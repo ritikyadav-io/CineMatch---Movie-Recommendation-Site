@@ -57,10 +57,10 @@ const personalities = [
 function MovieScrollRow({ title, data, loading, link }: { title: string; data?: any[]; loading: boolean; link: string }) {
   return (
     <div>
-      <div className="flex items-center justify-between mb-2 sm:mb-3 px-1">
-        <h2 className="text-sm sm:text-lg font-bold text-foreground">{title}</h2>
-        <Link to={link} className="flex items-center gap-0.5 text-[10px] sm:text-xs font-semibold text-muted-foreground hover:text-primary transition">
-          See All <ChevronRight className="size-3 sm:size-4" />
+      <div className="flex items-center justify-between mb-1 sm:mb-3 px-0.5">
+        <h2 className="text-xs sm:text-lg font-bold text-foreground">{title}</h2>
+        <Link to={link} className="flex items-center gap-0.5 text-[8px] sm:text-xs font-semibold text-muted-foreground hover:text-primary transition">
+          See All <ChevronRight className="size-2.5 sm:size-4" />
         </Link>
       </div>
       {loading ? (
@@ -68,9 +68,9 @@ function MovieScrollRow({ title, data, loading, link }: { title: string; data?: 
           <Loader2 className="size-4 animate-spin text-primary mr-2" /> Loading...
         </div>
       ) : data?.length ? (
-        <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
-          {data.slice(0, 10).map((item) => (
-            <div key={item.imdbID} className="shrink-0 w-[90px] sm:w-[120px] lg:w-[140px]">
+        <div className="flex gap-1.5 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
+          {data.slice(0, 12).map((item) => (
+            <div key={item.imdbID} className="shrink-0 w-[80px] sm:w-[120px] lg:w-[140px]">
               <CineMovieCard item={item} />
             </div>
           ))}
@@ -113,8 +113,8 @@ function AnimatedStat({ target, suffix, label, inView }: { target: number; suffi
   const display = target === 0 ? suffix : `${count.toLocaleString()}${suffix}`;
   return (
     <div className="space-y-1">
-      <p className="text-2xl sm:text-3xl font-black text-primary">{display}</p>
-      <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{label}</p>
+      <p className="text-lg sm:text-3xl font-black text-primary">{display}</p>
+      <p className="text-[8px] sm:text-xs text-muted-foreground font-medium">{label}</p>
     </div>
   );
 }
@@ -158,28 +158,28 @@ const Index = () => {
       <DNANav />
 
       {/* ═══════════ HERO ═══════════ */}
-      <section className="relative overflow-hidden h-[85vh] min-h-[480px] max-h-[720px]">
+      <section className="relative overflow-hidden h-[60vh] min-h-[340px] max-h-[720px] sm:h-[85vh]">
         <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent" />
 
-        <div className="container relative flex h-full items-end pb-12 sm:pb-16 lg:items-center lg:pb-0 px-4 sm:px-6">
+        <div className="container relative flex h-full items-end pb-8 sm:pb-16 lg:items-center lg:pb-0 px-3 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="max-w-xl space-y-4 sm:space-y-5"
+            className="max-w-xl space-y-2 sm:space-y-5"
           >
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/15 border border-primary/20 px-3 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/15 border border-primary/20 px-2 py-0.5 text-[8px] sm:text-xs font-bold uppercase tracking-wider text-primary">
               <span className="size-1.5 rounded-full bg-primary animate-pulse" />
               Now Streaming
             </div>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-foreground">
+            <h1 className="text-2xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-foreground">
               Discover Your<br />
               <span className="text-primary">Movie DNA</span>
             </h1>
-            <p className="max-w-md text-xs sm:text-sm leading-relaxed text-secondary-foreground">
+            <p className="max-w-md text-[10px] sm:text-sm leading-relaxed text-secondary-foreground hidden sm:block">
               Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more — plus full details, trailers, and where to watch.
             </p>
             <div className="flex items-center gap-2 sm:gap-3">
@@ -230,16 +230,16 @@ const Index = () => {
       </main>
 
       {/* ═══════════ PERSONALITY TYPES ═══════════ */}
-      <section className="container px-3 sm:px-6 py-10 sm:py-16">
+      <section className="container px-3 sm:px-6 py-6 sm:py-16">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-6 sm:mb-8"
+          className="text-center mb-4 sm:mb-8"
         >
-          <h2 className="text-xl sm:text-3xl font-black text-foreground">What's Your Movie Type?</h2>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1">Explore genres that match your vibe</p>
+          <h2 className="text-base sm:text-3xl font-black text-foreground">What's Your Movie Type?</h2>
+          <p className="text-[10px] sm:text-sm text-muted-foreground mt-0.5">Explore genres that match your vibe</p>
         </motion.div>
         <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           {personalities.map((p, i) => (
@@ -252,10 +252,10 @@ const Index = () => {
             >
               <Link
                 to={p.link}
-                className={`group flex flex-col items-center gap-2 rounded-xl bg-gradient-to-b ${p.color} border p-3 sm:p-5 text-center transition-all hover:scale-105`}
+                className={`group flex flex-col items-center gap-1 sm:gap-2 rounded-xl bg-gradient-to-b ${p.color} border p-2 sm:p-5 text-center transition-all hover:scale-105`}
               >
-                <p.icon className={`size-6 sm:size-8 ${p.iconColor}`} />
-                <span className="text-[10px] sm:text-xs font-bold text-foreground">{p.title}</span>
+                <p.icon className={`size-4 sm:size-8 ${p.iconColor}`} />
+                <span className="text-[8px] sm:text-xs font-bold text-foreground">{p.title}</span>
               </Link>
             </motion.div>
           ))}
