@@ -347,23 +347,6 @@ const MovieDetailPage = () => {
           )}
         </section>
 
-        {uniqueProviders.length > 0 && (
-          <section className="space-y-2">
-            <h2 className="text-sm sm:text-lg font-bold text-foreground">📺 Available On</h2>
-            <div className="flex flex-wrap gap-2">
-              {uniqueProviders.map((p) => (
-                <div key={p.provider_id} className="flex items-center gap-1.5 rounded-md bg-card border border-border px-2 py-1.5">
-                  {p.logo_path ? (
-                    <img src={`https://image.tmdb.org/t/p/w92${p.logo_path}`} alt={p.provider_name} className="size-6 rounded" />
-                  ) : (
-                    <div className="flex size-6 items-center justify-center rounded bg-muted"><Tv className="size-3 text-muted-foreground" /></div>
-                  )}
-                  <span className="text-[10px] font-medium text-foreground">{p.provider_name}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
 
         {/* Trailer thumbnail */}
         {movie.trailer && !showTrailer && (
