@@ -463,6 +463,11 @@ const MovieDetailPage = () => {
           </div>
         </div>
       )}
+
+      {/* Cast Bio Modal */}
+      {selectedActorId && (
+        <CastBioModal actorId={selectedActorId} onClose={() => setSelectedActorId(null)} />
+      )}
     </div>
   );
 };
