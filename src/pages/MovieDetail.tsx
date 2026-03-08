@@ -56,10 +56,12 @@ const MovieDetailPage = () => {
 
   const movie = detailQuery.data;
 
+  const resolvedTmdbId = movie?.tmdbId || tmdbId;
+
   const similarQuery = useQuery({
-    queryKey: ["movie-similar", tmdbId],
-    queryFn: () => fetchTmdbSimilar(tmdbId!),
-    enabled: Boolean(tmdbId),
+    queryKey: ["movie-similar", resolvedTmdbId],
+    queryFn: () => fetchTmdbSimilar(resolvedTmdbId!),
+    enabled: Boolean(resolvedTmdbId),
     staleTime: 1000 * 60 * 60,
   });
 
