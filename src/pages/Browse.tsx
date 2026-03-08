@@ -70,13 +70,13 @@ const BrowsePage = () => {
         </div>
 
         {/* Category pills */}
-        <div className="scroll-row gap-2 pb-2">
+        <div className="scroll-row gap-1 sm:gap-1.5 pb-2">
           {Object.entries(CATEGORIES).map(([key, val]) => (
             <button
               key={key}
               onClick={() => { setSearchParams({ cat: key }); setPage(1); }}
               className={[
-                "shrink-0 rounded-md px-4 py-2 text-xs font-medium transition",
+                "shrink-0 rounded-md px-2 sm:px-3 py-1 sm:py-1.5 text-[9px] sm:text-[11px] font-medium transition",
                 cat === key ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"
               ].join(" ")}
             >
@@ -91,7 +91,7 @@ const BrowsePage = () => {
             Loading movies...
           </div>
         ) : data?.length ? (
-          <div className="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+          <div className="grid gap-1 sm:gap-1.5 grid-cols-4 sm:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
             {data.map((item) => (
               <CineMovieCard key={item.imdbID} item={item} />
             ))}
@@ -101,22 +101,60 @@ const BrowsePage = () => {
         )}
 
         {/* Pagination */}
-        <div className="flex items-center justify-center gap-3 pt-4">
+        <div className="flex items-center justify-center gap-1 sm:gap-1.5 pt-3 flex-wrap">
           <Button
             variant="heroSecondary"
             size="sm"
+            className="text-[10px] !h-7 !px-2 sm:!px-3"
+            disabled={page <= 1}
+            onClick={() => setPage(1)}
+          >
+            « First
+          </Button>
+          <Button
+            variant="heroSecondary"
+            size="sm"
+            className="text-[10px] !h-7 !px-2 sm:!px-3"
             disabled={page <= 1}
             onClick={() => setPage((p) => Math.max(1, p - 1))}
           >
-            Previous
+            ‹ Prev
           </Button>
-          <span className="text-sm text-muted-foreground">Page {page}</span>
+          {Array.from({ length: Math.min(7, 20) }, (_, i) => {
+            const start = Math.max(1, Math.min(page - 3, 20 - 6));
+            const pageNum = start + i;
+            if (pageNum > 20) return null;
+            return (
+              <button
+                key={pageNum}
+                onClick={() => setPage(pageNum)}
+                className={`size-7 rounded-md text-[10px] font-bold transition ${
+                  page === pageNum
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-secondary text-secondary-foreground hover:bg-muted"
+                }`}
+              >
+                {pageNum}
+              </button>
+            );
+          })}
           <Button
             variant="heroSecondary"
             size="sm"
-            onClick={() => setPage((p) => p + 1)}
+            className="text-[10px] !h-7 !px-2 sm:!px-3"
+            disabled={page >= 20}
+            onClick={() => setPage((p) => Math.min(20, p + 1))}
           >
-            Next
+            Next ›
+          </Button>
+          <Button
+            variant="heroSecondary"
+            size="sm"
+            className="text-[10px] !h-7 !px-2 sm:!px-3"
+            disabled={page >= 20}
+            onClick={() => setPage(20)}
+          >
+            Last »
           </Button>
         </div>
       </main>
