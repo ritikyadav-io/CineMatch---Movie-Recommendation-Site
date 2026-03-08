@@ -284,6 +284,33 @@ export function DNANav() {
           </div>
         </div>
       )}
+      {/* Donate Modal */}
+      {showDonate && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center" onClick={() => setShowDonate(false)}>
+          <div className="absolute inset-0 bg-background/90 backdrop-blur-sm" />
+          <div
+            className="relative w-[90vw] max-w-sm rounded-2xl bg-card border border-border p-6 shadow-2xl space-y-4 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowDonate(false)}
+              className="absolute right-3 top-3 rounded-full p-1.5 hover:bg-muted text-foreground"
+              aria-label="Close"
+            >
+              <X className="size-4" />
+            </button>
+            <Heart className="size-8 text-primary mx-auto" />
+            <h2 className="text-lg font-bold text-foreground">Support Movie DNA</h2>
+            <p className="text-xs text-muted-foreground">Scan the QR code to donate via UPI</p>
+            <img
+              src={donateQr}
+              alt="Donate QR Code"
+              className="mx-auto w-56 rounded-lg"
+            />
+            <p className="text-xs text-muted-foreground font-mono">UPI: 8000802710@ybl</p>
+          </div>
+        </div>
+      )}
     </>
   );
 }
