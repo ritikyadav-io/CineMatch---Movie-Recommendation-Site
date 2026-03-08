@@ -74,17 +74,17 @@ const SearchPage = () => {
         <img src={heroSearch} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
         <div className="absolute inset-0 bg-gradient-to-r from-background/60 to-background/40" />
-        <div className="container relative flex flex-col items-center justify-end h-full pb-4 sm:pb-6 px-4 sm:px-6 text-center">
-          <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">
+        <div className="container relative flex flex-col items-center justify-end h-full pb-5 sm:pb-6 px-4 sm:px-6 text-center">
+          <h1 className="text-xl sm:text-4xl font-black tracking-tight text-foreground">
             Deep <span className="text-primary">Search</span>
           </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1.5">
             Enter an actor, actress, or director name and get movie suggestions instantly.
           </p>
         </div>
       </div>
 
-      <main className="container space-y-8 pt-4 pb-12 sm:pt-6 lg:pb-16 px-4 sm:px-6">
+      <main className="container space-y-6 pt-4 pb-12 sm:pt-6 lg:pb-16 px-4 sm:px-6">
         {/* ── Search Input Section ── */}
         <section className="max-w-xl mx-auto">
           <form onSubmit={handleSearch} className="flex gap-2">
@@ -98,7 +98,7 @@ const SearchPage = () => {
                 className="w-full rounded-lg border border-border bg-card pl-10 pr-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
               />
             </div>
-            <Button type="submit" variant="hero" size="sm" className="!h-auto !px-5">
+            <Button type="submit" variant="hero" size="default" className="!h-auto !px-5">
               Search
             </Button>
           </form>
@@ -114,8 +114,8 @@ const SearchPage = () => {
         {/* ── Actor/Actress matches ── */}
         {actors.length > 0 && (
           <section className="space-y-3">
-            <h2 className="text-lg font-bold text-foreground">🎭 People Found</h2>
-            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+            <h2 className="text-base sm:text-lg font-bold text-foreground">🎭 People Found</h2>
+            <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide">
               {actors.map((person) => {
                 const img = tmdbProfileImage(person.profile_path);
                 const isActive = selectedPerson?.id === person.id;
@@ -167,7 +167,7 @@ const SearchPage = () => {
                 Loading filmography...
               </div>
             ) : personMoviesQuery.data?.length ? (
-              <div className="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+              <div className="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 [&>*]:min-w-0">
                 {personMoviesQuery.data.map((item) => (
                   <CineMovieCard key={item.imdbID} item={item} />
                 ))}
@@ -188,7 +188,7 @@ const SearchPage = () => {
                 Searching...
               </div>
             ) : results.length ? (
-              <div className="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+              <div className="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 [&>*]:min-w-0">
                 {results.map((item) => (
                   <CineMovieCard key={item.imdbID} item={item} />
                 ))}
