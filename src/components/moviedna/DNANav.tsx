@@ -198,7 +198,7 @@ export function DNANav() {
           />
 
           {/* Drawer */}
-          <div className="absolute right-0 top-0 bottom-0 w-60 bg-card shadow-2xl animate-slide-in-right flex flex-col">
+          <div className="absolute left-0 top-0 bottom-0 w-52 bg-card shadow-2xl animate-slide-in-right flex flex-col">
             {/* Header */}
             <div className="flex items-center justify-between p-3 border-b border-border">
               <span className="text-sm font-black tracking-tight text-foreground">Movies <span className="text-primary">DNA</span></span>
