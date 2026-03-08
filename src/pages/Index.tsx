@@ -44,29 +44,29 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <main className="container pt-24 pb-12 space-y-12">
+      <main className="container px-3 sm:px-4 lg:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12 space-y-6 sm:space-y-10 lg:space-y-12">
         {/* Hero Banner */}
-        <div className="relative overflow-hidden rounded-xl" style={{ height: 400 }}>
+        <div className="relative overflow-hidden rounded-xl h-[240px] sm:h-[340px] lg:h-[400px]">
           <img src={heroImage} alt="Movie DNA" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-          <div className="relative flex h-full flex-col justify-end p-8">
-            <div className="inline-flex items-center gap-2 rounded bg-primary/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary w-fit mb-3">
+          <div className="relative flex h-full flex-col justify-end p-4 sm:p-6 lg:p-8">
+            <div className="inline-flex items-center gap-2 rounded bg-primary/20 px-2 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary w-fit mb-2 sm:mb-3">
               <span className="size-1.5 rounded-full bg-primary animate-pulse" />
               Now Streaming
             </div>
-            <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground">
               Discover Your <span className="text-primary">Movie DNA</span>
             </h1>
-            <p className="mt-2 max-w-lg text-sm text-secondary-foreground">
+            <p className="mt-1 sm:mt-2 max-w-lg text-xs sm:text-sm text-secondary-foreground line-clamp-2">
               Personalized movie recommendations from Hollywood, Bollywood, Superhero & Anime universes.
             </p>
-            <div className="flex items-center gap-3 mt-4">
-              <Button asChild variant="hero" size="lg">
-                <Link to="/quiz"><Play className="size-4 fill-current" /> Start Quiz</Link>
+            <div className="flex items-center gap-2 sm:gap-3 mt-3 sm:mt-4">
+              <Button asChild variant="hero" size="sm" className="sm:!h-10 sm:!px-5">
+                <Link to="/quiz"><Play className="size-3.5 sm:size-4 fill-current" /> Start Quiz</Link>
               </Button>
-              <Button asChild variant="heroSecondary" size="lg">
-                <Link to="/browse"><Info className="size-4" /> Browse All</Link>
+              <Button asChild variant="heroSecondary" size="sm" className="sm:!h-10 sm:!px-5">
+                <Link to="/browse"><Info className="size-3.5 sm:size-4" /> Browse All</Link>
               </Button>
             </div>
           </div>
@@ -75,9 +75,9 @@ const Index = () => {
         {/* Movie Sections */}
         {sections.map((section) => (
           <div key={section.title}>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-foreground">{section.title}</h2>
-              <Link to={section.link} className="flex items-center gap-0.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition">
+            <div className="flex items-center justify-between mb-2 sm:mb-4">
+              <h2 className="text-base sm:text-xl font-bold text-foreground">{section.title}</h2>
+              <Link to={section.link} className="flex items-center gap-0.5 text-[10px] sm:text-xs font-semibold text-muted-foreground hover:text-foreground transition">
                 See All <ChevronRight className="size-4" />
               </Link>
             </div>
@@ -86,7 +86,7 @@ const Index = () => {
                 <Loader2 className="size-5 animate-spin text-primary mr-2" /> Loading...
               </div>
             ) : section.data?.length ? (
-              <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <div className="grid gap-2 sm:gap-3 grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {section.data.slice(0, 8).map((item) => (
                   <CineMovieCard key={item.imdbID} item={item} />
                 ))}

@@ -23,23 +23,23 @@ export function CineMovieCard({ item, priority = false }: CineMovieCardProps) {
           loading={priority ? "eager" : "lazy"}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
-        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="absolute top-1 right-1 sm:top-2 sm:right-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <WatchlistButton movie={item} />
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-2 p-3">
-        <div className="flex items-start justify-between gap-2">
-          <div>
-            <h3 className="line-clamp-2 text-sm font-semibold text-foreground">{item.title}</h3>
-            <p className="text-xs text-muted-foreground">{item.year}</p>
+      <div className="flex flex-1 flex-col gap-1 sm:gap-2 p-1.5 sm:p-3">
+        <div className="flex items-start justify-between gap-1">
+          <div className="min-w-0">
+            <h3 className="line-clamp-1 sm:line-clamp-2 text-[11px] sm:text-sm font-semibold text-foreground">{item.title}</h3>
+            <p className="text-[10px] sm:text-xs text-muted-foreground">{item.year}</p>
           </div>
-          <span className="flex items-center gap-1 shrink-0 text-xs font-semibold text-foreground">
-            <Star className="size-3 fill-yellow-500 text-yellow-500" />
+          <span className="flex items-center gap-0.5 shrink-0 text-[10px] sm:text-xs font-semibold text-foreground">
+            <Star className="size-2.5 sm:size-3 fill-yellow-500 text-yellow-500" />
             {item.rating}
           </span>
         </div>
-        <div className="flex flex-wrap gap-1">
+        <div className="hidden sm:flex flex-wrap gap-1">
           {item.genres.slice(0, 2).map((genre) => (
             <span key={genre} className="rounded bg-secondary px-2 py-0.5 text-[10px] text-secondary-foreground">{genre}</span>
           ))}

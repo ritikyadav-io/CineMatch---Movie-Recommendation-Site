@@ -63,10 +63,10 @@ const BrowsePage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <main className="container pt-24 pb-12 lg:pt-28 space-y-6">
+      <main className="container px-3 sm:px-4 lg:px-8 pt-20 sm:pt-24 lg:pt-28 pb-8 sm:pb-12 space-y-4 sm:space-y-6">
         <div>
           <span className="text-xs font-bold uppercase tracking-wider text-primary">Browse</span>
-          <h1 className="text-4xl font-black tracking-tight text-foreground">{category.title}</h1>
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">{category.title}</h1>
         </div>
 
         {/* Category pills */}
@@ -91,7 +91,7 @@ const BrowsePage = () => {
             Loading movies...
           </div>
         ) : data?.length ? (
-          <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid gap-2 sm:gap-3 grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {data.map((item) => (
               <CineMovieCard key={item.imdbID} item={item} />
             ))}
