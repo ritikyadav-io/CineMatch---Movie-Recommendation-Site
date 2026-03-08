@@ -13,7 +13,7 @@ export function CineMovieCard({ item, priority = false }: CineMovieCardProps) {
   return (
     <Link
       to={`/movie/${item.imdbID}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-md bg-card transition-all duration-300 hover:scale-[1.03] hover:ring-1 hover:ring-muted-foreground/30"
+      className="group relative flex flex-col overflow-hidden rounded-md bg-card transition-all duration-300 hover:scale-[1.03] hover:ring-1 hover:ring-muted-foreground/30"
     >
       <div className="relative aspect-[2/3] overflow-hidden bg-muted">
         <img
