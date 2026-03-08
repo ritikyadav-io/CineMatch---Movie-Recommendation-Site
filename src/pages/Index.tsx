@@ -216,9 +216,6 @@ const Index = () => {
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-foreground">
             Movie <span className="text-primary">DNA</span>
           </h2>
-          <p className="text-lg sm:text-2xl font-black tracking-tight text-foreground">
-            MADE BY <span className="text-primary">RITIK YADAV</span>
-          </p>
         </div>
       </section>
 
