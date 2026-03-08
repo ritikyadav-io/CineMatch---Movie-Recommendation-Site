@@ -175,7 +175,7 @@ const Index = () => {
               <span className="size-1.5 rounded-full bg-primary animate-pulse" />
               Now Streaming
             </div>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-foreground">
+            <h1 className="text-2xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-foreground">
               Discover Your<br />
               <span className="text-primary">Movie DNA</span>
             </h1>
