@@ -1,10 +1,11 @@
-import { Bell, Search, Sparkles } from "lucide-react";
+import { Bell, Download, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import logo from "@/assets/moviedna-logo.png";
 import { Button } from "@/components/ui/button";
 import { CineSearchBar } from "@/components/cinematch/CineSearchBar";
+import { usePwaInstall } from "@/hooks/use-pwa-install";
 
 const navItems = [
   { to: "/", label: "Home" },
@@ -18,6 +19,7 @@ const navItems = [
 export function DNANav() {
   const [scrolled, setScrolled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const { canInstall, isInstalled, install } = usePwaInstall();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -72,6 +74,20 @@ export function DNANav() {
           <button className="p-2 text-muted-foreground transition hover:text-foreground hidden sm:block" aria-label="Notifications">
             <Bell className="size-5" />
           </button>
+
+          {/* Install App button */}
+          {canInstall && !isInstalled && (
+            <Button
+              onClick={install}
+              variant="heroSecondary"
+              size="sm"
+              className="hidden sm:flex"
+            >
+              <Download className="size-3.5" />
+              Install App
+            </Button>
+          )}
+
           <Button asChild variant="hero" size="sm">
             <Link to="/quiz">
               <Sparkles className="size-3.5" />
