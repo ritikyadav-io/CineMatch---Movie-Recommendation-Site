@@ -115,7 +115,7 @@ const MovieDetailPage = () => {
           </section>
         ) : null}
       </main>
-      <CineFooter />
+      <DNAFooter />
     </div>
   );
 };

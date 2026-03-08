@@ -147,7 +147,7 @@ const DiscoverPage = () => {
           </section>
         )}
       </main>
-      <CineFooter />
+      <DNAFooter />
     </div>
   );
 };

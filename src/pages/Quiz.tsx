@@ -71,7 +71,7 @@ const QuizPage = () => {
           </div>
         </div>
       </main>
-      <CineFooter />
+      <DNAFooter />
     </div>
   );
 };

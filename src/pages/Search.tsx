@@ -59,7 +59,7 @@ const SearchPage = () => {
           <div className="section-shell py-16 text-center text-muted-foreground">No matches yet. Try a broader title, actor, genre, or release year.</div>
         )}
       </main>
-      <CineFooter />
+      <DNAFooter />
     </div>
   );
 };
