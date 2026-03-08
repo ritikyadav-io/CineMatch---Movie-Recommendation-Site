@@ -42,7 +42,20 @@ export async function fetchOmdbTitle(imdbID: string): Promise<MediaCardData> {
 }
 
 export async function fetchOmdbBatch(ids: string[]) {
-  return Promise.all(ids.map((id) => fetchOmdbTitle(id)));
+  const limited = ids.slice(0, 20);
+  const results: MediaCardData[] = [];
+  for (const id of limited) {
+    try {
+      const item = await fetchOmdbTitle(id);
+      results.push(item);
+    } catch {
+      // skip failed fetches
+    }
+    if (results.length < limited.length) {
+      await new Promise((r) => setTimeout(r, 150));
+    }
+  }
+  return results;
 }
 
 export async function searchOmdbTitles(query: string) {
