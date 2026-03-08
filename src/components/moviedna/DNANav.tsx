@@ -35,6 +35,7 @@ const navItems = [
 
 export function DNANav() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { canInstall, isInstalled, install } = usePwaInstall();
@@ -45,7 +46,13 @@ export function DNANav() {
   const isHome = location.pathname === "/";
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20);
+    let lastY = window.scrollY;
+    const handler = () => {
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      setHidden(y > 80 && y > lastY);
+      lastY = y;
+    };
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
