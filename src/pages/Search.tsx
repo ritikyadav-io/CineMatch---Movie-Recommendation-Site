@@ -84,7 +84,7 @@ const SearchPage = () => {
         </div>
       </div>
 
-      <main className="container space-y-8 pt-4 pb-12 sm:pt-6 lg:pb-16 px-4 sm:px-6">
+      <main className="container space-y-6 pt-4 pb-12 sm:pt-6 lg:pb-16 px-4 sm:px-6">
         {/* ── Search Input Section ── */}
         <section className="max-w-xl mx-auto">
           <form onSubmit={handleSearch} className="flex gap-2">
@@ -98,7 +98,7 @@ const SearchPage = () => {
                 className="w-full rounded-lg border border-border bg-card pl-10 pr-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
               />
             </div>
-            <Button type="submit" variant="hero" size="sm" className="!h-auto !px-5">
+            <Button type="submit" variant="hero" size="default" className="!h-auto !px-5">
               Search
             </Button>
           </form>
