@@ -34,8 +34,6 @@ const WATCH_LINKS = [
   { name: "Netflix", url: (t: string) => `https://www.netflix.com/search?q=${encodeURIComponent(t)}`, color: "bg-red-600" },
   { name: "Prime Video", url: (t: string) => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`, color: "bg-blue-500" },
   { name: "Hotstar", url: (t: string) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`, color: "bg-blue-700" },
-  { name: "YouTube", url: (t: string) => `https://www.youtube.com/results?search_query=${encodeURIComponent(t + " full movie")}`, color: "bg-red-500" },
-  { name: "Google", url: (t: string) => `https://www.google.com/search?q=${encodeURIComponent(t + " watch online free")}`, color: "bg-green-600" },
 ];
 
 const MovieDetailPage = () => {
@@ -258,21 +256,17 @@ const MovieDetailPage = () => {
         {/* ═══ Watch Online Links ═══ */}
         <section className="space-y-2 sm:space-y-3">
           <h2 className="text-sm sm:text-lg font-bold text-foreground">🔗 Watch Online</h2>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 sm:gap-2">
+          <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
             {WATCH_LINKS.map((w) => (
               <a
                 key={w.name}
                 href={w.url(movie.title)}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.open(w.url(movie.title), "_blank", "noopener,noreferrer");
-                }}
-                className={`${w.color} rounded-md p-2 sm:p-3 text-center text-white transition hover:opacity-80 cursor-pointer`}
+                className={`${w.color} rounded-md p-1.5 sm:p-2 text-center text-white transition hover:opacity-80`}
               >
-                <ExternalLink className="size-3 sm:size-4 mx-auto mb-0.5" />
-                <p className="text-[8px] sm:text-xs font-bold">{w.name}</p>
+                <ExternalLink className="size-2.5 sm:size-3 mx-auto mb-0.5" />
+                <p className="text-[7px] sm:text-[10px] font-bold">{w.name}</p>
               </a>
             ))}
           </div>
