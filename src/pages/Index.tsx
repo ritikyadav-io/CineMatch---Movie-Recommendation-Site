@@ -86,7 +86,7 @@ const Index = () => {
                 <Loader2 className="size-5 animate-spin text-primary mr-2" /> Loading...
               </div>
             ) : section.data?.length ? (
-              <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <div className="grid gap-2 sm:gap-3 grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {section.data.slice(0, 8).map((item) => (
                   <CineMovieCard key={item.imdbID} item={item} />
                 ))}

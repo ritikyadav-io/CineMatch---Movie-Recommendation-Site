@@ -150,7 +150,7 @@ const MovieDetailPage = () => {
               {movie.tagline && (
                 <p className="text-sm italic text-muted-foreground mt-1">"{movie.tagline}"</p>
               )}
-              <p className="mt-3 text-sm leading-relaxed text-secondary-foreground max-w-3xl">
+              <p className="mt-2 sm:mt-3 text-xs sm:text-sm leading-relaxed text-secondary-foreground max-w-3xl line-clamp-4 sm:line-clamp-none">
                 {movie.overview}
               </p>
             </div>
