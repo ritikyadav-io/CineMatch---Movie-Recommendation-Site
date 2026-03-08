@@ -172,7 +172,7 @@ const Index = () => {
       <DNANav />
 
       {/* ═══════════ HERO ═══════════ */}
-      <section className="relative overflow-hidden h-[35vh] min-h-[220px] max-h-[720px] sm:h-[60vh] lg:h-[85vh]">
+      <section className="relative overflow-hidden h-[35vh] min-h-[220px] max-h-[820px] sm:h-[65vh] lg:h-[90vh]">
         <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
