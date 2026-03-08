@@ -100,7 +100,8 @@ function MovieRow({ config }: { config: RowConfig }) {
 
 export function TmdbRows() {
   return (
-    <div style={{ maxWidth: 1440, margin: '0 auto', padding: '32px 16px' }}>
+    <div style={{ maxWidth: 1440, margin: '0 auto', padding: '32px 16px', position: 'relative', zIndex: 10, backgroundColor: 'hsl(var(--background))' }}>
+      <h2 style={{ color: 'white', fontSize: 24, fontWeight: 'bold', marginBottom: 16 }}>🎬 Movies For You</h2>
       {rows.map((config) => (
         <MovieRow key={config.queryKey} config={config} />
       ))}
