@@ -256,46 +256,6 @@ const MovieDetailPage = () => {
           </div>
         </section>
 
-        {/* ═══ Watch on Site ═══ */}
-        <section className="space-y-2 sm:space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm sm:text-lg font-bold text-foreground">🎬 Watch Movie</h2>
-            {!showPlayer && (
-              <Button onClick={() => setShowPlayer(true)} variant="hero" size="sm" className="text-[10px] sm:text-xs !h-7 sm:!h-8 !px-3">
-                <PlayCircle className="size-3.5" /> Watch Now
-              </Button>
-            )}
-          </div>
-          {showPlayer && (
-            <div className="space-y-2">
-              <div className="relative aspect-video overflow-hidden rounded-lg border border-border bg-black">
-                {(() => {
-                  const hasImdb = movie.imdbID && !movie.imdbID.startsWith("tmdb-");
-                  const playerSrc = hasImdb
-                    ? `https://vidsrc.xyz/embed/movie/${movie.imdbID}`
-                    : `https://vidsrc.xyz/embed/movie/${movie.tmdbId}?tmdb=1`;
-                  return (
-                    <iframe
-                      src={playerSrc}
-                      className="h-full w-full"
-                      allowFullScreen
-                      allow="autoplay; encrypted-media; fullscreen"
-                      title={`Watch ${movie.title}`}
-                      referrerPolicy="origin"
-                      sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                    />
-                  );
-                })()}
-              </div>
-              <div className="flex items-center gap-3">
-                <button onClick={() => setShowPlayer(false)} className="text-[10px] sm:text-xs text-muted-foreground hover:text-foreground transition">
-                  ✕ Close Player
-                </button>
-                <span className="text-[8px] sm:text-[10px] text-muted-foreground">If player doesn't load, try the links below</span>
-              </div>
-            </div>
-          )}
-        </section>
 
         {/* ═══ Watch Online Links ═══ */}
         <section className="space-y-2 sm:space-y-3">
