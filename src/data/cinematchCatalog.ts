@@ -1257,34 +1257,86 @@ const nudityRank = { None: 0, Some: 1, "Full Nude": 2, "Doesn't matter": 3 };
 
 export function filterCatalogByQuiz(answers: QuizAnswers) {
   const seen = new Set<string>();
-  return cineMatchCatalog
-    .filter((entry) => entry.type === answers.contentType)
+
+  // First pass: score every entry in the catalog
+  const scored = cineMatchCatalog
     .map((entry) => {
       let score = 0;
-      if (entry.genres.includes(answers.genre)) score += 4;
-      if (answers.language === "Any" || entry.language === answers.language) score += 3;
-      if (entry.mood === answers.mood) score += 3;
+
+      // Content type is a hard filter — must match
+      if (entry.type !== answers.contentType) return { ...entry, score: -1 };
+
+      // Genre is the strongest signal (heavy weight)
+      if (entry.genres.some((g) => g.toLowerCase() === answers.genre.toLowerCase())) score += 10;
+
+      // Language: if user picks a specific language, strongly prefer it
+      if (answers.language !== "Any") {
+        if (entry.language.toLowerCase() === answers.language.toLowerCase()) score += 8;
+        else score -= 3; // penalise non-matching language when user picked one
+      } else {
+        score += 2; // small baseline when "Any"
+      }
+
+      // Mood match
+      if (entry.mood === answers.mood) score += 6;
+
+      // Violence tolerance
       if (violenceRank[entry.violence] <= violenceRank[answers.violence]) score += 2;
+
+      // Nudity tolerance
       if (answers.nudity === "Doesn't matter" || nudityRank[entry.nudity] <= nudityRank[answers.nudity]) score += 2;
+
+      // Release period
       if (
         (answers.releasePeriod === "2020+" && entry.year >= 2020) ||
         (answers.releasePeriod === "2010-2020" && entry.year >= 2010 && entry.year < 2020) ||
         (answers.releasePeriod === "Before 2010" && entry.year < 2010)
-      ) score += 2;
+      ) score += 3;
+
+      // Runtime
       if (entry.runtime === answers.runtime) score += 2;
-      if (entry.complexity === answers.complexity) score += 3;
-      if (answers.bollywoodVibe !== "Any" && entry.bollywoodVibe && entry.bollywoodVibe === answers.bollywoodVibe) score += 3;
-      if (answers.superheroPreference !== "Any" && entry.superheroStyle && entry.superheroStyle === answers.superheroPreference) score += 3;
-      if (answers.animeStyle !== "Any" && entry.animeStyle && entry.animeStyle === answers.animeStyle) score += 3;
+
+      // Complexity
+      if (entry.complexity === answers.complexity) score += 4;
+
+      // Niche vibes
+      if (answers.bollywoodVibe !== "Any" && entry.bollywoodVibe && entry.bollywoodVibe === answers.bollywoodVibe) score += 4;
+      if (answers.superheroPreference !== "Any" && entry.superheroStyle && entry.superheroStyle === answers.superheroPreference) score += 4;
+      if (answers.animeStyle !== "Any" && entry.animeStyle && entry.animeStyle === answers.animeStyle) score += 4;
+
       if (entry.hiddenGem) score += 0.3;
+      return { ...entry, score };
+    })
+    .filter((e) => e.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .filter((entry) => {
+      if (seen.has(entry.imdbID)) return false;
+      seen.add(entry.imdbID);
+      return true;
+    });
+
+  // If we got enough results, return them; otherwise relax and return top matches
+  if (scored.length >= 3) return scored;
+
+  // Fallback: return top entries of same content type sorted by score (no minimum)
+  const fallbackSeen = new Set<string>();
+  return cineMatchCatalog
+    .filter((e) => e.type === answers.contentType)
+    .map((entry) => {
+      let score = 0;
+      if (entry.genres.some((g) => g.toLowerCase() === answers.genre.toLowerCase())) score += 10;
+      if (answers.language === "Any" || entry.language.toLowerCase() === answers.language.toLowerCase()) score += 5;
+      if (entry.mood === answers.mood) score += 4;
+      if (entry.complexity === answers.complexity) score += 3;
       return { ...entry, score };
     })
     .sort((a, b) => b.score - a.score)
     .filter((entry) => {
-      if (entry.score < 6 || seen.has(entry.imdbID)) return false;
-      seen.add(entry.imdbID);
+      if (fallbackSeen.has(entry.imdbID)) return false;
+      fallbackSeen.add(entry.imdbID);
       return true;
-    });
+    })
+    .slice(0, 12);
 }
 
 export function findCatalogMatches(query: string) {
