@@ -1,8 +1,6 @@
 import { MediaCardData } from "@/types/cinematch";
+import { supabase } from "@/integrations/supabase/client";
 
-// TMDB API v3 — free public API key (publishable)
-const TMDB_API_KEY = "2dca580c2a14b55200e784d157207b4d";
-const TMDB_BASE = "https://api.themoviedb.org/3";
 const TMDB_IMG = "https://image.tmdb.org/t/p";
 
 function tmdbPoster(path: string | null, size = "w500") {
@@ -47,10 +45,11 @@ function mapTmdbToCard(movie: TmdbMovie, type: "movie" | "series" = "movie"): Me
 }
 
 async function tmdbFetch(endpoint: string, params: Record<string, string> = {}) {
-  const search = new URLSearchParams({ api_key: TMDB_API_KEY, ...params });
-  const response = await fetch(`${TMDB_BASE}${endpoint}?${search.toString()}`);
-  if (!response.ok) throw new Error(`TMDB error: ${response.status}`);
-  return response.json();
+  const { data, error } = await supabase.functions.invoke("tmdb-proxy", {
+    body: { endpoint, params },
+  });
+  if (error) throw new Error(`TMDB proxy error: ${error.message}`);
+  return data;
 }
 
 // ── Discover categories ──
@@ -112,11 +111,11 @@ export async function fetchTmdbAnime(page = 1): Promise<MediaCardData[]> {
   return data.results.map((m: TmdbMovie) => mapTmdbToCard(m));
 }
 
-// ── Superhero (Action + Sci-Fi keywords) ──
+// ── Superhero ──
 export async function fetchTmdbSuperhero(page = 1): Promise<MediaCardData[]> {
   const data = await tmdbFetch("/discover/movie", {
     with_genres: "28",
-    with_keywords: "9715|180547", // superhero | superhero-movie
+    with_keywords: "9715|180547",
     sort_by: "popularity.desc",
     page: String(page),
   });
@@ -174,7 +173,7 @@ export async function searchTmdbPerson(query: string): Promise<TmdbPerson[]> {
 }
 
 export async function fetchTmdbPersonMovies(personId: number, page = 1): Promise<MediaCardData[]> {
-  const data = await tmdbFetch(`/discover/movie`, {
+  const data = await tmdbFetch("/discover/movie", {
     with_cast: String(personId),
     sort_by: "popularity.desc",
     page: String(page),
