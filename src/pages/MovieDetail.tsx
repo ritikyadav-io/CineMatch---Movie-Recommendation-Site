@@ -23,7 +23,7 @@ import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
 import { Button } from "@/components/ui/button";
 import { WatchlistButton } from "@/components/moviedna/WatchlistButton";
-import { fetchTmdbFullDetail, TmdbFullDetail } from "@/lib/tmdb-detail";
+import { fetchTmdbFullDetail, fetchTmdbFullDetailByImdb, TmdbFullDetail } from "@/lib/tmdb-detail";
 import { fetchTmdbSimilar } from "@/lib/tmdb";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { getWatchSearchUrl } from "@/lib/omdb";
@@ -45,20 +45,23 @@ const MovieDetailPage = () => {
   const [summaryLoading, setSummaryLoading] = useState(false);
 
   const tmdbId = imdbID.startsWith("tmdb-") ? Number(imdbID.replace("tmdb-", "")) : null;
+  const isImdbId = imdbID.startsWith("tt");
 
   const detailQuery = useQuery({
     queryKey: ["movie-detail", imdbID],
-    queryFn: () => fetchTmdbFullDetail(tmdbId!),
-    enabled: Boolean(tmdbId),
+    queryFn: () => tmdbId ? fetchTmdbFullDetail(tmdbId) : fetchTmdbFullDetailByImdb(imdbID),
+    enabled: Boolean(tmdbId || isImdbId),
     staleTime: 1000 * 60 * 60,
   });
 
   const movie = detailQuery.data;
 
+  const resolvedTmdbId = movie?.tmdbId || tmdbId;
+
   const similarQuery = useQuery({
-    queryKey: ["movie-similar", tmdbId],
-    queryFn: () => fetchTmdbSimilar(tmdbId!),
-    enabled: Boolean(tmdbId),
+    queryKey: ["movie-similar", resolvedTmdbId],
+    queryFn: () => fetchTmdbSimilar(resolvedTmdbId!),
+    enabled: Boolean(resolvedTmdbId),
     staleTime: 1000 * 60 * 60,
   });
 
