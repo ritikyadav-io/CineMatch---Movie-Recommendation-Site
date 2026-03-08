@@ -35,19 +35,28 @@ const rows: RowConfig[] = [
 ];
 
 function MovieRow({ config }: { config: RowConfig }) {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: [config.queryKey],
     queryFn: () => config.fetcher(1),
     staleTime: 1000 * 60 * 30,
   });
 
+  if (error) {
+    return (
+      <div style={{ padding: '16px 0' }}>
+        <h2 className="text-lg font-bold text-foreground">{config.title}</h2>
+        <p className="text-sm text-destructive">Failed to load movies</p>
+      </div>
+    );
+  }
+
   if (isLoading) {
     return (
-      <div>
-        <div className="h-5 w-40 animate-pulse rounded bg-muted mb-3" />
+      <div style={{ marginBottom: 24 }}>
+        <div className="h-5 w-40 animate-pulse rounded bg-muted" style={{ marginBottom: 12 }} />
         <div style={{ display: 'flex', gap: 12, overflowX: 'auto' }}>
           {[1,2,3,4,5,6].map(i => (
-            <div key={i} style={{ width: 150, height: 225, flexShrink: 0, borderRadius: 8, background: 'var(--muted, #333)' }} />
+            <div key={i} className="bg-muted rounded-md" style={{ width: 150, height: 225, flexShrink: 0 }} />
           ))}
         </div>
       </div>
@@ -57,7 +66,7 @@ function MovieRow({ config }: { config: RowConfig }) {
   if (!data?.length) return null;
 
   return (
-    <div>
+    <div style={{ marginBottom: 32 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
         <h2 className="text-lg font-bold text-foreground">{config.title}</h2>
         <Link
@@ -67,30 +76,21 @@ function MovieRow({ config }: { config: RowConfig }) {
           See All <ChevronRight className="size-4" />
         </Link>
       </div>
-      <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 8 }}>
+      <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 8, scrollbarWidth: 'none' }}>
         {data.slice(0, 10).map((item) => (
           <Link
             key={item.imdbID}
             to={`/movie/${item.imdbID}`}
-            style={{ width: 150, flexShrink: 0, textDecoration: 'none' }}
-            className="group"
+            style={{ width: 150, flexShrink: 0, display: 'block', textDecoration: 'none', color: 'inherit' }}
           >
-            <div style={{ width: 150, height: 225, borderRadius: 8, overflow: 'hidden', position: 'relative' }} className="bg-muted">
-              <img
-                src={item.poster}
-                alt={item.title}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                loading="lazy"
-              />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 6, background: 'linear-gradient(transparent, rgba(0,0,0,0.8))' }}>
-                <span className="flex items-center gap-1 text-xs text-foreground">
-                  <Star className="size-3" style={{ color: '#eab308', fill: '#eab308' }} />
-                  {item.rating}
-                </span>
-              </div>
-            </div>
-            <p className="text-xs font-semibold text-foreground mt-1.5 truncate">{item.title}</p>
-            <p className="text-[10px] text-muted-foreground">{item.year}</p>
+            <img
+              src={item.poster}
+              alt={item.title}
+              style={{ width: 150, height: 225, objectFit: 'cover', display: 'block', borderRadius: 8 }}
+              loading="lazy"
+            />
+            <p className="text-xs font-semibold text-foreground truncate" style={{ marginTop: 6 }}>{item.title}</p>
+            <p className="text-muted-foreground" style={{ fontSize: 10 }}>{item.year} · ⭐ {item.rating}</p>
           </Link>
         ))}
       </div>
@@ -100,12 +100,10 @@ function MovieRow({ config }: { config: RowConfig }) {
 
 export function TmdbRows() {
   return (
-    <section style={{ padding: '32px 0' }}>
-      <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-        {rows.map((config) => (
-          <MovieRow key={config.queryKey} config={config} />
-        ))}
-      </div>
-    </section>
+    <div style={{ maxWidth: 1440, margin: '0 auto', padding: '32px 16px' }}>
+      {rows.map((config) => (
+        <MovieRow key={config.queryKey} config={config} />
+      ))}
+    </div>
   );
 }
