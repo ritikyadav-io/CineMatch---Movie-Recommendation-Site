@@ -19,7 +19,7 @@ const QuizPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <CineMatchNav />
+      <DNANav />
       <main className="container py-12 lg:py-16">
         <div className="mx-auto max-w-5xl space-y-8">
           <div className="section-shell space-y-4 text-center">
