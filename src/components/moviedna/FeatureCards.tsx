@@ -1,31 +1,37 @@
 import { motion } from "framer-motion";
 import { Brain, Dice5, Heart, Sparkles, Theater } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const features = [
   {
     icon: Sparkles,
     title: "Personalized Quiz",
     description: "Curated questions to decode your taste and deliver instant recommendations.",
+    to: "/quiz",
   },
   {
     icon: Brain,
     title: "Mood Finder",
     description: "Tell us your mood — we surface the perfect film to match.",
+    to: "/discover",
   },
   {
     icon: Heart,
     title: "Couple Mode",
     description: "Both partners take the quiz. We find what you'll both love.",
+    to: "/quiz",
   },
   {
     icon: Theater,
     title: "Personality Type",
     description: "Discover your cinematic identity: Action Addict, Dreamer, Explorer.",
+    to: "/quiz",
   },
   {
     icon: Dice5,
     title: "Random Night",
     description: "Can't decide? Let fate choose your next movie adventure.",
+    to: "/browse?cat=trending",
   },
 ];
 
@@ -50,13 +56,17 @@ export function FeatureCards() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.08 }}
-            className="group rounded-lg bg-card p-5 transition-all duration-300 hover:bg-secondary hover:scale-[1.02]"
           >
-            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-primary/15 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-              <feature.icon className="size-5" />
-            </div>
-            <h3 className="text-sm font-bold text-foreground mb-1">{feature.title}</h3>
-            <p className="text-xs leading-relaxed text-muted-foreground">{feature.description}</p>
+            <Link
+              to={feature.to}
+              className="group block rounded-lg bg-card p-5 transition-all duration-300 hover:bg-secondary hover:scale-[1.02]"
+            >
+              <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-primary/15 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <feature.icon className="size-5" />
+              </div>
+              <h3 className="text-sm font-bold text-foreground mb-1">{feature.title}</h3>
+              <p className="text-xs leading-relaxed text-muted-foreground">{feature.description}</p>
+            </Link>
           </motion.div>
         ))}
       </div>
