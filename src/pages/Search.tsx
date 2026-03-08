@@ -3,8 +3,8 @@ import { Loader2 } from "lucide-react";
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { CineFooter } from "@/components/cinematch/CineFooter";
-import { CineMatchNav } from "@/components/cinematch/CineMatchNav";
+import { DNAFooter } from "@/components/moviedna/DNAFooter";
+import { DNANav } from "@/components/moviedna/DNANav";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { findCatalogMatches } from "@/data/cinematchCatalog";
 import { fetchOmdbBatch, searchOmdbTitles } from "@/lib/omdb";
