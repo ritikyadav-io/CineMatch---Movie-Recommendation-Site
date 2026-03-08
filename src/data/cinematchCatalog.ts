@@ -1218,7 +1218,7 @@ export const quizFieldsets = [
   { key: "language", label: "Language", options: ["English", "Korean", "Japanese", "Spanish", "Hindi", "Any"] },
   { key: "mood", label: "Mood", options: ["Light and fun", "Dark and intense", "Emotional", "Mind-bending"] },
   { key: "violence", label: "Violence / Gore Level", options: ["None", "Moderate", "Extreme"] },
-  { key: "nudity", label: "Nudity Level", options: ["None", "Some", "Doesn't matter"] },
+  { key: "nudity", label: "Nudity Level", options: ["None", "Some", "Full Nude", "Doesn't matter"] },
   { key: "releasePeriod", label: "Release Period", options: ["2020+", "2010-2020", "Before 2010"] },
   { key: "runtime", label: "Runtime Preference", options: ["Short (<100 minutes)", "Medium", "Long epic"] },
   { key: "complexity", label: "Story Complexity", options: ["Simple entertainment", "Thought-provoking", "Mind-bending"] },
