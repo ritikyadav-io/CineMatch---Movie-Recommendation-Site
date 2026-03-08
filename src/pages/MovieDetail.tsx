@@ -42,6 +42,26 @@ const MovieDetailPage = () => {
 
   const movie = detailQuery.data;
 
+  const similarQuery = useQuery({
+    queryKey: ["movie-similar", tmdbId],
+    queryFn: () => fetchTmdbSimilar(tmdbId!),
+    enabled: Boolean(tmdbId),
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    const text = `Check out "${movie?.title}" on Movie DNA!`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: movie?.title, text, url });
+      } catch {}
+    } else {
+      await navigator.clipboard.writeText(url);
+      toast.success("Link copied to clipboard!");
+    }
+  };
+
   if (detailQuery.isLoading) {
     return (
       <div className="min-h-screen bg-background text-foreground">
