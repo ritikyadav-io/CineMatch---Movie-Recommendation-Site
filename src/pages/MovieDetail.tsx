@@ -45,12 +45,15 @@ const MovieDetailPage = () => {
   const [selectedActorId, setSelectedActorId] = useState<number | null>(null);
   const [summaryLoading, setSummaryLoading] = useState(false);
 
-  const tmdbId = imdbID.startsWith("tmdb-") ? Number(imdbID.replace("tmdb-", "")) : null;
+  const isTmdbTv = imdbID.startsWith("tmdb-tv-");
+  const isTmdbMovie = !isTmdbTv && imdbID.startsWith("tmdb-");
+  const tmdbId = isTmdbTv ? Number(imdbID.replace("tmdb-tv-", "")) : isTmdbMovie ? Number(imdbID.replace("tmdb-", "")) : null;
+  const mediaType = isTmdbTv ? "tv" : "movie";
   const isImdbId = imdbID.startsWith("tt");
 
   const detailQuery = useQuery({
     queryKey: ["movie-detail", imdbID],
-    queryFn: () => tmdbId ? fetchTmdbFullDetail(tmdbId) : fetchTmdbFullDetailByImdb(imdbID),
+    queryFn: () => tmdbId ? fetchTmdbFullDetail(tmdbId, mediaType) : fetchTmdbFullDetailByImdb(imdbID),
     enabled: Boolean(tmdbId || isImdbId),
     staleTime: 1000 * 60 * 60,
   });
@@ -60,8 +63,8 @@ const MovieDetailPage = () => {
   const resolvedTmdbId = movie?.tmdbId || tmdbId;
 
   const similarQuery = useQuery({
-    queryKey: ["movie-similar", resolvedTmdbId],
-    queryFn: () => fetchTmdbSimilar(resolvedTmdbId!),
+    queryKey: ["movie-similar", resolvedTmdbId, mediaType],
+    queryFn: () => fetchTmdbSimilar(resolvedTmdbId!, mediaType),
     enabled: Boolean(resolvedTmdbId),
     staleTime: 1000 * 60 * 60,
   });

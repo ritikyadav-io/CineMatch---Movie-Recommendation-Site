@@ -31,8 +31,9 @@ const GENRE_MAP: Record<number, string> = {
 };
 
 function mapTmdbToCard(movie: TmdbMovie, type: "movie" | "series" = "movie"): MediaCardData {
+  const prefix = type === "series" ? "tmdb-tv" : "tmdb";
   return {
-    imdbID: `tmdb-${movie.id}`,
+    imdbID: `${prefix}-${movie.id}`,
     title: movie.title || movie.name || "Untitled",
     year: (movie.release_date || movie.first_air_date || "").slice(0, 4),
     rating: movie.vote_average?.toFixed(1) || "N/A",
@@ -157,9 +158,10 @@ export async function searchTmdb(query: string, page = 1): Promise<MediaCardData
 }
 
 // ── Similar movies ──
-export async function fetchTmdbSimilar(tmdbId: number, page = 1): Promise<MediaCardData[]> {
-  const data = await tmdbFetch(`/movie/${tmdbId}/similar`, { page: String(page) });
-  return (data.results || []).map((m: TmdbMovie) => mapTmdbToCard(m));
+export async function fetchTmdbSimilar(tmdbId: number, mediaType: "movie" | "tv" = "movie", page = 1): Promise<MediaCardData[]> {
+  const data = await tmdbFetch(`/${mediaType}/${tmdbId}/similar`, { page: String(page) });
+  const type = mediaType === "tv" ? "series" : "movie";
+  return (data.results || []).map((m: TmdbMovie) => mapTmdbToCard(m, type as "movie" | "series"));
 }
 
 // ── Search by person (actor/actress) ──

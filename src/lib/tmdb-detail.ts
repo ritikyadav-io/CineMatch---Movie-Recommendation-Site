@@ -38,9 +38,9 @@ export interface TmdbFullDetail {
   watch_providers_in: { flatrate?: WatchProvider[]; rent?: WatchProvider[]; buy?: WatchProvider[] };
 }
 
-export async function fetchTmdbFullDetail(tmdbId: number): Promise<TmdbFullDetail> {
+export async function fetchTmdbFullDetail(tmdbId: number, mediaType: "movie" | "tv" = "movie"): Promise<TmdbFullDetail> {
   const { data, error } = await supabase.functions.invoke("tmdb-proxy", {
-    body: { endpoint: `/movie/${tmdbId}`, detail: true },
+    body: { endpoint: `/${mediaType}/${tmdbId}`, detail: true, mediaType },
   });
 
   if (error) throw new Error(`Detail fetch error: ${error.message}`);
