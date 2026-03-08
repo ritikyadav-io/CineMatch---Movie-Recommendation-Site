@@ -236,10 +236,10 @@ const Index = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-6 sm:mb-8"
+          className="text-center mb-4 sm:mb-8"
         >
-          <h2 className="text-xl sm:text-3xl font-black text-foreground">What's Your Movie Type?</h2>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1">Explore genres that match your vibe</p>
+          <h2 className="text-base sm:text-3xl font-black text-foreground">What's Your Movie Type?</h2>
+          <p className="text-[10px] sm:text-sm text-muted-foreground mt-0.5">Explore genres that match your vibe</p>
         </motion.div>
         <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           {personalities.map((p, i) => (
