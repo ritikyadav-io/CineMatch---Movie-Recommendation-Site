@@ -263,19 +263,19 @@ const Index = () => {
       </section>
 
       {/* ═══════════ FUN STATS ═══════════ */}
-      <section className="container px-3 sm:px-6 pb-10 sm:pb-16">
+      <section className="container px-3 sm:px-6 pb-6 sm:pb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="rounded-2xl bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-5 py-10 sm:py-14 text-center space-y-6"
+          className="rounded-xl bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-3 py-6 sm:px-5 sm:py-14 text-center space-y-3 sm:space-y-6"
         >
-          <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">
+          <h2 className="text-base sm:text-4xl font-black tracking-tight text-foreground">
             Movie <span className="text-primary">DNA</span> in Numbers
           </h2>
           <StatsGrid />
-          <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto">
+          <p className="text-[10px] sm:text-sm text-muted-foreground max-w-md mx-auto">
             Your perfect movie is one quiz away. Stop scrolling, start watching. 🍿
           </p>
           <Button asChild variant="hero" size="sm" className="group sm:!h-11 sm:!px-6 sm:!text-sm">
