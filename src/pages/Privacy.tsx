@@ -1,5 +1,5 @@
-import { CineFooter } from "@/components/cinematch/CineFooter";
-import { CineMatchNav } from "@/components/cinematch/CineMatchNav";
+import { DNAFooter } from "@/components/moviedna/DNAFooter";
+import { DNANav } from "@/components/moviedna/DNANav";
 
 const PrivacyPage = () => {
   return (
