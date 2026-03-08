@@ -3,58 +3,55 @@ import { Star } from "lucide-react";
 import { useState } from "react";
 
 const sliders = [
-  { label: "Romance", color: "from-pink-500 to-rose-500" },
-  { label: "Action", color: "from-orange-500 to-red-500" },
-  { label: "Comedy", color: "from-yellow-500 to-amber-500" },
-  { label: "Gore", color: "from-red-700 to-red-900" },
-  { label: "Emotional Intensity", color: "from-blue-400 to-indigo-500" },
-  { label: "Anime Preference", color: "from-violet-500 to-purple-500" },
-  { label: "Superhero Interest", color: "from-cyan-400 to-blue-500" },
+  { label: "Romance", color: "bg-primary" },
+  { label: "Action", color: "bg-orange-500" },
+  { label: "Comedy", color: "bg-yellow-500" },
+  { label: "Gore", color: "bg-red-800" },
+  { label: "Emotional Intensity", color: "bg-accent" },
+  { label: "Anime Preference", color: "bg-violet-500" },
+  { label: "Superhero Interest", color: "bg-cyan-500" },
 ];
 
 export function QuizPreview() {
   const [values, setValues] = useState<number[]>([65, 80, 45, 20, 70, 55, 90]);
 
   return (
-    <section className="container py-20 lg:py-28">
+    <section className="container py-12 lg:py-16">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.6 }}
-        className="mb-14 text-center"
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.5 }}
+        className="mb-8"
       >
-        <p className="text-xs uppercase tracking-[0.35em] text-primary">Quiz Preview</p>
-        <h2 className="mt-4 font-display text-4xl uppercase tracking-[0.06em] sm:text-5xl lg:text-6xl">
-          Dial In Your Taste
-        </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-          Slide each preference to build your unique movie profile. Here's a taste of how it works.
+        <h2 className="text-2xl font-bold text-foreground">Dial In Your Taste</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Slide each preference to build your unique movie profile.
         </p>
       </motion.div>
 
-      <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
         {/* Sliders */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
+          initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="section-shell space-y-5"
+          transition={{ duration: 0.5 }}
+          className="rounded-lg bg-card p-5 space-y-4"
         >
           {sliders.map((slider, index) => (
-            <div key={slider.label} className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
+            <div key={slider.label} className="space-y-1.5">
+              <div className="flex items-center justify-between text-xs">
                 <span className="font-medium text-foreground">{slider.label}</span>
-                <span className="text-xs text-muted-foreground">{values[index]}%</span>
+                <span className="text-muted-foreground">{values[index]}%</span>
               </div>
-              <div className="relative h-3 overflow-hidden rounded-full bg-muted">
+              <div className="relative h-1.5 overflow-hidden rounded-full bg-muted">
                 <motion.div
-                  className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r ${slider.color}`}
+                  className={`absolute inset-y-0 left-0 rounded-full ${slider.color}`}
                   initial={{ width: 0 }}
                   whileInView={{ width: `${values[index]}%` }}
                   viewport={{ once: true }}
-                  transition={{ duration: 1, delay: index * 0.1, ease: "easeOut" }}
+                  transition={{ duration: 0.8, delay: index * 0.06, ease: "easeOut" }}
                 />
                 <input
                   type="range"
@@ -74,37 +71,32 @@ export function QuizPreview() {
           ))}
         </motion.div>
 
-        {/* Sample result card */}
+        {/* Sample result */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
+          initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="section-shell flex flex-col justify-center space-y-6"
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="rounded-lg bg-card p-5 flex flex-col justify-center space-y-4"
         >
-          <p className="text-xs uppercase tracking-[0.35em] text-primary">Sample Result</p>
-          <div className="overflow-hidden rounded-2xl border border-border/60 bg-muted/50">
-            <div className="aspect-[16/9] bg-gradient-to-br from-secondary via-muted to-card" />
-          </div>
-
-          <div className="space-y-3">
+          <span className="text-xs font-bold uppercase tracking-wider text-primary">Sample Result</span>
+          <div className="overflow-hidden rounded-lg bg-muted aspect-video" />
+          <div className="space-y-2">
             <div className="flex items-center gap-3">
-              <div className="rounded-full bg-primary/20 px-4 py-1.5 text-sm font-bold text-primary">
-                92% Match
-              </div>
-              <div className="flex items-center gap-1 text-sm text-foreground">
-                <Star className="size-4 fill-primary text-primary" />
+              <span className="rounded bg-primary/20 px-3 py-1 text-xs font-bold text-primary">92% Match</span>
+              <span className="flex items-center gap-1 text-sm text-foreground">
+                <Star className="size-3.5 fill-yellow-500 text-yellow-500" />
                 8.6
-              </div>
+              </span>
             </div>
-            <h3 className="text-2xl font-semibold text-foreground">Inception</h3>
-            <div className="flex flex-wrap gap-2">
+            <h3 className="text-xl font-bold text-foreground">Inception</h3>
+            <div className="flex gap-2">
               {["Action", "Sci-Fi", "Thriller"].map((g) => (
-                <span key={g} className="rounded-full border border-border bg-secondary px-3 py-1 text-xs text-secondary-foreground">{g}</span>
+                <span key={g} className="rounded bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">{g}</span>
               ))}
             </div>
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              Your high action and mind-bending preferences perfectly align with this dream-heist masterpiece. The complex layered narrative matches your taste for thought-provoking storytelling.
+            <p className="text-xs leading-relaxed text-muted-foreground">
+              Your high action and mind-bending preferences perfectly align with this dream-heist masterpiece.
             </p>
           </div>
         </motion.div>

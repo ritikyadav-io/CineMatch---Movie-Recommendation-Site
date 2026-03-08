@@ -4,86 +4,62 @@ import { Brain, Dice5, Heart, Sparkles, Theater } from "lucide-react";
 const features = [
   {
     icon: Sparkles,
-    title: "Personalized Movie Quiz",
-    description: "Answer curated questions about your taste and get instant, tailored movie recommendations.",
+    title: "Personalized Quiz",
+    description: "Curated questions to decode your taste and deliver instant recommendations.",
   },
   {
     icon: Brain,
-    title: "Mood-Based Movie Finder",
-    description: "Tell us your mood and we'll surface the perfect film to match how you're feeling right now.",
+    title: "Mood Finder",
+    description: "Tell us your mood — we surface the perfect film to match.",
   },
   {
     icon: Heart,
-    title: "Couple Movie Mode",
-    description: "Both partners take the quiz — we find the movie you'll both love for date night.",
+    title: "Couple Mode",
+    description: "Both partners take the quiz. We find what you'll both love.",
   },
   {
     icon: Theater,
-    title: "Movie Personality Type",
-    description: "Discover if you're an Action Addict, Romantic Dreamer, Sci-Fi Explorer, or Anime Enthusiast.",
+    title: "Personality Type",
+    description: "Discover your cinematic identity: Action Addict, Dreamer, Explorer.",
   },
   {
     icon: Dice5,
-    title: "Random Movie Night",
-    description: "Can't decide? Hit the random button and let fate choose your next cinematic adventure.",
+    title: "Random Night",
+    description: "Can't decide? Let fate choose your next movie adventure.",
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
-};
-
 export function FeatureCards() {
   return (
-    <section className="container py-20 lg:py-28">
+    <section className="container py-12 lg:py-16">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.6 }}
-        className="mb-14 text-center"
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.5 }}
+        className="mb-8"
       >
-        <p className="text-xs uppercase tracking-[0.35em] text-primary">How It Works</p>
-        <h2 className="mt-4 font-display text-4xl uppercase tracking-[0.06em] sm:text-5xl lg:text-6xl">
-          Five Ways to Discover
-        </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-          Movie DNA gives you multiple paths to your next obsession — from scientific taste-matching to pure serendipity.
-        </p>
+        <h2 className="text-2xl font-bold text-foreground">How It Works</h2>
       </motion.div>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-60px" }}
-        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
-      >
-        {features.map((feature) => (
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        {features.map((feature, index) => (
           <motion.div
             key={feature.title}
-            variants={cardVariants}
-            className="group relative overflow-hidden rounded-[2rem] border border-border/60 bg-card/70 p-6 shadow-poster backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 hover:shadow-glow"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: index * 0.08 }}
+            className="group rounded-lg bg-card p-5 transition-all duration-300 hover:bg-secondary hover:scale-[1.02]"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-            <div className="relative space-y-4">
-              <div className="flex size-14 items-center justify-center rounded-2xl bg-secondary/80 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
-                <feature.icon className="size-6" />
-              </div>
-              <h3 className="text-lg font-semibold text-foreground">{feature.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
+            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-primary/15 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+              <feature.icon className="size-5" />
             </div>
+            <h3 className="text-sm font-bold text-foreground mb-1">{feature.title}</h3>
+            <p className="text-xs leading-relaxed text-muted-foreground">{feature.description}</p>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 }

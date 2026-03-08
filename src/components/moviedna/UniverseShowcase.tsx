@@ -1,5 +1,6 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import hollywoodImg from "@/assets/universe-hollywood.jpg";
 import bollywoodImg from "@/assets/universe-bollywood.jpg";
@@ -9,106 +10,76 @@ import animeImg from "@/assets/universe-anime.jpg";
 const universes = [
   {
     title: "Hollywood Blockbusters",
-    description: "Epic action, award-winning drama, and billion-dollar spectacles.",
+    subtitle: "Action • Drama • Sci-Fi",
     image: hollywoodImg,
-    accent: "from-amber-600/60 to-transparent",
+    link: "/discover?section=trending",
   },
   {
     title: "Bollywood Romance & Drama",
-    description: "Sweeping love stories, vibrant musicals, and emotional sagas.",
+    subtitle: "Romance • Musical • Thriller",
     image: bollywoodImg,
-    accent: "from-rose-600/60 to-transparent",
+    link: "/discover?section=hidden-gems",
   },
   {
     title: "Superhero Movies",
-    description: "Capes, cosmic battles, and interconnected cinematic universes.",
+    subtitle: "Marvel • DC • Animated",
     image: superheroImg,
-    accent: "from-blue-600/60 to-transparent",
+    link: "/discover?section=top-rated",
   },
   {
     title: "Anime Adventures",
-    description: "Hand-drawn magic, epic quests, and boundary-pushing animation.",
+    subtitle: "Shonen • Fantasy • Psychological",
     image: animeImg,
-    accent: "from-violet-600/60 to-transparent",
+    link: "/discover?section=hidden-gems",
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.15 } },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, scale: 0.92 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.7, ease: "easeOut" as const } },
-};
-
-function ParallaxCard({ universe }: { universe: typeof universes[number] }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"],
-  });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
-
-  return (
-    <motion.div
-      ref={cardRef}
-      variants={cardVariants}
-      className="group relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-border/60 shadow-poster"
-    >
-      <motion.img
-        src={universe.image}
-        alt={universe.title}
-        className="h-[120%] w-full object-cover transition-transform duration-700 group-hover:scale-110"
-        loading="lazy"
-        style={{ y: imgY }}
-      />
-      <div className={`absolute inset-0 bg-gradient-to-t ${universe.accent}`} />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-
-      <div className="absolute inset-x-0 bottom-0 p-6 lg:p-8">
-        <h3 className="font-display text-3xl uppercase tracking-[0.06em] text-foreground lg:text-4xl">
-          {universe.title}
-        </h3>
-        <p className="mt-2 max-w-md text-sm text-muted-foreground">{universe.description}</p>
-      </div>
-
-      <div className="pointer-events-none absolute inset-0 rounded-[2rem] border-2 border-primary/0 transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-glow" />
-    </motion.div>
-  );
-}
-
 export function UniverseShowcase() {
   return (
-    <section className="container py-20 lg:py-28">
+    <section className="container py-12 lg:py-16">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.6 }}
-        className="mb-14 text-center"
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.5 }}
+        className="mb-6 flex items-center justify-between"
       >
-        <p className="text-xs uppercase tracking-[0.35em] text-primary">Movie Universes</p>
-        <h2 className="mt-4 font-display text-4xl uppercase tracking-[0.06em] sm:text-5xl lg:text-6xl">
-          Every World, One Platform
-        </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-          From Bollywood's golden palaces to anime's electric battlefields — Movie DNA spans every cinematic universe.
-        </p>
+        <h2 className="text-2xl font-bold text-foreground">Movie Universes</h2>
+        <Link to="/discover" className="flex items-center gap-1 text-xs font-semibold text-muted-foreground transition hover:text-foreground">
+          Explore All <ChevronRight className="size-4" />
+        </Link>
       </motion.div>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-60px" }}
-        className="grid gap-6 sm:grid-cols-2"
-      >
-        {universes.map((universe) => (
-          <ParallaxCard key={universe.title} universe={universe} />
+      <div className="scroll-row gap-3 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
+        {universes.map((universe, index) => (
+          <motion.div
+            key={universe.title}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+          >
+            <Link
+              to={universe.link}
+              className="group relative block aspect-[16/9] w-72 overflow-hidden rounded-md lg:w-auto"
+            >
+              <img
+                src={universe.image}
+                alt={universe.title}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+              <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-primary/10" />
+
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <h3 className="text-base font-bold text-foreground">{universe.title}</h3>
+                <p className="text-xs text-muted-foreground">{universe.subtitle}</p>
+              </div>
+            </Link>
+          </motion.div>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 }

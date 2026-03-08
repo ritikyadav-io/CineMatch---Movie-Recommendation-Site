@@ -1,4 +1,5 @@
-import { Dna, Flame, Sparkles } from "lucide-react";
+import { Bell, Search, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
@@ -10,40 +11,47 @@ const navItems = [
   { to: "/quiz", label: "Quiz" },
   { to: "/discover?section=trending", label: "Trending" },
   { to: "/discover?section=series", label: "Series" },
+  { to: "/discover?section=top-rated", label: "Top Rated" },
 ];
 
 export function DNANav() {
+  const [scrolled, setScrolled] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-      <div className="container flex flex-col gap-4 py-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-3">
-            <div className="flex size-11 items-center justify-center rounded-full bg-spotlight shadow-glow">
-              <Dna className="size-5 text-primary-foreground" />
-            </div>
-            <div>
-              <p className="font-display text-2xl uppercase tracking-[0.28em] text-primary">Movie DNA</p>
-              <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Cinematic Discovery Engine</p>
-            </div>
-          </Link>
+    <header
+      className={[
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        scrolled ? "bg-background/95 shadow-lg backdrop-blur-md" : "bg-gradient-to-b from-background/80 to-transparent",
+      ].join(" ")}
+    >
+      <div className="container flex items-center gap-6 py-3">
+        {/* Logo */}
+        <Link to="/" className="mr-4 flex items-center gap-2 shrink-0">
+          <div className="flex size-8 items-center justify-center rounded bg-primary">
+            <span className="text-sm font-black text-primary-foreground">M</span>
+          </div>
+          <span className="text-lg font-extrabold tracking-tight text-foreground hidden sm:block">
+            Movie <span className="text-primary">DNA</span>
+          </span>
+        </Link>
 
-          <Button asChild variant="heroSecondary" size="sm" className="lg:hidden">
-            <Link to="/quiz">
-              <Sparkles className="size-4" />
-              Quiz
-            </Link>
-          </Button>
-        </div>
-
-        <nav className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+        {/* Nav links */}
+        <nav className="hidden lg:flex items-center gap-1 text-sm">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
                 [
-                  "rounded-full px-4 py-2 transition duration-300 hover:bg-secondary/70 hover:text-foreground",
-                  isActive ? "bg-secondary text-foreground shadow-poster" : "",
+                  "px-3 py-1.5 rounded transition-colors duration-200 hover:text-foreground",
+                  isActive ? "text-foreground font-semibold" : "text-muted-foreground",
                 ].join(" ")
               }
             >
@@ -52,22 +60,28 @@ export function DNANav() {
           ))}
         </nav>
 
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-          <CineSearchBar className="w-full lg:w-[22rem]" />
-          <div className="hidden gap-3 lg:flex">
-            <Button asChild variant="heroSecondary" size="sm">
-              <Link to="/discover?mode=random">
-                <Flame className="size-4" />
-                Surprise Me
-              </Link>
-            </Button>
-            <Button asChild variant="hero" size="sm">
-              <Link to="/quiz">
-                <Sparkles className="size-4" />
-                Start Quiz
-              </Link>
-            </Button>
-          </div>
+        {/* Right side */}
+        <div className="ml-auto flex items-center gap-3">
+          {showSearch ? (
+            <CineSearchBar className="w-64 animate-fade-in" />
+          ) : (
+            <button
+              onClick={() => setShowSearch(true)}
+              className="p-2 text-muted-foreground transition hover:text-foreground"
+              aria-label="Search"
+            >
+              <Search className="size-5" />
+            </button>
+          )}
+          <button className="p-2 text-muted-foreground transition hover:text-foreground hidden sm:block" aria-label="Notifications">
+            <Bell className="size-5" />
+          </button>
+          <Button asChild variant="hero" size="sm">
+            <Link to="/quiz">
+              <Sparkles className="size-3.5" />
+              Start Quiz
+            </Link>
+          </Button>
         </div>
       </div>
     </header>
