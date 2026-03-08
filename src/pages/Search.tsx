@@ -182,6 +182,9 @@ const SearchPage = () => {
             </>
           )}
         </section>
+        <div className="container pb-12">
+          <TmdbMiniRow category="toprated" />
+        </div>
       </main>
       <DNAFooter />
     </div>

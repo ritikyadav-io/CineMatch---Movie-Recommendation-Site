@@ -98,7 +98,10 @@ const QuizPage = () => {
               <Sparkles className="size-4" />
               Show Recommendations
             </Button>
-          </div>
+         </div>
+        </div>
+        <div className="container pb-12">
+          <TmdbMiniRow category="trending" />
         </div>
       </main>
       <DNAFooter />
