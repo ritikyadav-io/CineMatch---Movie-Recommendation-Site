@@ -90,7 +90,7 @@ serve(async (req) => {
 
     return new Response(JSON.stringify(data), {
       status: tmdbRes.status,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json", "Cache-Control": "public, max-age=1800, s-maxage=3600" },
     });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {

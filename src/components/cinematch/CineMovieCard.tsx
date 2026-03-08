@@ -1,8 +1,11 @@
 import { Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCallback } from "react";
 
 import { MediaCardData } from "@/types/cinematch";
 import { WatchlistButton } from "@/components/moviedna/WatchlistButton";
+import { fetchTmdbFullDetail } from "@/lib/tmdb-detail";
 
 interface CineMovieCardProps {
   item: MediaCardData;
@@ -10,9 +13,24 @@ interface CineMovieCardProps {
 }
 
 export function CineMovieCard({ item, priority = false }: CineMovieCardProps) {
+  const queryClient = useQueryClient();
+
+  const prefetch = useCallback(() => {
+    const tmdbId = item.imdbID.startsWith("tmdb-") ? Number(item.imdbID.replace("tmdb-", "")) : null;
+    if (tmdbId) {
+      queryClient.prefetchQuery({
+        queryKey: ["movie-detail", item.imdbID],
+        queryFn: () => fetchTmdbFullDetail(tmdbId),
+        staleTime: 1000 * 60 * 60,
+      });
+    }
+  }, [item.imdbID, queryClient]);
+
   return (
     <Link
       to={`/movie/${item.imdbID}`}
+      onMouseEnter={prefetch}
+      onTouchStart={prefetch}
       className="group relative flex flex-col overflow-hidden rounded-md bg-card transition-all duration-300 hover:scale-[1.03] hover:ring-1 hover:ring-muted-foreground/30"
     >
       <div className="relative aspect-[2/3] overflow-hidden bg-muted">
