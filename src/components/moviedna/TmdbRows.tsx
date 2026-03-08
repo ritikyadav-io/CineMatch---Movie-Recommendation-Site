@@ -69,17 +69,14 @@ function MovieRow({ config }: { config: RowConfig }) {
           See All <ChevronRight className="size-4" />
         </Link>
       </div>
-      <div className="scroll-row gap-3">
-        {data.map((item, index) => (
-          <motion.div
+      <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' }}>
+        {data.map((item) => (
+          <div
             key={item.imdbID}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: index * 0.03 }}
-            className="w-40 shrink-0"
+            className="w-36 sm:w-40 flex-none"
           >
             <CineMovieCard item={item} />
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>
