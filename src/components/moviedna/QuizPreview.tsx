@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
+import { Button } from "@/components/ui/button";
 
 const sliders = [
   { label: "Romance", color: "bg-primary" },
