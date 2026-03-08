@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, PlayCircle, Tv } from "lucide-react";
+import { Loader2, PlayCircle, Tv, X } from "lucide-react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
@@ -7,13 +8,23 @@ import { DNANav } from "@/components/moviedna/DNANav";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { Button } from "@/components/ui/button";
 import { getRelatedCatalogEntries } from "@/data/cinematchCatalog";
-import { fetchOmdbBatch, fetchOmdbTitle, getTrailerSearchUrl, getWatchSearchUrl } from "@/lib/omdb";
+import { fetchOmdbBatch, fetchOmdbTitle, fetchYouTubeTrailerId, getYouTubeEmbedUrl, getTrailerSearchUrl, getWatchSearchUrl } from "@/lib/omdb";
 
 const MovieDetailPage = () => {
   const { imdbID = "" } = useParams();
+  const [showTrailer, setShowTrailer] = useState(false);
+
   const detailQuery = useQuery({ queryKey: ["movie", imdbID], queryFn: () => fetchOmdbTitle(imdbID), enabled: Boolean(imdbID), staleTime: 1000 * 60 * 60 });
   const relatedIds = getRelatedCatalogEntries(imdbID, 5).map((item) => item.imdbID);
   const relatedQuery = useQuery({ queryKey: ["movie", imdbID, "related"], queryFn: () => fetchOmdbBatch(relatedIds), enabled: relatedIds.length > 0, staleTime: 1000 * 60 * 60 });
+
+  const movie = detailQuery.data;
+  const trailerQuery = useQuery({
+    queryKey: ["youtube-trailer", movie?.title, movie?.year],
+    queryFn: () => fetchYouTubeTrailerId(movie!.title, movie!.year),
+    enabled: Boolean(movie),
+    staleTime: 1000 * 60 * 60 * 24,
+  });
 
   if (detailQuery.isLoading) {
     return (
@@ -29,18 +40,16 @@ const MovieDetailPage = () => {
     );
   }
 
-  if (!detailQuery.data) {
+  if (!movie) {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <DNANav />
         <main className="container py-24">
-          <div className="section-shell py-16 text-center text-muted-foreground">We couldn’t load that title right now.</div>
+          <div className="section-shell py-16 text-center text-muted-foreground">We couldn't load that title right now.</div>
         </main>
       </div>
     );
   }
-
-  const movie = detailQuery.data;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -79,13 +88,26 @@ const MovieDetailPage = () => {
             ) : null}
 
             <div className="grid gap-4 sm:grid-cols-2">
-              <a href={getTrailerSearchUrl(movie.title, movie.year)} target="_blank" rel="noreferrer" className="section-shell flex items-center justify-between gap-4 p-5 transition duration-300 hover:border-primary/40 hover:bg-secondary/70">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.24em] text-primary">Trailer</p>
-                  <p className="mt-2 text-lg font-semibold">Watch trailer</p>
-                </div>
-                <PlayCircle className="size-6 text-primary" />
-              </a>
+              {trailerQuery.data ? (
+                <button
+                  onClick={() => setShowTrailer(true)}
+                  className="section-shell flex items-center justify-between gap-4 p-5 text-left transition duration-300 hover:border-primary/40 hover:bg-secondary/70"
+                >
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.24em] text-primary">Trailer</p>
+                    <p className="mt-2 text-lg font-semibold">Watch trailer</p>
+                  </div>
+                  <PlayCircle className="size-6 text-primary" />
+                </button>
+              ) : (
+                <a href={getTrailerSearchUrl(movie.title, movie.year)} target="_blank" rel="noreferrer" className="section-shell flex items-center justify-between gap-4 p-5 transition duration-300 hover:border-primary/40 hover:bg-secondary/70">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.24em] text-primary">Trailer</p>
+                    <p className="mt-2 text-lg font-semibold">Watch trailer</p>
+                  </div>
+                  <PlayCircle className="size-6 text-primary" />
+                </a>
+              )}
               <a href={getWatchSearchUrl(movie.title, movie.year)} target="_blank" rel="noreferrer" className="section-shell flex items-center justify-between gap-4 p-5 transition duration-300 hover:border-primary/40 hover:bg-secondary/70">
                 <div>
                   <p className="text-xs uppercase tracking-[0.24em] text-primary">Where to Watch</p>
@@ -94,6 +116,27 @@ const MovieDetailPage = () => {
                 <Tv className="size-6 text-primary" />
               </a>
             </div>
+
+            {/* Embedded trailer */}
+            {trailerQuery.data && (
+              <div className="overflow-hidden rounded-2xl border border-border">
+                <div className="relative aspect-video">
+                  <img
+                    src={`https://img.youtube.com/vi/${trailerQuery.data}/hqdefault.jpg`}
+                    alt={`${movie.title} trailer thumbnail`}
+                    className="h-full w-full object-cover"
+                  />
+                  <button
+                    onClick={() => setShowTrailer(true)}
+                    className="absolute inset-0 flex items-center justify-center bg-background/30 transition hover:bg-background/10"
+                  >
+                    <div className="flex size-16 items-center justify-center rounded-full border-2 border-primary bg-background/60 text-primary backdrop-blur-sm">
+                      <PlayCircle className="size-8" />
+                    </div>
+                  </button>
+                </div>
+              </div>
+            )}
 
             <Button asChild variant="heroSecondary" size="xl">
               <Link to="/discover">Back to Discover</Link>
@@ -116,6 +159,33 @@ const MovieDetailPage = () => {
         ) : null}
       </main>
       <DNAFooter />
+
+      {/* Fullscreen trailer modal */}
+      {showTrailer && trailerQuery.data && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-md"
+          onClick={() => setShowTrailer(false)}
+        >
+          <button
+            onClick={() => setShowTrailer(false)}
+            className="absolute right-6 top-6 z-50 flex size-12 items-center justify-center rounded-full border border-border bg-card text-foreground transition hover:bg-secondary"
+            aria-label="Close trailer"
+          >
+            <X className="size-6" />
+          </button>
+          <div className="w-full max-w-5xl px-4" onClick={(e) => e.stopPropagation()}>
+            <div className="relative aspect-video overflow-hidden rounded-2xl border border-border shadow-glow">
+              <iframe
+                src={getYouTubeEmbedUrl(trailerQuery.data)}
+                className="h-full w-full"
+                allowFullScreen
+                allow="autoplay; encrypted-media"
+                title={`${movie.title} trailer`}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
