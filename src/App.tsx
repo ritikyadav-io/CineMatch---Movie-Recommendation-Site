@@ -19,6 +19,12 @@ import QuizPage from "./pages/Quiz";
 import SearchPage from "./pages/Search";
 import TrailersPage from "./pages/Trailers";
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
 const queryClient = new QueryClient();
 
 const App = () => (
