@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { MediaCardData } from "@/types/cinematch";
+import { WatchlistButton } from "@/components/moviedna/WatchlistButton";
 
 interface CineMovieCardProps {
   item: MediaCardData;
@@ -12,7 +13,7 @@ export function CineMovieCard({ item, priority = false }: CineMovieCardProps) {
   return (
     <Link
       to={`/movie/${item.imdbID}`}
-      className="group flex h-full flex-col overflow-hidden rounded-md bg-card transition-all duration-300 hover:scale-[1.03] hover:ring-1 hover:ring-muted-foreground/30"
+      className="group relative flex h-full flex-col overflow-hidden rounded-md bg-card transition-all duration-300 hover:scale-[1.03] hover:ring-1 hover:ring-muted-foreground/30"
     >
       <div className="relative aspect-[2/3] overflow-hidden bg-muted">
         <img
@@ -22,6 +23,9 @@ export function CineMovieCard({ item, priority = false }: CineMovieCardProps) {
           loading={priority ? "eager" : "lazy"}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
+        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <WatchlistButton movie={item} />
+        </div>
       </div>
 
       <div className="flex flex-1 flex-col gap-2 p-3">
