@@ -346,6 +346,18 @@ const MovieDetailPage = () => {
           </section>
         )}
 
+        {/* Similar Movies */}
+        {(similarQuery.data?.length ?? 0) > 0 && (
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-foreground">🎬 Similar Movies</h2>
+            <div className="grid gap-2 sm:gap-3 grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {similarQuery.data!.slice(0, 10).map((item) => (
+                <CineMovieCard key={item.imdbID} item={item} />
+              ))}
+            </div>
+          </section>
+        )}
+
         <Button asChild variant="heroSecondary">
           <Link to="/">
             <ArrowLeft className="size-4" /> Back Home
