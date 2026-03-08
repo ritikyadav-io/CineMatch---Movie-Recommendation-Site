@@ -205,8 +205,8 @@ const Index = () => {
       </section>
 
       {/* ═══════════ FEATURES ═══════════ */}
-      <section className="container px-3 sm:px-6 -mt-6 sm:-mt-12 lg:-mt-16 relative z-10">
-        <div className="grid grid-cols-4 gap-1.5 sm:gap-3 lg:gap-5">
+      <section className="container px-4 sm:px-6 -mt-6 sm:-mt-12 lg:-mt-16 relative z-10">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-5">
           {features.map((f, i) => (
             <motion.div
               key={f.title}
@@ -217,14 +217,14 @@ const Index = () => {
             >
               <Link
                 to={f.link}
-                className="group flex flex-col items-center gap-1 sm:gap-3 lg:gap-4 rounded-lg lg:rounded-xl bg-card/80 backdrop-blur-md border border-border p-2 sm:p-5 lg:p-8 transition-all hover:bg-card hover:border-primary/30 hover:scale-[1.02] text-center"
+                className="group flex flex-col items-center gap-2 sm:gap-3 lg:gap-4 rounded-lg lg:rounded-xl bg-card/80 backdrop-blur-md border border-border p-3 sm:p-5 lg:p-8 transition-all hover:bg-card hover:border-primary/30 hover:scale-[1.02] text-center"
               >
-                <div className="flex size-6 sm:size-10 lg:size-14 items-center justify-center rounded-md lg:rounded-xl bg-primary/10">
-                  <f.icon className="size-3 sm:size-5 lg:size-7 text-primary" />
+                <div className="flex size-9 sm:size-10 lg:size-14 items-center justify-center rounded-md lg:rounded-xl bg-primary/10">
+                  <f.icon className="size-4 sm:size-5 lg:size-7 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-[8px] sm:text-sm lg:text-base font-bold text-foreground leading-tight">{f.title}</h3>
-                  <p className="text-[7px] sm:text-xs lg:text-sm text-muted-foreground mt-0.5 lg:mt-1 line-clamp-1 sm:line-clamp-2 hidden sm:block">{f.desc}</p>
+                  <h3 className="text-xs sm:text-sm lg:text-base font-bold text-foreground leading-tight">{f.title}</h3>
+                  <p className="text-[10px] sm:text-xs lg:text-sm text-muted-foreground mt-0.5 lg:mt-1 line-clamp-2">{f.desc}</p>
                 </div>
               </Link>
             </motion.div>
