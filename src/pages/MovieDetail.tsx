@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { CastBioModal } from "@/components/moviedna/CastBioModal";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
