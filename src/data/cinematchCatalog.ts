@@ -1203,7 +1203,12 @@ export const sectionMap: Record<DiscoverSectionKey, { title: string; description
   "hidden-gems": {
     title: "Hidden Gems",
     description: "Less obvious picks with elite taste-maker appeal.",
-    ids: ["tt3799694", "tt2194499", "tt12477480", "tt0457430", "tt0455944", "tt5311514"]
+    ids: [
+      "tt3799694", "tt2194499", "tt12477480", "tt0457430", "tt0455944", "tt5311514",
+      "tt1954470", "tt0790636", "tt0347149", "tt1131729", "tt0469494",
+      "tt0208092", "tt0838221", "tt0092005", "tt0070735", "tt1280558",
+      "tt2278388", "tt0112573", "tt0119217", "tt0169547", "tt0120689",
+    ]
   },
   series: {
     title: "Popular Series",
