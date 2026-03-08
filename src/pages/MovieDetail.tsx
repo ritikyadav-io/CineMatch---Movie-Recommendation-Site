@@ -23,7 +23,7 @@ import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
 import { Button } from "@/components/ui/button";
 import { WatchlistButton } from "@/components/moviedna/WatchlistButton";
-import { fetchTmdbFullDetail, TmdbFullDetail } from "@/lib/tmdb-detail";
+import { fetchTmdbFullDetail, fetchTmdbFullDetailByImdb, TmdbFullDetail } from "@/lib/tmdb-detail";
 import { fetchTmdbSimilar } from "@/lib/tmdb";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { getWatchSearchUrl } from "@/lib/omdb";
