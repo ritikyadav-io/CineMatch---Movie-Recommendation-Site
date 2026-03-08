@@ -84,14 +84,17 @@ const DiscoverPage = () => {
               <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">{headline}</h1>
               <p className="max-w-2xl text-[10px] sm:text-sm text-muted-foreground mt-0.5">{description}</p>
             </div>
-          <Button asChild variant="heroSecondary" size="sm" className="self-start text-xs">
-            <Link to="/discover?mode=random">
-              <Shuffle className="size-3.5" />
-              Surprise Me
-            </Link>
-          </Button>
-        </section>
+            <Button asChild variant="heroSecondary" size="sm" className="self-start text-xs">
+              <Link to="/discover?mode=random">
+                <Shuffle className="size-3.5" />
+                Surprise Me
+              </Link>
+            </Button>
+          </section>
+        </div>
+      </div>
 
+      <main className="container space-y-4 sm:space-y-8 pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pb-16 px-3 sm:px-6">
         {recommendationsQuery.isLoading ? (
           <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground text-xs">
             <Loader2 className="size-4 animate-spin text-primary" />
