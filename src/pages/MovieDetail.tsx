@@ -152,7 +152,7 @@ const MovieDetailPage = () => {
 
       {/* Backdrop — compact */}
       {movie.backdrop_path && (
-        <div className="relative h-[25vh] sm:h-[35vh] lg:h-[45vh] overflow-hidden">
+        <div className="relative h-[25vh] sm:h-[35vh] lg:h-[45vh] overflow-hidden animate-fade-in">
           <img
             src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
             alt=""
@@ -163,7 +163,7 @@ const MovieDetailPage = () => {
         </div>
       )}
 
-      <main className={`container px-3 sm:px-4 lg:px-8 space-y-4 sm:space-y-6 pb-6 sm:pb-10 ${movie.backdrop_path ? "-mt-20 sm:-mt-32 relative z-10" : "pt-16 sm:pt-20"}`}>
+      <main className={`animate-fade-in container px-3 sm:px-4 lg:px-8 space-y-4 sm:space-y-6 pb-6 sm:pb-10 ${movie.backdrop_path ? "-mt-20 sm:-mt-32 relative z-10" : "pt-16 sm:pt-20"}`}>
         {/* Poster + Info */}
         <section className="grid gap-3 sm:gap-5 grid-cols-[100px_1fr] sm:grid-cols-[160px_1fr] lg:grid-cols-[240px_1fr]">
           <div className="space-y-2">
