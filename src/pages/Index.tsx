@@ -240,18 +240,18 @@ const Index = () => {
       </main>
 
       {/* ═══════════ PERSONALITY TYPES ═══════════ */}
-      <section className="container px-3 sm:px-6 lg:px-8 py-6 sm:py-16 lg:py-20">
+      <section className="container px-4 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-20">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-4 sm:mb-8 lg:mb-12"
+          className="text-center mb-5 sm:mb-8 lg:mb-12"
         >
-          <h2 className="text-base sm:text-3xl lg:text-4xl font-black text-foreground">What's Your Movie Type?</h2>
-          <p className="text-[10px] sm:text-sm lg:text-base text-muted-foreground mt-0.5 lg:mt-2">Explore genres that match your vibe</p>
+          <h2 className="text-lg sm:text-3xl lg:text-4xl font-black text-foreground">What's Your Movie Type?</h2>
+          <p className="text-xs sm:text-sm lg:text-base text-muted-foreground mt-1 lg:mt-2">Explore genres that match your vibe</p>
         </motion.div>
-        <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 lg:gap-5">
+        <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-3 lg:gap-5">
           {personalities.map((p, i) => (
             <motion.div
               key={p.title}
@@ -262,10 +262,10 @@ const Index = () => {
             >
               <Link
                 to={p.link}
-                className={`group flex flex-col items-center gap-1 sm:gap-2 lg:gap-3 rounded-xl bg-gradient-to-b ${p.color} border p-2 sm:p-5 lg:p-8 text-center transition-all hover:scale-105`}
+                className={`group flex flex-col items-center gap-2 sm:gap-2 lg:gap-3 rounded-xl bg-gradient-to-b ${p.color} border p-3 sm:p-5 lg:p-8 text-center transition-all hover:scale-105`}
               >
-                <p.icon className={`size-4 sm:size-8 lg:size-12 ${p.iconColor}`} />
-                <span className="text-[8px] sm:text-xs lg:text-sm font-bold text-foreground">{p.title}</span>
+                <p.icon className={`size-6 sm:size-8 lg:size-12 ${p.iconColor}`} />
+                <span className="text-[10px] sm:text-xs lg:text-sm font-bold text-foreground">{p.title}</span>
               </Link>
             </motion.div>
           ))}
