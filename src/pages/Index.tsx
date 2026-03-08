@@ -223,7 +223,7 @@ const Index = () => {
       </section>
 
       {/* ═══════════ MOVIE ROWS (horizontal scroll) ═══════════ */}
-      <main className="container px-3 sm:px-6 space-y-6 sm:space-y-8 pt-8 sm:pt-12">
+      <main className="container px-3 sm:px-6 space-y-4 sm:space-y-8 pt-6 sm:pt-12">
         {sections.map((s) => (
           <MovieScrollRow key={s.title} title={s.title} data={s.data} loading={s.loading} link={s.link} />
         ))}
