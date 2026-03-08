@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader2, Shuffle } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 
-import { CineFooter } from "@/components/cinematch/CineFooter";
-import { CineMatchNav } from "@/components/cinematch/CineMatchNav";
+import { DNAFooter } from "@/components/moviedna/DNAFooter";
+import { DNANav } from "@/components/moviedna/DNANav";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { Button } from "@/components/ui/button";
 import { defaultQuizAnswers, filterCatalogByQuiz, getRandomCatalogPick, sectionMap } from "@/data/cinematchCatalog";
@@ -67,7 +67,7 @@ const DiscoverPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <CineMatchNav />
+      <DNANav />
       <main className="container space-y-10 py-12 lg:space-y-14 lg:py-16">
         <section className="section-shell flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4">
@@ -147,7 +147,7 @@ const DiscoverPage = () => {
           </section>
         )}
       </main>
-      <CineFooter />
+      <DNAFooter />
     </div>
   );
 };

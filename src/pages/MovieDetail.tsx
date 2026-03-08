@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader2, PlayCircle, Tv } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 
-import { CineFooter } from "@/components/cinematch/CineFooter";
-import { CineMatchNav } from "@/components/cinematch/CineMatchNav";
+import { DNAFooter } from "@/components/moviedna/DNAFooter";
+import { DNANav } from "@/components/moviedna/DNANav";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { Button } from "@/components/ui/button";
 import { getRelatedCatalogEntries } from "@/data/cinematchCatalog";
@@ -18,7 +18,7 @@ const MovieDetailPage = () => {
   if (detailQuery.isLoading) {
     return (
       <div className="min-h-screen bg-background text-foreground">
-        <CineMatchNav />
+        <DNANav />
         <main className="container py-24">
           <div className="section-shell flex items-center justify-center gap-3 py-20 text-muted-foreground">
             <Loader2 className="size-5 animate-spin text-primary" />
@@ -32,7 +32,7 @@ const MovieDetailPage = () => {
   if (!detailQuery.data) {
     return (
       <div className="min-h-screen bg-background text-foreground">
-        <CineMatchNav />
+        <DNANav />
         <main className="container py-24">
           <div className="section-shell py-16 text-center text-muted-foreground">We couldn’t load that title right now.</div>
         </main>
@@ -44,7 +44,7 @@ const MovieDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <CineMatchNav />
+      <DNANav />
       <main className="container space-y-10 py-12 lg:space-y-14 lg:py-16">
         <section className="grid gap-8 section-shell lg:grid-cols-[0.38fr_0.62fr]">
           <img src={movie.poster} alt={`${movie.title} poster`} className="w-full rounded-[1.8rem] border border-border/70 object-cover shadow-poster" loading="eager" />
@@ -115,7 +115,7 @@ const MovieDetailPage = () => {
           </section>
         ) : null}
       </main>
-      <CineFooter />
+      <DNAFooter />
     </div>
   );
 };

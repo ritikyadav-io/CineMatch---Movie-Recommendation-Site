@@ -3,8 +3,8 @@ import { Loader2 } from "lucide-react";
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { CineFooter } from "@/components/cinematch/CineFooter";
-import { CineMatchNav } from "@/components/cinematch/CineMatchNav";
+import { DNAFooter } from "@/components/moviedna/DNAFooter";
+import { DNANav } from "@/components/moviedna/DNANav";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { findCatalogMatches } from "@/data/cinematchCatalog";
 import { fetchOmdbBatch, searchOmdbTitles } from "@/lib/omdb";
@@ -35,7 +35,7 @@ const SearchPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <CineMatchNav />
+      <DNANav />
       <main className="container space-y-10 py-12 lg:py-16">
         <section className="section-shell space-y-4">
           <p className="text-xs uppercase tracking-[0.28em] text-primary">Global Search</p>
@@ -59,7 +59,7 @@ const SearchPage = () => {
           <div className="section-shell py-16 text-center text-muted-foreground">No matches yet. Try a broader title, actor, genre, or release year.</div>
         )}
       </main>
-      <CineFooter />
+      <DNAFooter />
     </div>
   );
 };

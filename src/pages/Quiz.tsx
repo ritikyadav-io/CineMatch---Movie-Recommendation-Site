@@ -2,8 +2,8 @@ import { Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { CineFooter } from "@/components/cinematch/CineFooter";
-import { CineMatchNav } from "@/components/cinematch/CineMatchNav";
+import { DNAFooter } from "@/components/moviedna/DNAFooter";
+import { DNANav } from "@/components/moviedna/DNANav";
 import { Button } from "@/components/ui/button";
 import { defaultQuizAnswers, quizFieldsets } from "@/data/cinematchCatalog";
 import { QuizAnswers } from "@/types/cinematch";
@@ -19,7 +19,7 @@ const QuizPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <CineMatchNav />
+      <DNANav />
       <main className="container py-12 lg:py-16">
         <div className="mx-auto max-w-5xl space-y-8">
           <div className="section-shell space-y-4 text-center">
@@ -71,7 +71,7 @@ const QuizPage = () => {
           </div>
         </div>
       </main>
-      <CineFooter />
+      <DNAFooter />
     </div>
   );
 };
