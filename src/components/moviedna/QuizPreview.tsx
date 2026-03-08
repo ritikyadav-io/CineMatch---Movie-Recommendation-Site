@@ -102,6 +102,11 @@ export function QuizPreview() {
               Your high action and mind-bending preferences perfectly align with this dream-heist masterpiece.
             </p>
           </div>
+          <Button asChild variant="hero" size="sm" className="w-fit">
+            <Link to="/quiz">
+              Take the Quiz <ArrowRight className="size-3.5" />
+            </Link>
+          </Button>
         </motion.div>
       </div>
     </section>

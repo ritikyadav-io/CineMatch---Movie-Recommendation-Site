@@ -55,13 +55,17 @@ export function MoviePersonality() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.08 }}
-            className="group rounded-lg bg-card p-6 transition-all duration-300 hover:bg-secondary hover:scale-[1.02]"
           >
-            <div className={`mb-3 flex size-10 items-center justify-center rounded-lg ${type.color}`}>
-              <type.icon className="size-5" />
-            </div>
-            <h3 className="text-sm font-bold text-foreground mb-1">{type.title}</h3>
-            <p className="text-xs leading-relaxed text-muted-foreground">{type.description}</p>
+            <Link
+              to={type.link}
+              className="group block rounded-lg bg-card p-6 transition-all duration-300 hover:bg-secondary hover:scale-[1.02]"
+            >
+              <div className={`mb-3 flex size-10 items-center justify-center rounded-lg ${type.color}`}>
+                <type.icon className="size-5" />
+              </div>
+              <h3 className="text-sm font-bold text-foreground mb-1">{type.title}</h3>
+              <p className="text-xs leading-relaxed text-muted-foreground">{type.description}</p>
+            </Link>
           </motion.div>
         ))}
       </div>
