@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ChevronRight, Loader2, Play, X } from "lucide-react";
 import { useState } from "react";
 
+import heroTrailers from "@/assets/hero-trailers.jpg";
 import { DNANav } from "@/components/moviedna/DNANav";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { fetchYouTubeTrailerId, getYouTubeEmbedUrl, getTrailerSearchUrl } from "@/lib/omdb";
@@ -28,32 +29,32 @@ function TrailerCard({ trailer, index }: { trailer: typeof trailers[number]; ind
   });
 
   const handleClick = () => {
-    if (videoId) setShowPlayer(true);
-    else window.open(getTrailerSearchUrl(trailer.title, trailer.year), "_blank");
+    if (videoId) {
+      setShowPlayer(true);
+    } else if (!isLoading) {
+      window.open(getTrailerSearchUrl(trailer.title, trailer.year), "_blank");
+    }
   };
 
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.3, delay: index * 0.04 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.08, duration: 0.4 }}
+        className="group cursor-pointer overflow-hidden rounded-lg bg-card border border-border transition-all hover:border-primary/30 hover:scale-[1.02]"
         onClick={handleClick}
-        className="group cursor-pointer overflow-hidden rounded-md bg-card border border-border transition-all duration-300 hover:scale-[1.02] hover:border-primary/30"
       >
         {videoId ? (
           <div className="relative aspect-video overflow-hidden">
             <img
               src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
-              alt={`${trailer.title} trailer`}
+              alt={`${trailer.title} trailer thumbnail`}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
-            <div className="absolute inset-0 flex items-center justify-center bg-background/20 transition group-hover:bg-background/10">
-              <div className="flex size-8 sm:size-10 items-center justify-center rounded-full bg-background/80 text-foreground transition group-hover:bg-primary group-hover:text-primary-foreground">
-                <Play className="size-3 sm:size-4 fill-current" />
-              </div>
+            <div className="absolute inset-0 flex items-center justify-center bg-background/30 group-hover:bg-background/10 transition">
+              <Play className="size-6 sm:size-8 text-primary-foreground drop-shadow-lg" />
             </div>
           </div>
         ) : (
@@ -88,11 +89,20 @@ const TrailersPage = () => {
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
 
-      <main className="container px-3 sm:px-6 pt-14 sm:pt-16 pb-8">
-        <div className="mb-4 sm:mb-6">
-          <h1 className="text-base sm:text-2xl font-black text-foreground">🎬 Trailers</h1>
-          <p className="text-[9px] sm:text-xs text-muted-foreground mt-0.5">Preview before you watch</p>
+      {/* Hero Banner */}
+      <div className="relative h-32 sm:h-44 lg:h-52 overflow-hidden">
+        <img src={heroTrailers} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent" />
+        <div className="container relative flex items-end h-full pb-4 sm:pb-6 px-3 sm:px-6">
+          <div>
+            <h1 className="text-base sm:text-2xl font-black text-foreground">🎬 Trailers</h1>
+            <p className="text-[9px] sm:text-xs text-muted-foreground mt-0.5">Preview before you watch</p>
+          </div>
         </div>
+      </div>
+
+      <main className="container px-3 sm:px-6 pt-4 sm:pt-6 pb-8">
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
           {trailers.map((trailer, index) => (
