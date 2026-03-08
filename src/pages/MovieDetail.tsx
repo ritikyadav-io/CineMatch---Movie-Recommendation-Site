@@ -21,6 +21,7 @@ import { toast } from "sonner";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
+import { MovieDetailSkeleton } from "@/components/moviedna/MovieDetailSkeleton";
 import { Button } from "@/components/ui/button";
 import { WatchlistButton } from "@/components/moviedna/WatchlistButton";
 import { fetchTmdbFullDetail, fetchTmdbFullDetailByImdb, TmdbFullDetail } from "@/lib/tmdb-detail";
