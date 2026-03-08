@@ -44,7 +44,7 @@ const MovieDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <CineMatchNav />
+      <DNANav />
       <main className="container space-y-10 py-12 lg:space-y-14 lg:py-16">
         <section className="grid gap-8 section-shell lg:grid-cols-[0.38fr_0.62fr]">
           <img src={movie.poster} alt={`${movie.title} poster`} className="w-full rounded-[1.8rem] border border-border/70 object-cover shadow-poster" loading="eager" />
