@@ -57,10 +57,10 @@ const personalities = [
 function MovieScrollRow({ title, data, loading, link }: { title: string; data?: any[]; loading: boolean; link: string }) {
   return (
     <div>
-      <div className="flex items-center justify-between mb-2 sm:mb-3 px-1">
-        <h2 className="text-sm sm:text-lg font-bold text-foreground">{title}</h2>
-        <Link to={link} className="flex items-center gap-0.5 text-[10px] sm:text-xs font-semibold text-muted-foreground hover:text-primary transition">
-          See All <ChevronRight className="size-3 sm:size-4" />
+      <div className="flex items-center justify-between mb-1 sm:mb-3 px-0.5">
+        <h2 className="text-xs sm:text-lg font-bold text-foreground">{title}</h2>
+        <Link to={link} className="flex items-center gap-0.5 text-[8px] sm:text-xs font-semibold text-muted-foreground hover:text-primary transition">
+          See All <ChevronRight className="size-2.5 sm:size-4" />
         </Link>
       </div>
       {loading ? (
