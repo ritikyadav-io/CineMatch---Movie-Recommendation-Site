@@ -46,27 +46,27 @@ const Index = () => {
       <DNANav />
       <main className="container pt-24 pb-12 space-y-12">
         {/* Hero Banner */}
-        <div className="relative overflow-hidden rounded-xl" style={{ height: 400 }}>
+        <div className="relative overflow-hidden rounded-xl h-[240px] sm:h-[340px] lg:h-[400px]">
           <img src={heroImage} alt="Movie DNA" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-          <div className="relative flex h-full flex-col justify-end p-8">
-            <div className="inline-flex items-center gap-2 rounded bg-primary/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary w-fit mb-3">
+          <div className="relative flex h-full flex-col justify-end p-4 sm:p-6 lg:p-8">
+            <div className="inline-flex items-center gap-2 rounded bg-primary/20 px-2 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary w-fit mb-2 sm:mb-3">
               <span className="size-1.5 rounded-full bg-primary animate-pulse" />
               Now Streaming
             </div>
-            <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground">
               Discover Your <span className="text-primary">Movie DNA</span>
             </h1>
-            <p className="mt-2 max-w-lg text-sm text-secondary-foreground">
+            <p className="mt-1 sm:mt-2 max-w-lg text-xs sm:text-sm text-secondary-foreground line-clamp-2">
               Personalized movie recommendations from Hollywood, Bollywood, Superhero & Anime universes.
             </p>
-            <div className="flex items-center gap-3 mt-4">
-              <Button asChild variant="hero" size="lg">
-                <Link to="/quiz"><Play className="size-4 fill-current" /> Start Quiz</Link>
+            <div className="flex items-center gap-2 sm:gap-3 mt-3 sm:mt-4">
+              <Button asChild variant="hero" size="sm" className="sm:!h-10 sm:!px-5">
+                <Link to="/quiz"><Play className="size-3.5 sm:size-4 fill-current" /> Start Quiz</Link>
               </Button>
-              <Button asChild variant="heroSecondary" size="lg">
-                <Link to="/browse"><Info className="size-4" /> Browse All</Link>
+              <Button asChild variant="heroSecondary" size="sm" className="sm:!h-10 sm:!px-5">
+                <Link to="/browse"><Info className="size-3.5 sm:size-4" /> Browse All</Link>
               </Button>
             </div>
           </div>
