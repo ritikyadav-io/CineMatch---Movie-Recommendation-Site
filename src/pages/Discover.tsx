@@ -7,9 +7,31 @@ import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { Button } from "@/components/ui/button";
-import { defaultQuizAnswers, filterCatalogByQuiz, getRandomCatalogPick, sectionMap } from "@/data/cinematchCatalog";
+import { catalogById, defaultQuizAnswers, filterCatalogByQuiz, getRandomCatalogPick, sectionMap } from "@/data/cinematchCatalog";
 import { fetchOmdbBatch, fetchOmdbTitle } from "@/lib/omdb";
-import { DiscoverSectionKey, QuizAnswers } from "@/types/cinematch";
+import { DiscoverSectionKey, MediaCardData, QuizAnswers } from "@/types/cinematch";
+
+/** Convert catalog entries to MediaCardData instantly (no network) */
+function catalogToCards(ids: string[]): MediaCardData[] {
+  return ids
+    .map((id) => {
+      const entry = catalogById[id];
+      if (!entry) return null;
+      return {
+        imdbID: entry.imdbID,
+        title: entry.title,
+        year: String(entry.year),
+        rating: "—",
+        genres: entry.genres,
+        poster: `https://img.omdbapi.com/?apikey=6a2ef45d&i=${entry.imdbID}`,
+        overview: entry.shortDescription,
+        language: entry.language,
+        type: entry.type,
+        actors: entry.actors,
+      } satisfies MediaCardData;
+    })
+    .filter(Boolean) as MediaCardData[];
+}
 
 const DiscoverPage = () => {
   const [searchParams] = useSearchParams();
@@ -31,23 +53,30 @@ const DiscoverPage = () => {
     animeStyle: (searchParams.get("animeStyle") as QuizAnswers["animeStyle"]) || defaultQuizAnswers.animeStyle,
   };
 
-  const selectedIds = mode === "quiz"
-    ? filterCatalogByQuiz(quizAnswers).slice(0, 12).map((m) => m.imdbID)
-    : section && sectionMap[section]
-      ? sectionMap[section].ids.slice(0, 12)
-      : [];
+  // For quiz mode, use catalog data directly (instant) — no OMDb calls
+  const quizEntries = mode === "quiz" ? filterCatalogByQuiz(quizAnswers).slice(0, 12) : [];
+  const quizCards = mode === "quiz" ? catalogToCards(quizEntries.map((e) => e.imdbID)) : [];
 
-  const recommendationsQuery = useQuery({
-    queryKey: ["discover", mode, section, selectedIds.join("|")],
-    queryFn: () => fetchOmdbBatch(selectedIds),
+  // For section mode, still use OMDb (fewer items, already cached)
+  const sectionIds = section && sectionMap[section] ? sectionMap[section].ids.slice(0, 12) : [];
+
+  const sectionQuery = useQuery({
+    queryKey: ["discover-section", section, sectionIds.join("|")],
+    queryFn: () => fetchOmdbBatch(sectionIds),
     staleTime: 1000 * 60 * 60,
+    enabled: mode !== "quiz" && mode !== "random" && sectionIds.length > 0,
   });
 
   const surpriseQuery = useQuery({
-    queryKey: ["discover", "surprise", selectedIds[0]],
+    queryKey: ["discover", "surprise"],
     queryFn: () => fetchOmdbTitle(getRandomCatalogPick().imdbID),
     staleTime: 1000 * 60 * 60,
   });
+
+  // Determine which data to use
+  const isQuizMode = mode === "quiz";
+  const recommendations = isQuizMode ? quizCards : sectionQuery.data || [];
+  const isLoading = isQuizMode ? false : sectionQuery.isLoading;
 
   const headline = mode === "quiz"
     ? "Your Results"
@@ -65,8 +94,8 @@ const DiscoverPage = () => {
         ? sectionMap[section].description
         : "Explore hand-picked movies and series.";
 
-  const topPick = recommendationsQuery.data?.[0];
-  const moreLikeThis = recommendationsQuery.data?.slice(1) || [];
+  const topPick = recommendations[0] || null;
+  const moreLikeThis = recommendations.slice(1);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -95,7 +124,7 @@ const DiscoverPage = () => {
       </div>
 
       <main className="container space-y-4 sm:space-y-8 pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pb-16 px-4 sm:px-6">
-        {recommendationsQuery.isLoading ? (
+        {isLoading ? (
           <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground text-xs">
             <Loader2 className="size-4 animate-spin text-primary" />
             Loading recommendations...
@@ -112,7 +141,9 @@ const DiscoverPage = () => {
                 <p className="text-[10px] sm:text-sm text-muted-foreground line-clamp-3 sm:line-clamp-none">{topPick.overview}</p>
                 <div className="flex flex-wrap gap-1 sm:gap-2 text-[8px] sm:text-xs">
                   <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground">{topPick.year}</span>
-                  <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground">IMDb {topPick.rating}</span>
+                  {topPick.rating !== "—" && (
+                    <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground">IMDb {topPick.rating}</span>
+                  )}
                   <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground">{topPick.genres.slice(0, 2).join(" • ")}</span>
                 </div>
                 <div className="flex gap-2 pt-1 sm:pt-2">
