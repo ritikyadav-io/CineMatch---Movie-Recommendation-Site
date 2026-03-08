@@ -1,6 +1,6 @@
 export type ContentType = "movie" | "series";
 export type ViolenceLevel = "None" | "Moderate" | "Extreme";
-export type NudityLevel = "None" | "Some" | "Doesn't matter";
+export type NudityLevel = "None" | "Some" | "Full Nude" | "Doesn't matter";
 export type RuntimePreference = "Short (<100 minutes)" | "Medium" | "Long epic";
 export type ComplexityLevel = "Simple entertainment" | "Thought-provoking" | "Mind-bending";
 export type DiscoverSectionKey = "trending" | "top-rated" | "hidden-gems" | "series";

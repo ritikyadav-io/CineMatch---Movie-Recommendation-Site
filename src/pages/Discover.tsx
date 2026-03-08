@@ -32,7 +32,7 @@ const DiscoverPage = () => {
 
   const selectedIds = (() => {
     if (mode === "random") return [getRandomCatalogPick().imdbID];
-    if (mode === "quiz") return filterCatalogByQuiz(quizAnswers).slice(0, 6).map((entry) => entry.imdbID);
+    if (mode === "quiz") return filterCatalogByQuiz(quizAnswers).map((entry) => entry.imdbID);
     if (section && sectionMap[section]) return sectionMap[section].ids;
     return sectionMap.trending.ids;
   })();
