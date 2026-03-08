@@ -89,10 +89,10 @@ export function DNANav() {
             ) : (
               <button
                 onClick={() => setMobileOpen(true)}
-                className="p-2 text-muted-foreground transition hover:text-foreground"
+                className="p-1 text-muted-foreground transition hover:text-foreground"
                 aria-label="Open menu"
               >
-                <Menu className="size-5" />
+                <Menu className="size-4" />
               </button>
             )}
           </div>
