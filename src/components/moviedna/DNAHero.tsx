@@ -5,6 +5,15 @@ import { Link } from "react-router-dom";
 import heroImage from "@/assets/moviedna-hero.jpg";
 import { Button } from "@/components/ui/button";
 
+const categoryLinks = [
+  { label: "Hollywood", to: "/browse?cat=trending" },
+  { label: "Bollywood", to: "/browse?cat=bollywood" },
+  { label: "Superhero", to: "/browse?cat=superhero" },
+  { label: "Anime", to: "/browse?cat=anime" },
+  { label: "Sci-Fi", to: "/browse?cat=scifi" },
+  { label: "Gaming", to: "/browse?cat=action" },
+];
+
 export function DNAHero() {
   return (
     <section className="relative h-[85vh] min-h-[600px] overflow-hidden">
@@ -16,13 +25,11 @@ export function DNAHero() {
           className="h-full w-full object-cover"
           loading="eager"
         />
-        {/* Netflix-style gradients */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
       </div>
 
-      {/* Content - left aligned like Netflix */}
       <div className="container relative flex h-full items-end pb-20 lg:items-center lg:pb-0">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -30,7 +37,6 @@ export function DNAHero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="max-w-2xl space-y-5"
         >
-          {/* Badge */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -75,14 +81,14 @@ export function DNAHero() {
               </Link>
             </Button>
             <Button asChild variant="heroSecondary" size="xl">
-              <Link to="/discover?section=trending">
+              <Link to="/browse">
                 <Info className="size-5" />
                 Explore
               </Link>
             </Button>
           </motion.div>
 
-          {/* Category tags */}
+          {/* Category tags — now clickable links */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -90,8 +96,14 @@ export function DNAHero() {
             className="flex flex-wrap items-center gap-2 pt-2 text-xs text-muted-foreground"
           >
             <span className="font-semibold text-foreground">Categories:</span>
-            {["Hollywood", "Bollywood", "Superhero", "Anime", "Sci-Fi", "Gaming"].map((tag) => (
-              <span key={tag} className="rounded bg-secondary px-2 py-0.5">{tag}</span>
+            {categoryLinks.map((cat) => (
+              <Link
+                key={cat.label}
+                to={cat.to}
+                className="rounded bg-secondary px-2 py-0.5 transition hover:bg-primary hover:text-primary-foreground"
+              >
+                {cat.label}
+              </Link>
             ))}
           </motion.div>
         </motion.div>

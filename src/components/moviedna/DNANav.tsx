@@ -1,6 +1,19 @@
-import { Bell, Download, Search, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  Bell,
+  Clapperboard,
+  Compass,
+  Download,
+  Film,
+  Flame,
+  Home,
+  Menu,
+  Search,
+  Sparkles,
+  X,
+} from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import logo from "@/assets/moviedna-logo.png";
 import { Button } from "@/components/ui/button";
@@ -8,18 +21,23 @@ import { CineSearchBar } from "@/components/cinematch/CineSearchBar";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 
 const navItems = [
-  { to: "/", label: "Home" },
-  { to: "/browse", label: "Browse" },
-  { to: "/discover", label: "Discover" },
-  { to: "/quiz", label: "Quiz" },
-  { to: "/browse?cat=bollywood", label: "Bollywood" },
-  { to: "/browse?cat=anime", label: "Anime" },
+  { to: "/", label: "Home", icon: Home },
+  { to: "/browse", label: "Browse", icon: Film },
+  { to: "/discover", label: "Discover", icon: Compass },
+  { to: "/quiz", label: "Quiz", icon: Sparkles },
+  { to: "/browse?cat=bollywood", label: "Bollywood", icon: Clapperboard },
+  { to: "/browse?cat=anime", label: "Anime", icon: Flame },
 ];
 
 export function DNANav() {
   const [scrolled, setScrolled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const { canInstall, isInstalled, install } = usePwaInstall();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -27,75 +45,206 @@ export function DNANav() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
+
   return (
-    <header
-      className={[
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        scrolled ? "bg-background/95 shadow-lg backdrop-blur-md" : "bg-gradient-to-b from-background/80 to-transparent",
-      ].join(" ")}
-    >
-      <div className="container flex items-center gap-6 py-3">
-        {/* Logo */}
-        <Link to="/" className="mr-4 shrink-0">
-          <img src={logo} alt="Movie DNA" className="h-8 w-auto" />
-        </Link>
+    <>
+      <header
+        className={[
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+          scrolled
+            ? "bg-background/95 shadow-lg backdrop-blur-md"
+            : "bg-gradient-to-b from-background/80 to-transparent",
+        ].join(" ")}
+      >
+        <div className="container flex items-center gap-4 py-3">
+          {/* Mobile: Back button or Hamburger */}
+          <div className="flex lg:hidden">
+            {!isHome ? (
+              <button
+                onClick={() => navigate(-1)}
+                className="p-2 text-muted-foreground transition hover:text-foreground"
+                aria-label="Go back"
+              >
+                <ArrowLeft className="size-5" />
+              </button>
+            ) : (
+              <button
+                onClick={() => setMobileOpen(true)}
+                className="p-2 text-muted-foreground transition hover:text-foreground"
+                aria-label="Open menu"
+              >
+                <Menu className="size-5" />
+              </button>
+            )}
+          </div>
 
-        {/* Nav links */}
-        <nav className="hidden lg:flex items-center gap-1 text-sm">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                [
-                  "px-3 py-1.5 rounded transition-colors duration-200 hover:text-foreground",
-                  isActive ? "text-foreground font-semibold" : "text-muted-foreground",
-                ].join(" ")
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
+          {/* Logo */}
+          <Link to="/" className="shrink-0">
+            <img src={logo} alt="Movie DNA" className="h-8 w-auto" />
+          </Link>
 
-        {/* Right side */}
-        <div className="ml-auto flex items-center gap-3">
-          {showSearch ? (
-            <CineSearchBar className="w-64 animate-fade-in" />
-          ) : (
+          {/* Desktop nav links */}
+          <nav className="hidden lg:flex items-center gap-1 text-sm ml-4">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  [
+                    "px-3 py-1.5 rounded transition-colors duration-200 hover:text-foreground",
+                    isActive
+                      ? "text-foreground font-semibold"
+                      : "text-muted-foreground",
+                  ].join(" ")
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          {/* Right side */}
+          <div className="ml-auto flex items-center gap-2 sm:gap-3">
+            {showSearch ? (
+              <CineSearchBar className="w-48 sm:w-64 animate-fade-in" />
+            ) : (
+              <button
+                onClick={() => setShowSearch(true)}
+                className="p-2 text-muted-foreground transition hover:text-foreground"
+                aria-label="Search"
+              >
+                <Search className="size-5" />
+              </button>
+            )}
             <button
-              onClick={() => setShowSearch(true)}
-              className="p-2 text-muted-foreground transition hover:text-foreground"
-              aria-label="Search"
+              className="p-2 text-muted-foreground transition hover:text-foreground hidden sm:block"
+              aria-label="Notifications"
             >
-              <Search className="size-5" />
+              <Bell className="size-5" />
             </button>
-          )}
-          <button className="p-2 text-muted-foreground transition hover:text-foreground hidden sm:block" aria-label="Notifications">
-            <Bell className="size-5" />
-          </button>
 
-          {/* Install App button */}
-          {canInstall && !isInstalled && (
-            <Button
-              onClick={install}
-              variant="heroSecondary"
-              size="sm"
-              className="hidden sm:flex"
-            >
-              <Download className="size-3.5" />
-              Install App
+            {canInstall && !isInstalled && (
+              <Button
+                onClick={install}
+                variant="heroSecondary"
+                size="sm"
+                className="hidden sm:flex"
+              >
+                <Download className="size-3.5" />
+                Install App
+              </Button>
+            )}
+
+            <Button asChild variant="hero" size="sm" className="hidden sm:flex">
+              <Link to="/quiz">
+                <Sparkles className="size-3.5" />
+                Start Quiz
+              </Link>
             </Button>
-          )}
 
-          <Button asChild variant="hero" size="sm">
-            <Link to="/quiz">
-              <Sparkles className="size-3.5" />
-              Start Quiz
-            </Link>
-          </Button>
+            {/* Mobile hamburger (shown on non-home pages too) */}
+            {isHome ? null : (
+              <button
+                onClick={() => setMobileOpen(true)}
+                className="p-2 text-muted-foreground transition hover:text-foreground lg:hidden"
+                aria-label="Open menu"
+              >
+                <Menu className="size-5" />
+              </button>
+            )}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Mobile slide-out drawer */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-[60] lg:hidden">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+            onClick={() => setMobileOpen(false)}
+          />
+
+          {/* Drawer */}
+          <div className="absolute right-0 top-0 bottom-0 w-72 bg-card shadow-2xl animate-slide-in-right flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-border">
+              <img src={logo} alt="Movie DNA" className="h-7 w-auto" />
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="p-2 rounded-full hover:bg-muted text-foreground"
+                aria-label="Close menu"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+
+            {/* Nav links */}
+            <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+              {navItems.map((item) => {
+                const isActive =
+                  location.pathname === item.to ||
+                  (item.to.includes("?") &&
+                    location.pathname + location.search === item.to);
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={() => setMobileOpen(false)}
+                    className={[
+                      "flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition",
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : "text-foreground hover:bg-muted",
+                    ].join(" ")}
+                  >
+                    <item.icon className="size-5" />
+                    {item.label}
+                  </Link>
+                );
+              })}
+
+              <div className="border-t border-border my-3" />
+
+              <Link
+                to="/search"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-foreground hover:bg-muted transition"
+              >
+                <Search className="size-5" />
+                Search
+              </Link>
+            </nav>
+
+            {/* Bottom actions */}
+            <div className="p-4 space-y-2 border-t border-border">
+              {canInstall && !isInstalled && (
+                <Button
+                  onClick={() => {
+                    install();
+                    setMobileOpen(false);
+                  }}
+                  variant="heroSecondary"
+                  className="w-full"
+                >
+                  <Download className="size-4" />
+                  Install App
+                </Button>
+              )}
+              <Button asChild variant="hero" className="w-full">
+                <Link to="/quiz" onClick={() => setMobileOpen(false)}>
+                  <Sparkles className="size-4" />
+                  Start Quiz
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
