@@ -29,6 +29,11 @@ function ScrollToTop() {
   return null;
 }
 
+function MovieDetailKeyWrapper() {
+  const { imdbID } = useParams();
+  return <MovieDetailPage key={imdbID} />;
+}
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
