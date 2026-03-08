@@ -34,13 +34,8 @@ export function DNANav() {
     >
       <div className="container flex items-center gap-6 py-3">
         {/* Logo */}
-        <Link to="/" className="mr-4 flex items-center gap-2 shrink-0">
-          <div className="flex size-8 items-center justify-center rounded bg-primary">
-            <span className="text-sm font-black text-primary-foreground">M</span>
-          </div>
-          <span className="text-lg font-extrabold tracking-tight text-foreground hidden sm:block">
-            Movie <span className="text-primary">DNA</span>
-          </span>
+        <Link to="/" className="mr-4 shrink-0">
+          <img src={logo} alt="Movie DNA" className="h-8 w-auto" />
         </Link>
 
         {/* Nav links */}
