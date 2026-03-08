@@ -223,19 +223,7 @@ const Index = () => {
           <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">
             Movie <span className="text-primary">DNA</span> in Numbers
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
-            {[
-              { num: "10K+", label: "Movies to Explore" },
-              { num: "8", label: "Genre Universes" },
-              { num: "50+", label: "Countries Covered" },
-              { num: "∞", label: "Movie Nights Saved" },
-            ].map((stat) => (
-              <div key={stat.label} className="space-y-1">
-                <p className="text-2xl sm:text-3xl font-black text-primary">{stat.num}</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{stat.label}</p>
-              </div>
-            ))}
-          </div>
+          <StatsGrid />
           <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto">
             Your perfect movie is one quiz away. Stop scrolling, start watching. 🍿
           </p>
