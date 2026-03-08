@@ -74,11 +74,11 @@ const SearchPage = () => {
         <img src={heroSearch} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
         <div className="absolute inset-0 bg-gradient-to-r from-background/60 to-background/40" />
-        <div className="container relative flex flex-col items-center justify-end h-full pb-4 sm:pb-6 px-4 sm:px-6 text-center">
-          <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">
+        <div className="container relative flex flex-col items-center justify-end h-full pb-5 sm:pb-6 px-4 sm:px-6 text-center">
+          <h1 className="text-xl sm:text-4xl font-black tracking-tight text-foreground">
             Deep <span className="text-primary">Search</span>
           </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1.5">
             Enter an actor, actress, or director name and get movie suggestions instantly.
           </p>
         </div>
