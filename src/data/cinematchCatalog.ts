@@ -166,23 +166,6 @@ export const cineMatchCatalog: CatalogEntry[] = [
     searchTerms: ["guillermo del toro", "fantasy", "spanish"]
   },
   {
-    imdbID: "tt5074352",
-    title: "Dangal",
-    type: "movie",
-    year: 2016,
-    genres: ["Drama", "Sport", "Biography"],
-    language: "Hindi",
-    mood: "Emotional",
-    violence: "None",
-    nudity: "None",
-    runtime: "Long epic",
-    complexity: "Simple entertainment",
-    actors: ["Aamir Khan", "Fatima Sana Shaikh"],
-    shortDescription: "An uplifting underdog sports drama with powerful emotional payoff.",
-    hiddenGem: true,
-    searchTerms: ["sports", "wrestling", "inspiring"]
-  },
-  {
     imdbID: "tt12477480",
     title: "Decision to Leave",
     type: "movie",
