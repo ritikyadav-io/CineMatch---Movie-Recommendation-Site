@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Flame, Heart, Rocket, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const personalities = [
   {
