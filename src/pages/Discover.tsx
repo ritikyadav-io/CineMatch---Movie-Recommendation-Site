@@ -71,6 +71,7 @@ const DiscoverPage = () => {
     queryKey: ["discover", "surprise"],
     queryFn: () => fetchOmdbTitle(getRandomCatalogPick().imdbID),
     staleTime: 1000 * 60 * 60,
+    enabled: mode !== "quiz", // skip in quiz mode for faster load
   });
 
   // Determine which data to use
