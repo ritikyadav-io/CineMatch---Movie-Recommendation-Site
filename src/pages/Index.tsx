@@ -83,7 +83,7 @@ function LazyMovieRow({ title, fetchFn, link, queryKey }: { title: string; fetch
   return (
     <div ref={ref}>
       <div className="flex items-center justify-between mb-1 sm:mb-3 px-0.5">
-        <h2 className="text-xs sm:text-lg font-bold text-foreground">{title}</h2>
+        <h2 className="text-xs sm:text-lg lg:text-xl font-bold text-foreground">{title}</h2>
         <Link to={link} className="flex items-center gap-0.5 text-[8px] sm:text-xs font-semibold text-muted-foreground hover:text-primary transition">
           See All <ChevronRight className="size-2.5 sm:size-4" />
         </Link>
