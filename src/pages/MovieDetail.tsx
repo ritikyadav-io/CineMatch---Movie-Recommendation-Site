@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader2, PlayCircle, Tv } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 
-import { CineFooter } from "@/components/cinematch/CineFooter";
-import { CineMatchNav } from "@/components/cinematch/CineMatchNav";
+import { DNAFooter } from "@/components/moviedna/DNAFooter";
+import { DNANav } from "@/components/moviedna/DNANav";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { Button } from "@/components/ui/button";
 import { getRelatedCatalogEntries } from "@/data/cinematchCatalog";
