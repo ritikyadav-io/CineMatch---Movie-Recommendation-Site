@@ -172,32 +172,32 @@ const Index = () => {
       <DNANav />
 
       {/* ═══════════ HERO ═══════════ */}
-      <section className="relative overflow-hidden h-[35vh] min-h-[220px] max-h-[820px] sm:h-[65vh] lg:h-[90vh]">
+      <section className="relative overflow-hidden h-[45vh] min-h-[280px] max-h-[820px] sm:h-[65vh] lg:h-[90vh]">
         <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent" />
 
-        <div className="container relative flex h-full items-end pb-8 sm:pb-16 lg:items-center lg:pb-0 px-3 sm:px-6">
+        <div className="container relative flex h-full items-end pb-10 sm:pb-16 lg:items-center lg:pb-0 px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="max-w-xl space-y-2 sm:space-y-5"
+            className="max-w-xl space-y-3 sm:space-y-5"
           >
-            <h1 className="text-2xl sm:text-5xl lg:text-7xl font-black leading-[1.05] tracking-tight text-foreground">
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black leading-[1.05] tracking-tight text-foreground">
               Discover Your<br />
               <span className="text-primary">Favourite Movies</span>
             </h1>
-            <p className="max-w-md text-[10px] sm:text-sm lg:text-base leading-relaxed text-secondary-foreground hidden sm:block">
-              Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more — plus full details, trailers, and where to watch.
+            <p className="max-w-md text-xs sm:text-sm lg:text-base leading-relaxed text-secondary-foreground">
+              Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more.
             </p>
-            <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
-              <Button asChild variant="hero" size="sm" className="sm:!h-11 sm:!px-6 sm:!text-sm lg:!h-13 lg:!px-8 lg:!text-base">
-                <Link to="/quiz"><Play className="size-3.5 sm:size-4 lg:size-5 fill-current" /> Start Quiz</Link>
+            <div className="flex items-center gap-3 sm:gap-3 lg:gap-4">
+              <Button asChild variant="hero" size="default" className="sm:!h-11 sm:!px-6 sm:!text-sm lg:!h-13 lg:!px-8 lg:!text-base">
+                <Link to="/quiz"><Play className="size-4 sm:size-4 lg:size-5 fill-current" /> Start Quiz</Link>
               </Button>
-              <Button asChild variant="heroSecondary" size="sm" className="sm:!h-11 sm:!px-6 sm:!text-sm lg:!h-13 lg:!px-8 lg:!text-base">
-                <Link to="/browse"><Film className="size-3.5 sm:size-4 lg:size-5" /> Browse All</Link>
+              <Button asChild variant="heroSecondary" size="default" className="sm:!h-11 sm:!px-6 sm:!text-sm lg:!h-13 lg:!px-8 lg:!text-base">
+                <Link to="/browse"><Film className="size-4 sm:size-4 lg:size-5" /> Browse All</Link>
               </Button>
             </div>
           </motion.div>
