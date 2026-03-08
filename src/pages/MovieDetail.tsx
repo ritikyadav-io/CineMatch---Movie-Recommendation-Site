@@ -18,7 +18,7 @@ const MovieDetailPage = () => {
   if (detailQuery.isLoading) {
     return (
       <div className="min-h-screen bg-background text-foreground">
-        <CineMatchNav />
+        <DNANav />
         <main className="container py-24">
           <div className="section-shell flex items-center justify-center gap-3 py-20 text-muted-foreground">
             <Loader2 className="size-5 animate-spin text-primary" />
