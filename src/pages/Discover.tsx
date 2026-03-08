@@ -71,46 +71,46 @@ const DiscoverPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <main className="container space-y-8 pt-24 pb-12 lg:pt-28 lg:pb-16">
-        <section className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <main className="container space-y-4 sm:space-y-8 pt-20 pb-8 sm:pt-24 sm:pb-12 lg:pt-28 lg:pb-16 px-3 sm:px-6">
+        <section className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">Discover</span>
-            <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">{headline}</h1>
-            <p className="max-w-2xl text-sm text-muted-foreground mt-1">{description}</p>
+            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">Discover</span>
+            <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">{headline}</h1>
+            <p className="max-w-2xl text-[10px] sm:text-sm text-muted-foreground mt-0.5">{description}</p>
           </div>
-          <Button asChild variant="heroSecondary" size="sm">
+          <Button asChild variant="heroSecondary" size="sm" className="self-start text-xs">
             <Link to="/discover?mode=random">
-              <Shuffle className="size-4" />
+              <Shuffle className="size-3.5" />
               Surprise Me
             </Link>
           </Button>
         </section>
 
         {recommendationsQuery.isLoading ? (
-          <div className="flex items-center justify-center gap-3 py-20 text-muted-foreground">
-            <Loader2 className="size-5 animate-spin text-primary" />
+          <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground text-xs">
+            <Loader2 className="size-4 animate-spin text-primary" />
             Loading recommendations...
           </div>
         ) : topPick ? (
           <>
-            <section className="grid gap-6 lg:grid-cols-[0.4fr_0.6fr] rounded-lg bg-card overflow-hidden">
+            <section className="grid gap-3 sm:gap-6 grid-cols-[0.35fr_0.65fr] sm:grid-cols-[0.4fr_0.6fr] rounded-lg bg-card overflow-hidden">
               <img src={topPick.poster} alt={`${topPick.title} poster`} className="w-full h-full object-cover" loading="eager" />
-              <div className="p-6 lg:p-8 space-y-4 flex flex-col justify-center">
-                <span className="text-xs font-bold uppercase tracking-wider text-primary">
+              <div className="p-3 sm:p-6 lg:p-8 space-y-2 sm:space-y-4 flex flex-col justify-center">
+                <span className="text-[8px] sm:text-xs font-bold uppercase tracking-wider text-primary">
                   Top {topPick.type === "series" ? "Series" : "Movie"}
                 </span>
-                <h2 className="text-3xl font-black tracking-tight text-foreground sm:text-4xl">{topPick.title}</h2>
-                <p className="text-sm text-muted-foreground">{topPick.overview}</p>
-                <div className="flex flex-wrap gap-2 text-xs">
-                  <span className="rounded bg-secondary px-3 py-1 text-secondary-foreground">{topPick.year}</span>
-                  <span className="rounded bg-secondary px-3 py-1 text-secondary-foreground">IMDb {topPick.rating}</span>
-                  <span className="rounded bg-secondary px-3 py-1 text-secondary-foreground">{topPick.genres.slice(0, 2).join(" • ")}</span>
+                <h2 className="text-base sm:text-3xl font-black tracking-tight text-foreground">{topPick.title}</h2>
+                <p className="text-[10px] sm:text-sm text-muted-foreground line-clamp-3 sm:line-clamp-none">{topPick.overview}</p>
+                <div className="flex flex-wrap gap-1 sm:gap-2 text-[8px] sm:text-xs">
+                  <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground">{topPick.year}</span>
+                  <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground">IMDb {topPick.rating}</span>
+                  <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground">{topPick.genres.slice(0, 2).join(" • ")}</span>
                 </div>
-                <div className="flex gap-3 pt-2">
-                  <Button asChild variant="hero">
+                <div className="flex gap-2 pt-1 sm:pt-2">
+                  <Button asChild variant="hero" size="sm" className="text-[10px] sm:text-sm !h-7 sm:!h-9 !px-3 sm:!px-4">
                     <Link to={`/movie/${topPick.imdbID}`}>View Details</Link>
                   </Button>
-                  <Button asChild variant="heroSecondary">
+                  <Button asChild variant="heroSecondary" size="sm" className="text-[10px] sm:text-sm !h-7 sm:!h-9 !px-3 sm:!px-4">
                     <Link to="/quiz">Retake Quiz</Link>
                   </Button>
                 </div>
@@ -118,9 +118,9 @@ const DiscoverPage = () => {
             </section>
 
             {moreLikeThis.length > 0 && (
-              <section className="space-y-4">
-                <h2 className="text-xl font-bold text-foreground">You May Also Like</h2>
-                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+              <section className="space-y-2 sm:space-y-4">
+                <h2 className="text-sm sm:text-xl font-bold text-foreground">You May Also Like</h2>
+                <div className="grid gap-2 grid-cols-3 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
                   {moreLikeThis.map((item) => (
                     <CineMovieCard key={item.imdbID} item={item} />
                   ))}
@@ -129,17 +129,17 @@ const DiscoverPage = () => {
             )}
           </>
         ) : (
-          <div className="py-16 text-center text-muted-foreground">No results matched. Try a broader genre or language.</div>
+          <div className="py-12 text-center text-muted-foreground text-xs">No results matched. Try a broader genre or language.</div>
         )}
 
         {surpriseQuery.data && (
-          <section className="flex flex-col gap-3 rounded-lg bg-card p-6 lg:flex-row lg:items-center lg:justify-between">
+          <section className="flex flex-col gap-2 sm:gap-3 rounded-lg bg-card p-3 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-primary">Wildcard</span>
-              <h2 className="text-lg font-bold text-foreground">Tonight's Surprise</h2>
-              <p className="text-xs text-muted-foreground">{surpriseQuery.data.title} is standing by.</p>
+              <span className="text-[8px] sm:text-xs font-bold uppercase tracking-wider text-primary">Wildcard</span>
+              <h2 className="text-sm sm:text-lg font-bold text-foreground">Tonight's Surprise</h2>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">{surpriseQuery.data.title} is standing by.</p>
             </div>
-            <Button asChild variant="heroSecondary" size="sm">
+            <Button asChild variant="heroSecondary" size="sm" className="self-start text-xs">
               <Link to={`/movie/${surpriseQuery.data.imdbID}`}>View Pick</Link>
             </Button>
           </section>
