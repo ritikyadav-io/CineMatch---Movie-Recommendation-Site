@@ -232,9 +232,43 @@ const MovieDetailPage = () => {
           </div>
         </section>
 
-        {/* ═══ Watch Online ═══ */}
+        {/* ═══ Watch on Site ═══ */}
         <section className="space-y-2 sm:space-y-3">
-          <h2 className="text-sm sm:text-lg font-bold text-foreground">🎬 Watch Online</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm sm:text-lg font-bold text-foreground">🎬 Watch Movie</h2>
+            {!showPlayer && (
+              <Button onClick={() => setShowPlayer(true)} variant="hero" size="sm" className="text-[10px] sm:text-xs !h-7 sm:!h-8 !px-3">
+                <PlayCircle className="size-3.5" /> Watch Now
+              </Button>
+            )}
+          </div>
+          {showPlayer && movie.imdbID && !movie.imdbID.startsWith("tmdb-") ? (
+            <div className="space-y-2">
+              <div className="relative aspect-video overflow-hidden rounded-lg border border-border bg-black">
+                <iframe
+                  src={`https://vidsrc.xyz/embed/movie/${movie.imdbID}`}
+                  className="h-full w-full"
+                  allowFullScreen
+                  allow="autoplay; encrypted-media; fullscreen"
+                  title={`Watch ${movie.title}`}
+                  referrerPolicy="origin"
+                />
+              </div>
+              <button onClick={() => setShowPlayer(false)} className="text-[10px] sm:text-xs text-muted-foreground hover:text-foreground transition">
+                ✕ Close Player
+              </button>
+            </div>
+          ) : showPlayer ? (
+            <div className="rounded-lg bg-card border border-border p-4 text-center space-y-2">
+              <p className="text-xs text-muted-foreground">Player not available for this title. Try the links below:</p>
+              <button onClick={() => setShowPlayer(false)} className="text-[10px] text-muted-foreground hover:text-foreground transition">✕ Close</button>
+            </div>
+          ) : null}
+        </section>
+
+        {/* ═══ Watch Online Links ═══ */}
+        <section className="space-y-2 sm:space-y-3">
+          <h2 className="text-sm sm:text-lg font-bold text-foreground">🔗 Watch Online</h2>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 sm:gap-2">
             {WATCH_LINKS.map((w) => (
               <a
