@@ -233,6 +233,16 @@ export function DNANav() {
                 <Search className="size-5" />
                 Search
               </Link>
+              {user && (
+                <Link
+                  to="/profile"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-foreground hover:bg-muted transition"
+                >
+                  <Bookmark className="size-5" />
+                  My Profile & Watchlist
+                </Link>
+              )}
             </nav>
 
             {/* Bottom actions */}
@@ -250,12 +260,21 @@ export function DNANav() {
                   Install App
                 </Button>
               )}
-              <Button asChild variant="hero" className="w-full">
-                <Link to="/quiz" onClick={() => setMobileOpen(false)}>
-                  <Sparkles className="size-4" />
-                  Start Quiz
-                </Link>
-              </Button>
+              {user ? (
+                <Button asChild variant="hero" className="w-full">
+                  <Link to="/quiz" onClick={() => setMobileOpen(false)}>
+                    <Sparkles className="size-4" />
+                    Start Quiz
+                  </Link>
+                </Button>
+              ) : (
+                <Button asChild variant="hero" className="w-full">
+                  <Link to="/auth" onClick={() => setMobileOpen(false)}>
+                    <LogIn className="size-4" />
+                    Sign In / Sign Up
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
         </div>
