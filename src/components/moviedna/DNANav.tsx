@@ -259,7 +259,7 @@ export function DNANav() {
             </nav>
 
             {/* Bottom actions */}
-            <div className="p-4 space-y-2 border-t border-border">
+            <div className="p-3 space-y-1.5 border-t border-border">
               {canInstall && !isInstalled && (
                 <Button
                   onClick={() => {
@@ -267,18 +267,20 @@ export function DNANav() {
                     setMobileOpen(false);
                   }}
                   variant="heroSecondary"
-                  className="w-full"
+                  size="sm"
+                  className="w-full text-xs"
                 >
-                  <Download className="size-4" />
+                  <Download className="size-3.5" />
                   Install App
                 </Button>
               )}
               <Button
                 onClick={() => { setShowDonate(true); setMobileOpen(false); }}
                 variant="hero"
-                className="w-full"
+                size="sm"
+                className="w-full text-xs"
               >
-                <Heart className="size-4" />
+                <Heart className="size-3.5" />
                 Donate
               </Button>
             </div>
