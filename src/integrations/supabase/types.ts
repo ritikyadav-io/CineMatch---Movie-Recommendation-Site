@@ -14,7 +14,102 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      quiz_results: {
+        Row: {
+          answers: Json
+          created_at: string
+          id: string
+          match_score: number | null
+          top_movie_imdb_id: string | null
+          top_movie_poster: string | null
+          top_movie_title: string | null
+          user_id: string
+        }
+        Insert: {
+          answers: Json
+          created_at?: string
+          id?: string
+          match_score?: number | null
+          top_movie_imdb_id?: string | null
+          top_movie_poster?: string | null
+          top_movie_title?: string | null
+          user_id: string
+        }
+        Update: {
+          answers?: Json
+          created_at?: string
+          id?: string
+          match_score?: number | null
+          top_movie_imdb_id?: string | null
+          top_movie_poster?: string | null
+          top_movie_title?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      watchlist: {
+        Row: {
+          added_at: string
+          genres: string[] | null
+          id: string
+          imdb_id: string
+          poster: string | null
+          rating: string | null
+          title: string
+          user_id: string
+          year: string | null
+        }
+        Insert: {
+          added_at?: string
+          genres?: string[] | null
+          id?: string
+          imdb_id: string
+          poster?: string | null
+          rating?: string | null
+          title: string
+          user_id: string
+          year?: string | null
+        }
+        Update: {
+          added_at?: string
+          genres?: string[] | null
+          id?: string
+          imdb_id?: string
+          poster?: string | null
+          rating?: string | null
+          title?: string
+          user_id?: string
+          year?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
