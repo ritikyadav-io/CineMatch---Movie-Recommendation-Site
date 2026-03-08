@@ -62,7 +62,7 @@ const AuthPage = () => {
             </h1>
             <p className="text-sm text-muted-foreground">
               {isSignUp
-                ? "Sign up to save your Movie DNA profile and watchlist."
+                ? "Sign up to save your Movies DNA profile and watchlist."
                 : "Sign in to access your watchlist and quiz results."}
             </p>
           </div>

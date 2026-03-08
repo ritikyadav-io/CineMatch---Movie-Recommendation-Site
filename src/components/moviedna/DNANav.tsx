@@ -99,7 +99,7 @@ export function DNANav() {
 
           {/* Logo */}
           <Link to="/" className="shrink-0 text-base sm:text-xl font-black tracking-tight text-foreground">
-            Movie <span className="text-primary">DNA</span>
+            Movies <span className="text-primary">DNA</span>
           </Link>
 
           {/* Desktop nav links */}
@@ -201,7 +201,7 @@ export function DNANav() {
           <div className="absolute right-0 top-0 bottom-0 w-72 bg-card shadow-2xl animate-slide-in-right flex flex-col">
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-border">
-              <span className="text-lg font-black tracking-tight text-foreground">Movie <span className="text-primary">DNA</span></span>
+              <span className="text-lg font-black tracking-tight text-foreground">Movies <span className="text-primary">DNA</span></span>
               <button
                 onClick={() => setMobileOpen(false)}
                 className="p-2 rounded-full hover:bg-muted text-foreground"
@@ -301,7 +301,7 @@ export function DNANav() {
               <X className="size-4" />
             </button>
             <Heart className="size-8 text-primary mx-auto" />
-            <h2 className="text-lg font-bold text-foreground">Support Movie DNA</h2>
+            <h2 className="text-lg font-bold text-foreground">Support Movies DNA</h2>
             <p className="text-xs text-muted-foreground">Scan the QR code to donate via UPI</p>
             <img
               src={donateQr}

@@ -177,7 +177,7 @@ const Index = () => {
             </div>
             <h1 className="text-2xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-foreground">
               Discover Your<br />
-              <span className="text-primary">Movie DNA</span>
+              <span className="text-primary">Movies DNA</span>
             </h1>
             <p className="max-w-md text-[10px] sm:text-sm leading-relaxed text-secondary-foreground hidden sm:block">
               Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more — plus full details, trailers, and where to watch.
@@ -272,7 +272,7 @@ const Index = () => {
           className="rounded-xl bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-3 py-6 sm:px-5 sm:py-14 text-center space-y-3 sm:space-y-6"
         >
           <h2 className="text-base sm:text-4xl font-black tracking-tight text-foreground">
-            Movie <span className="text-primary">DNA</span> in Numbers
+            Movies <span className="text-primary">DNA</span> in Numbers
           </h2>
           <StatsGrid />
           <p className="text-[10px] sm:text-sm text-muted-foreground max-w-md mx-auto">

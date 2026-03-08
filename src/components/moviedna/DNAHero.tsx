@@ -55,7 +55,7 @@ export function DNAHero() {
           >
             Discover Your
             <br />
-            <span className="text-primary">Movie DNA</span>
+            <span className="text-primary">Movies DNA</span>
           </motion.h1>
 
           <motion.p

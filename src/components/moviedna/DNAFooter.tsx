@@ -9,10 +9,10 @@ export function DNAFooter() {
       <div className="container grid gap-8 py-10 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-3">
           <Link to="/">
-            <img src={logo} alt="Movie DNA" className="h-7 w-auto" />
+            <img src={logo} alt="Movies DNA" className="h-7 w-auto" />
           </Link>
           <p className="max-w-md text-xs leading-5 text-muted-foreground">
-            Movie DNA decodes your cinematic taste — blending Hollywood, Bollywood, superhero, and anime universes into one discovery engine.
+            Movies DNA decodes your cinematic taste — blending Hollywood, Bollywood, superhero, and anime universes into one discovery engine.
           </p>
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
             Powered by OMDb API & YouTube Data
