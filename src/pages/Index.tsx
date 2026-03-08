@@ -56,9 +56,9 @@ const personalities = [
 /* ── Skeleton row placeholder ── */
 function SkeletonRow() {
   return (
-    <div className="flex gap-1.5 sm:gap-3 overflow-hidden pb-2">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="shrink-0 w-[80px] sm:w-[120px] lg:w-[140px]">
+    <div className="flex gap-1.5 sm:gap-3 lg:gap-4 overflow-hidden pb-2">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <div key={i} className="shrink-0 w-[80px] sm:w-[120px] lg:w-[170px] xl:w-[190px]">
           <Skeleton className="aspect-[2/3] w-full rounded-md" />
           <Skeleton className="h-3 w-3/4 mt-1 rounded" />
           <Skeleton className="h-2 w-1/2 mt-0.5 rounded" />
@@ -83,7 +83,7 @@ function LazyMovieRow({ title, fetchFn, link, queryKey }: { title: string; fetch
   return (
     <div ref={ref}>
       <div className="flex items-center justify-between mb-1 sm:mb-3 px-0.5">
-        <h2 className="text-xs sm:text-lg font-bold text-foreground">{title}</h2>
+        <h2 className="text-xs sm:text-lg lg:text-xl font-bold text-foreground">{title}</h2>
         <Link to={link} className="flex items-center gap-0.5 text-[8px] sm:text-xs font-semibold text-muted-foreground hover:text-primary transition">
           See All <ChevronRight className="size-2.5 sm:size-4" />
         </Link>
@@ -91,9 +91,9 @@ function LazyMovieRow({ title, fetchFn, link, queryKey }: { title: string; fetch
       {!isVisible || isLoading ? (
         <SkeletonRow />
       ) : data?.length ? (
-        <div className="flex gap-1.5 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
-          {data.slice(0, 12).map((item) => (
-            <div key={item.imdbID} className="shrink-0 w-[80px] sm:w-[120px] lg:w-[140px]">
+        <div className="flex gap-1.5 sm:gap-3 lg:gap-4 overflow-x-auto pb-2 scrollbar-hide">
+          {data.slice(0, 15).map((item) => (
+            <div key={item.imdbID} className="shrink-0 w-[80px] sm:w-[120px] lg:w-[170px] xl:w-[190px]">
               <CineMovieCard item={item} />
             </div>
           ))}
@@ -136,8 +136,8 @@ function AnimatedStat({ target, suffix, label, inView }: { target: number; suffi
   const display = target === 0 ? suffix : `${count.toLocaleString()}${suffix}`;
   return (
     <div className="space-y-0.5">
-      <p className="text-sm sm:text-xl font-black text-primary">{display}</p>
-      <p className="text-[7px] sm:text-[10px] text-muted-foreground font-medium">{label}</p>
+      <p className="text-sm sm:text-xl lg:text-3xl font-black text-primary">{display}</p>
+      <p className="text-[7px] sm:text-[10px] lg:text-sm text-muted-foreground font-medium">{label}</p>
     </div>
   );
 }
@@ -146,7 +146,7 @@ function StatsGrid() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
   return (
-    <div ref={ref} className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+    <div ref={ref} className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-8 max-w-2xl lg:max-w-4xl mx-auto">
       {statsData.map((s) => (
         <AnimatedStat key={s.label} {...s} inView={inView} />
       ))}
@@ -172,7 +172,7 @@ const Index = () => {
       <DNANav />
 
       {/* ═══════════ HERO ═══════════ */}
-      <section className="relative overflow-hidden h-[35vh] min-h-[220px] max-h-[720px] sm:h-[60vh] lg:h-[85vh]">
+      <section className="relative overflow-hidden h-[35vh] min-h-[220px] max-h-[820px] sm:h-[65vh] lg:h-[90vh]">
         <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
@@ -189,19 +189,19 @@ const Index = () => {
               <span className="size-1.5 rounded-full bg-primary animate-pulse" />
               Now Streaming
             </div>
-            <h1 className="text-2xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-foreground">
+            <h1 className="text-2xl sm:text-5xl lg:text-7xl font-black leading-[1.05] tracking-tight text-foreground">
               Discover Your<br />
               <span className="text-primary">Favourite Movies</span>
             </h1>
-            <p className="max-w-md text-[10px] sm:text-sm leading-relaxed text-secondary-foreground hidden sm:block">
+            <p className="max-w-md text-[10px] sm:text-sm lg:text-base leading-relaxed text-secondary-foreground hidden sm:block">
               Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more — plus full details, trailers, and where to watch.
             </p>
-            <div className="flex items-center gap-2 sm:gap-3">
-              <Button asChild variant="hero" size="sm" className="sm:!h-11 sm:!px-6 sm:!text-sm">
-                <Link to="/quiz"><Play className="size-3.5 sm:size-4 fill-current" /> Start Quiz</Link>
+            <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
+              <Button asChild variant="hero" size="sm" className="sm:!h-11 sm:!px-6 sm:!text-sm lg:!h-13 lg:!px-8 lg:!text-base">
+                <Link to="/quiz"><Play className="size-3.5 sm:size-4 lg:size-5 fill-current" /> Start Quiz</Link>
               </Button>
-              <Button asChild variant="heroSecondary" size="sm" className="sm:!h-11 sm:!px-6 sm:!text-sm">
-                <Link to="/browse"><Film className="size-3.5 sm:size-4" /> Browse All</Link>
+              <Button asChild variant="heroSecondary" size="sm" className="sm:!h-11 sm:!px-6 sm:!text-sm lg:!h-13 lg:!px-8 lg:!text-base">
+                <Link to="/browse"><Film className="size-3.5 sm:size-4 lg:size-5" /> Browse All</Link>
               </Button>
             </div>
           </motion.div>
@@ -209,8 +209,8 @@ const Index = () => {
       </section>
 
       {/* ═══════════ FEATURES ═══════════ */}
-      <section className="container px-3 sm:px-6 -mt-6 sm:-mt-12 relative z-10">
-        <div className="grid grid-cols-4 gap-1.5 sm:gap-3">
+      <section className="container px-3 sm:px-6 -mt-6 sm:-mt-12 lg:-mt-16 relative z-10">
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-3 lg:gap-5">
           {features.map((f, i) => (
             <motion.div
               key={f.title}
@@ -221,14 +221,14 @@ const Index = () => {
             >
               <Link
                 to={f.link}
-                className="group flex flex-col items-center gap-1 sm:gap-3 rounded-lg bg-card/80 backdrop-blur-md border border-border p-2 sm:p-5 transition-all hover:bg-card hover:border-primary/30 hover:scale-[1.02] text-center"
+                className="group flex flex-col items-center gap-1 sm:gap-3 lg:gap-4 rounded-lg lg:rounded-xl bg-card/80 backdrop-blur-md border border-border p-2 sm:p-5 lg:p-8 transition-all hover:bg-card hover:border-primary/30 hover:scale-[1.02] text-center"
               >
-                <div className="flex size-6 sm:size-10 items-center justify-center rounded-md bg-primary/10">
-                  <f.icon className="size-3 sm:size-5 text-primary" />
+                <div className="flex size-6 sm:size-10 lg:size-14 items-center justify-center rounded-md lg:rounded-xl bg-primary/10">
+                  <f.icon className="size-3 sm:size-5 lg:size-7 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-[8px] sm:text-sm font-bold text-foreground leading-tight">{f.title}</h3>
-                  <p className="text-[7px] sm:text-xs text-muted-foreground mt-0.5 line-clamp-1 sm:line-clamp-2 hidden sm:block">{f.desc}</p>
+                  <h3 className="text-[8px] sm:text-sm lg:text-base font-bold text-foreground leading-tight">{f.title}</h3>
+                  <p className="text-[7px] sm:text-xs lg:text-sm text-muted-foreground mt-0.5 lg:mt-1 line-clamp-1 sm:line-clamp-2 hidden sm:block">{f.desc}</p>
                 </div>
               </Link>
             </motion.div>
@@ -237,25 +237,25 @@ const Index = () => {
       </section>
 
       {/* ═══════════ MOVIE ROWS (horizontal scroll) ═══════════ */}
-      <main className="container px-3 sm:px-6 space-y-4 sm:space-y-8 pt-6 sm:pt-12">
+      <main className="container px-3 sm:px-6 lg:px-8 space-y-4 sm:space-y-8 lg:space-y-10 pt-6 sm:pt-12 lg:pt-16">
         {sections.map((s) => (
           <LazyMovieRow key={s.queryKey} title={s.title} fetchFn={s.fetchFn} link={s.link} queryKey={s.queryKey} />
         ))}
       </main>
 
       {/* ═══════════ PERSONALITY TYPES ═══════════ */}
-      <section className="container px-3 sm:px-6 py-6 sm:py-16">
+      <section className="container px-3 sm:px-6 lg:px-8 py-6 sm:py-16 lg:py-20">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-4 sm:mb-8"
+          className="text-center mb-4 sm:mb-8 lg:mb-12"
         >
-          <h2 className="text-base sm:text-3xl font-black text-foreground">What's Your Movie Type?</h2>
-          <p className="text-[10px] sm:text-sm text-muted-foreground mt-0.5">Explore genres that match your vibe</p>
+          <h2 className="text-base sm:text-3xl lg:text-4xl font-black text-foreground">What's Your Movie Type?</h2>
+          <p className="text-[10px] sm:text-sm lg:text-base text-muted-foreground mt-0.5 lg:mt-2">Explore genres that match your vibe</p>
         </motion.div>
-        <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 lg:gap-5">
           {personalities.map((p, i) => (
             <motion.div
               key={p.title}
@@ -266,10 +266,10 @@ const Index = () => {
             >
               <Link
                 to={p.link}
-                className={`group flex flex-col items-center gap-1 sm:gap-2 rounded-xl bg-gradient-to-b ${p.color} border p-2 sm:p-5 text-center transition-all hover:scale-105`}
+                className={`group flex flex-col items-center gap-1 sm:gap-2 lg:gap-3 rounded-xl bg-gradient-to-b ${p.color} border p-2 sm:p-5 lg:p-8 text-center transition-all hover:scale-105`}
               >
-                <p.icon className={`size-4 sm:size-8 ${p.iconColor}`} />
-                <span className="text-[8px] sm:text-xs font-bold text-foreground">{p.title}</span>
+                <p.icon className={`size-4 sm:size-8 lg:size-12 ${p.iconColor}`} />
+                <span className="text-[8px] sm:text-xs lg:text-sm font-bold text-foreground">{p.title}</span>
               </Link>
             </motion.div>
           ))}
@@ -277,24 +277,24 @@ const Index = () => {
       </section>
 
       {/* ═══════════ FUN STATS ═══════════ */}
-      <section className="container px-3 sm:px-6 pb-4 sm:pb-10">
+      <section className="container px-3 sm:px-6 lg:px-8 pb-4 sm:pb-10 lg:pb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="rounded-lg bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-3 py-4 sm:px-4 sm:py-8 text-center space-y-2 sm:space-y-4"
+          className="rounded-lg lg:rounded-2xl bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-3 py-4 sm:px-4 sm:py-8 lg:px-8 lg:py-14 text-center space-y-2 sm:space-y-4 lg:space-y-6"
         >
-          <h2 className="text-sm sm:text-2xl font-black tracking-tight text-foreground">
+          <h2 className="text-sm sm:text-2xl lg:text-4xl font-black tracking-tight text-foreground">
             Movies <span className="text-primary">DNA</span> in Numbers
           </h2>
           <StatsGrid />
-          <p className="text-[8px] sm:text-xs text-muted-foreground max-w-sm mx-auto">
+          <p className="text-[8px] sm:text-xs lg:text-sm text-muted-foreground max-w-sm lg:max-w-lg mx-auto">
             Your perfect movie is one quiz away. Stop scrolling, start watching. 🍿
           </p>
-          <Button asChild variant="hero" size="sm" className="group sm:!h-9 sm:!px-5 sm:!text-xs">
+          <Button asChild variant="hero" size="sm" className="group sm:!h-9 sm:!px-5 sm:!text-xs lg:!h-12 lg:!px-8 lg:!text-sm">
             <Link to="/quiz">
-              Take the Quiz <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+              Take the Quiz <ArrowRight className="size-3.5 lg:size-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
         </motion.div>
