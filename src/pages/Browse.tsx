@@ -101,22 +101,60 @@ const BrowsePage = () => {
         )}
 
         {/* Pagination */}
-        <div className="flex items-center justify-center gap-3 pt-4">
+        <div className="flex items-center justify-center gap-1 sm:gap-1.5 pt-3 flex-wrap">
           <Button
             variant="heroSecondary"
             size="sm"
+            className="text-[10px] !h-7 !px-2 sm:!px-3"
+            disabled={page <= 1}
+            onClick={() => setPage(1)}
+          >
+            « First
+          </Button>
+          <Button
+            variant="heroSecondary"
+            size="sm"
+            className="text-[10px] !h-7 !px-2 sm:!px-3"
             disabled={page <= 1}
             onClick={() => setPage((p) => Math.max(1, p - 1))}
           >
-            Previous
+            ‹ Prev
           </Button>
-          <span className="text-sm text-muted-foreground">Page {page}</span>
+          {Array.from({ length: Math.min(7, 20) }, (_, i) => {
+            const start = Math.max(1, Math.min(page - 3, 20 - 6));
+            const pageNum = start + i;
+            if (pageNum > 20) return null;
+            return (
+              <button
+                key={pageNum}
+                onClick={() => setPage(pageNum)}
+                className={`size-7 rounded-md text-[10px] font-bold transition ${
+                  page === pageNum
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-secondary text-secondary-foreground hover:bg-muted"
+                }`}
+              >
+                {pageNum}
+              </button>
+            );
+          })}
           <Button
             variant="heroSecondary"
             size="sm"
-            onClick={() => setPage((p) => p + 1)}
+            className="text-[10px] !h-7 !px-2 sm:!px-3"
+            disabled={page >= 20}
+            onClick={() => setPage((p) => Math.min(20, p + 1))}
           >
-            Next
+            Next ›
+          </Button>
+          <Button
+            variant="heroSecondary"
+            size="sm"
+            className="text-[10px] !h-7 !px-2 sm:!px-3"
+            disabled={page >= 20}
+            onClick={() => setPage(20)}
+          >
+            Last »
           </Button>
         </div>
       </main>
