@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import {
   fetchTmdbTrending,
   fetchTmdbBollywood,
@@ -35,6 +34,34 @@ const rows: RowConfig[] = [
   { title: "📺 Trending Series", queryKey: "tmdb-series", fetcher: fetchTmdbSeries, link: "/browse?cat=series" },
 ];
 
+function SimpleMovieCard({ item }: { item: MediaCardData }) {
+  return (
+    <Link
+      to={`/movie/${item.imdbID}`}
+      className="group block w-[140px] sm:w-[160px] flex-shrink-0"
+    >
+      <div className="relative overflow-hidden rounded-md bg-muted" style={{ aspectRatio: '2/3' }}>
+        <img
+          src={item.poster}
+          alt={item.title}
+          className="block h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+        />
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background to-transparent p-2">
+          <div className="flex items-center gap-1 text-xs text-foreground">
+            <Star className="size-3 fill-yellow-500 text-yellow-500" />
+            {item.rating}
+          </div>
+        </div>
+      </div>
+      <div className="mt-1.5 px-0.5">
+        <h3 className="truncate text-xs font-semibold text-foreground">{item.title}</h3>
+        <p className="text-[10px] text-muted-foreground">{item.year}</p>
+      </div>
+    </Link>
+  );
+}
+
 function MovieRow({ config }: { config: RowConfig }) {
   const { data, isLoading } = useQuery({
     queryKey: [config.queryKey],
@@ -46,9 +73,9 @@ function MovieRow({ config }: { config: RowConfig }) {
     return (
       <div className="space-y-3">
         <div className="h-5 w-40 animate-pulse rounded bg-muted" />
-        <div className="scroll-row gap-3">
+        <div className="flex gap-3 overflow-hidden">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="w-40 shrink-0 aspect-[2/3] animate-pulse rounded-md bg-muted" />
+            <div key={i} className="w-[140px] sm:w-[160px] flex-shrink-0 rounded-md bg-muted" style={{ aspectRatio: '2/3' }} />
           ))}
         </div>
       </div>
@@ -68,14 +95,12 @@ function MovieRow({ config }: { config: RowConfig }) {
           See All <ChevronRight className="size-4" />
         </Link>
       </div>
-      <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' }}>
-        {data.map((item) => (
-          <div
-            key={item.imdbID}
-            className="w-36 sm:w-40 flex-none"
-          >
-            <CineMovieCard item={item} />
-          </div>
+      <div
+        className="flex gap-3 overflow-x-auto pb-2"
+        style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {data.slice(0, 10).map((item) => (
+          <SimpleMovieCard key={item.imdbID} item={item} />
         ))}
       </div>
     </div>
