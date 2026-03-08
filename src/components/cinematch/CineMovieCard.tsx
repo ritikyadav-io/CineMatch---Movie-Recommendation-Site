@@ -39,6 +39,8 @@ export function CineMovieCard({ item, priority = false }: CineMovieCardProps) {
           alt={`${item.title} poster`}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading={priority ? "eager" : "lazy"}
+          decoding="async"
+          fetchPriority={priority ? "high" : "low"}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
         <div className="absolute top-1 right-1 sm:top-2 sm:right-2 opacity-0 group-hover:opacity-100 transition-opacity">
