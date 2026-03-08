@@ -16,6 +16,7 @@ import PrivacyPage from "./pages/Privacy";
 import ProfilePage from "./pages/Profile";
 import QuizPage from "./pages/Quiz";
 import SearchPage from "./pages/Search";
+import TrailersPage from "./pages/Trailers";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/browse" element={<BrowsePage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/movie/:imdbID" element={<MovieDetailPage />} />
+            <Route path="/trailers" element={<TrailersPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
