@@ -73,18 +73,18 @@ const DiscoverPage = () => {
       <DNANav />
 
       {/* Hero Banner */}
-      <div className="relative h-32 sm:h-44 lg:h-52 overflow-hidden">
+      <div className="relative h-36 sm:h-44 lg:h-52 overflow-hidden">
         <img src={heroDiscover} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
         <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent" />
-        <div className="container relative flex items-end h-full pb-4 sm:pb-6 px-3 sm:px-6">
-          <section className="flex flex-col gap-1 sm:gap-2 lg:flex-row lg:items-end lg:justify-between w-full">
+        <div className="container relative flex items-end h-full pb-5 sm:pb-6 px-4 sm:px-6">
+          <section className="flex flex-col gap-1.5 sm:gap-2 lg:flex-row lg:items-end lg:justify-between w-full">
             <div>
-              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">Discover</span>
-              <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">{headline}</h1>
-              <p className="max-w-2xl text-[10px] sm:text-sm text-muted-foreground mt-0.5">{description}</p>
+              <span className="text-xs sm:text-xs font-bold uppercase tracking-wider text-primary">Discover</span>
+              <h1 className="text-xl sm:text-4xl font-black tracking-tight text-foreground">{headline}</h1>
+              <p className="max-w-2xl text-xs sm:text-sm text-muted-foreground mt-1">{description}</p>
             </div>
-            <Button asChild variant="heroSecondary" size="sm" className="self-start text-xs">
+            <Button asChild variant="heroSecondary" size="default" className="self-start text-xs">
               <Link to="/discover?mode=random">
                 <Shuffle className="size-3.5" />
                 Surprise Me
