@@ -67,7 +67,7 @@ const DiscoverPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <CineMatchNav />
+      <DNANav />
       <main className="container space-y-10 py-12 lg:space-y-14 lg:py-16">
         <section className="section-shell flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4">
