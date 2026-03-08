@@ -34,8 +34,6 @@ const WATCH_LINKS = [
   { name: "Netflix", url: (t: string) => `https://www.netflix.com/search?q=${encodeURIComponent(t)}`, color: "bg-red-600" },
   { name: "Prime Video", url: (t: string) => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`, color: "bg-blue-500" },
   { name: "Hotstar", url: (t: string) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`, color: "bg-blue-700" },
-  { name: "YouTube", url: (t: string) => `https://www.youtube.com/results?search_query=${encodeURIComponent(t + " full movie")}`, color: "bg-red-500" },
-  { name: "Google", url: (t: string) => `https://www.google.com/search?q=${encodeURIComponent(t + " watch online free")}`, color: "bg-green-600" },
 ];
 
 const MovieDetailPage = () => {
