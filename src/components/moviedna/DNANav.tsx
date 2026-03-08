@@ -75,7 +75,7 @@ export function DNANav() {
             : "bg-gradient-to-b from-background/80 to-transparent",
         ].join(" ")}
       >
-        <div className="container flex items-center gap-4 py-3">
+        <div className="container flex items-center gap-2 sm:gap-4 py-2 sm:py-3">
           {/* Mobile: Back button or Hamburger */}
           <div className="flex lg:hidden">
             {!isHome ? (
