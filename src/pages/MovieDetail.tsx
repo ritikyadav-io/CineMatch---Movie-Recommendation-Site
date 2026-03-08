@@ -30,8 +30,8 @@ const MovieDetailPage = () => {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <DNANav />
-        <main className="container py-24">
-          <div className="section-shell flex items-center justify-center gap-3 py-20 text-muted-foreground">
+        <main className="container pt-24 pb-12">
+          <div className="flex items-center justify-center gap-3 py-20 text-muted-foreground">
             <Loader2 className="size-5 animate-spin text-primary" />
             Loading movie details...
           </div>
@@ -44,8 +44,8 @@ const MovieDetailPage = () => {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <DNANav />
-        <main className="container py-24">
-          <div className="section-shell py-16 text-center text-muted-foreground">We couldn't load that title right now.</div>
+        <main className="container pt-24 pb-12">
+          <div className="py-16 text-center text-muted-foreground">We couldn't load that title right now.</div>
         </main>
       </div>
     );
@@ -54,103 +54,94 @@ const MovieDetailPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <main className="container space-y-10 py-12 lg:space-y-14 lg:py-16">
-        <section className="grid gap-8 section-shell lg:grid-cols-[0.38fr_0.62fr]">
-          <img src={movie.poster} alt={`${movie.title} poster`} className="w-full rounded-[1.8rem] border border-border/70 object-cover shadow-poster" loading="eager" />
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <p className="text-xs uppercase tracking-[0.28em] text-primary">{movie.type === "series" ? "Series detail" : "Movie detail"}</p>
-              <h1 className="font-display text-5xl uppercase tracking-[0.08em] sm:text-6xl">{movie.title}</h1>
-              <p className="max-w-3xl text-muted-foreground">{movie.overview}</p>
+      <main className="container space-y-8 pt-24 pb-12 lg:pt-28 lg:pb-16">
+        <section className="grid gap-6 lg:grid-cols-[0.35fr_0.65fr]">
+          <img src={movie.poster} alt={`${movie.title} poster`} className="w-full rounded-lg object-cover" loading="eager" />
+          <div className="space-y-5">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-primary">
+                {movie.type === "series" ? "Series" : "Movie"} Detail
+              </span>
+              <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl mt-1">{movie.title}</h1>
+              <p className="mt-2 text-sm text-muted-foreground max-w-2xl">{movie.overview}</p>
             </div>
 
-            <div className="flex flex-wrap gap-3 text-sm">
-              <span className="rounded-full border border-border bg-secondary px-4 py-2">{movie.year}</span>
-              <span className="rounded-full border border-border bg-secondary px-4 py-2">IMDb {movie.rating}</span>
-              {movie.runtime && <span className="rounded-full border border-border bg-secondary px-4 py-2">{movie.runtime}</span>}
-              <span className="rounded-full border border-border bg-secondary px-4 py-2">{movie.language}</span>
+            <div className="flex flex-wrap gap-2 text-xs">
+              <span className="rounded bg-secondary px-3 py-1 text-secondary-foreground">{movie.year}</span>
+              <span className="rounded bg-secondary px-3 py-1 text-secondary-foreground">IMDb {movie.rating}</span>
+              {movie.runtime && <span className="rounded bg-secondary px-3 py-1 text-secondary-foreground">{movie.runtime}</span>}
+              <span className="rounded bg-secondary px-3 py-1 text-secondary-foreground">{movie.language}</span>
             </div>
 
-            <div className="space-y-3">
-              <h2 className="text-xl font-semibold text-foreground">Genres</h2>
-              <div className="flex flex-wrap gap-3">
+            <div>
+              <h2 className="text-sm font-bold text-foreground mb-2">Genres</h2>
+              <div className="flex flex-wrap gap-2">
                 {movie.genres.map((genre) => (
-                  <span key={genre} className="rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground">{genre}</span>
+                  <span key={genre} className="rounded bg-card px-3 py-1 text-xs text-foreground border border-border">{genre}</span>
                 ))}
               </div>
             </div>
 
             {movie.actors?.length ? (
-              <div className="space-y-3">
-                <h2 className="text-xl font-semibold text-foreground">Cast</h2>
-                <p className="text-muted-foreground">{movie.actors.join(" • ")}</p>
+              <div>
+                <h2 className="text-sm font-bold text-foreground mb-1">Cast</h2>
+                <p className="text-xs text-muted-foreground">{movie.actors.join(" • ")}</p>
               </div>
             ) : null}
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2">
               {trailerQuery.data ? (
                 <button
                   onClick={() => setShowTrailer(true)}
-                  className="section-shell flex items-center justify-between gap-4 p-5 text-left transition duration-300 hover:border-primary/40 hover:bg-secondary/70"
+                  className="flex items-center justify-between rounded-lg bg-card p-4 transition hover:bg-secondary"
                 >
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.24em] text-primary">Trailer</p>
-                    <p className="mt-2 text-lg font-semibold">Watch trailer</p>
+                  <div className="text-left">
+                    <p className="text-xs font-bold uppercase tracking-wider text-primary">Trailer</p>
+                    <p className="text-sm font-semibold text-foreground mt-0.5">Watch Trailer</p>
                   </div>
-                  <PlayCircle className="size-6 text-primary" />
+                  <PlayCircle className="size-5 text-primary" />
                 </button>
               ) : (
-                <a href={getTrailerSearchUrl(movie.title, movie.year)} target="_blank" rel="noreferrer" className="section-shell flex items-center justify-between gap-4 p-5 transition duration-300 hover:border-primary/40 hover:bg-secondary/70">
+                <a href={getTrailerSearchUrl(movie.title, movie.year)} target="_blank" rel="noreferrer" className="flex items-center justify-between rounded-lg bg-card p-4 transition hover:bg-secondary">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.24em] text-primary">Trailer</p>
-                    <p className="mt-2 text-lg font-semibold">Watch trailer</p>
+                    <p className="text-xs font-bold uppercase tracking-wider text-primary">Trailer</p>
+                    <p className="text-sm font-semibold text-foreground mt-0.5">Watch Trailer</p>
                   </div>
-                  <PlayCircle className="size-6 text-primary" />
+                  <PlayCircle className="size-5 text-primary" />
                 </a>
               )}
-              <a href={getWatchSearchUrl(movie.title, movie.year)} target="_blank" rel="noreferrer" className="section-shell flex items-center justify-between gap-4 p-5 transition duration-300 hover:border-primary/40 hover:bg-secondary/70">
+              <a href={getWatchSearchUrl(movie.title, movie.year)} target="_blank" rel="noreferrer" className="flex items-center justify-between rounded-lg bg-card p-4 transition hover:bg-secondary">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.24em] text-primary">Where to Watch</p>
-                  <p className="mt-2 text-lg font-semibold">Find streaming options</p>
+                  <p className="text-xs font-bold uppercase tracking-wider text-primary">Streaming</p>
+                  <p className="text-sm font-semibold text-foreground mt-0.5">Find Where to Watch</p>
                 </div>
-                <Tv className="size-6 text-primary" />
+                <Tv className="size-5 text-primary" />
               </a>
             </div>
 
-            {/* Embedded trailer */}
             {trailerQuery.data && (
-              <div className="overflow-hidden rounded-2xl border border-border">
+              <div className="overflow-hidden rounded-lg border border-border">
                 <div className="relative aspect-video">
-                  <img
-                    src={`https://img.youtube.com/vi/${trailerQuery.data}/hqdefault.jpg`}
-                    alt={`${movie.title} trailer thumbnail`}
-                    className="h-full w-full object-cover"
-                  />
-                  <button
-                    onClick={() => setShowTrailer(true)}
-                    className="absolute inset-0 flex items-center justify-center bg-background/30 transition hover:bg-background/10"
-                  >
-                    <div className="flex size-16 items-center justify-center rounded-full border-2 border-primary bg-background/60 text-primary backdrop-blur-sm">
-                      <PlayCircle className="size-8" />
+                  <img src={`https://img.youtube.com/vi/${trailerQuery.data}/hqdefault.jpg`} alt={`${movie.title} trailer`} className="h-full w-full object-cover" />
+                  <button onClick={() => setShowTrailer(true)} className="absolute inset-0 flex items-center justify-center bg-background/30 transition hover:bg-background/10">
+                    <div className="flex size-14 items-center justify-center rounded-full bg-background/80 text-foreground transition hover:bg-primary hover:text-primary-foreground">
+                      <PlayCircle className="size-7" />
                     </div>
                   </button>
                 </div>
               </div>
             )}
 
-            <Button asChild variant="heroSecondary" size="xl">
+            <Button asChild variant="heroSecondary">
               <Link to="/discover">Back to Discover</Link>
             </Button>
           </div>
         </section>
 
         {relatedQuery.data?.length ? (
-          <section className="space-y-6">
-            <div>
-              <p className="text-xs uppercase tracking-[0.28em] text-primary">You May Also Like</p>
-              <h2 className="font-display text-4xl uppercase tracking-[0.08em]">More cinematic picks</h2>
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-5">
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold text-foreground">More Like This</h2>
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
               {relatedQuery.data.map((item) => (
                 <CineMovieCard key={item.imdbID} item={item} />
               ))}
@@ -160,28 +151,14 @@ const MovieDetailPage = () => {
       </main>
       <DNAFooter />
 
-      {/* Fullscreen trailer modal */}
       {showTrailer && trailerQuery.data && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-md"
-          onClick={() => setShowTrailer(false)}
-        >
-          <button
-            onClick={() => setShowTrailer(false)}
-            className="absolute right-6 top-6 z-50 flex size-12 items-center justify-center rounded-full border border-border bg-card text-foreground transition hover:bg-secondary"
-            aria-label="Close trailer"
-          >
-            <X className="size-6" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-sm" onClick={() => setShowTrailer(false)}>
+          <button onClick={() => setShowTrailer(false)} className="absolute right-4 top-4 z-50 rounded-full bg-secondary p-2 text-foreground hover:bg-muted" aria-label="Close">
+            <X className="size-5" />
           </button>
           <div className="w-full max-w-5xl px-4" onClick={(e) => e.stopPropagation()}>
-            <div className="relative aspect-video overflow-hidden rounded-2xl border border-border shadow-glow">
-              <iframe
-                src={getYouTubeEmbedUrl(trailerQuery.data)}
-                className="h-full w-full"
-                allowFullScreen
-                allow="autoplay; encrypted-media"
-                title={`${movie.title} trailer`}
-              />
+            <div className="relative aspect-video overflow-hidden rounded-lg">
+              <iframe src={getYouTubeEmbedUrl(trailerQuery.data)} className="h-full w-full" allowFullScreen allow="autoplay; encrypted-media" title={`${movie.title} trailer`} />
             </div>
           </div>
         </div>

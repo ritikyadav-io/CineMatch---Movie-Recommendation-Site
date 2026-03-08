@@ -36,27 +36,27 @@ const SearchPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <main className="container space-y-10 py-12 lg:py-16">
-        <section className="section-shell space-y-4">
-          <p className="text-xs uppercase tracking-[0.28em] text-primary">Global Search</p>
-          <h1 className="font-display text-5xl uppercase tracking-[0.08em] sm:text-6xl">Search results</h1>
-          <p className="text-muted-foreground">Search by movie title, actor, genre, or year. CineMatch blends curated matching with live OMDb title search.</p>
-          {query && <p className="text-sm text-foreground">Showing results for <span className="text-primary">“{query}”</span></p>}
+      <main className="container space-y-8 pt-24 pb-12 lg:pt-28 lg:pb-16">
+        <section>
+          <span className="text-xs font-bold uppercase tracking-wider text-primary">Search</span>
+          <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">Results</h1>
+          <p className="text-sm text-muted-foreground mt-1">Search by movie title, actor, genre, or year.</p>
+          {query && <p className="text-xs text-foreground mt-2">Showing results for <span className="text-primary">"{query}"</span></p>}
         </section>
 
         {catalogQuery.isLoading || titleQuery.isLoading ? (
-          <div className="section-shell flex items-center justify-center gap-3 py-20 text-muted-foreground">
+          <div className="flex items-center justify-center gap-3 py-20 text-muted-foreground">
             <Loader2 className="size-5 animate-spin text-primary" />
-            Searching the archive...
+            Searching...
           </div>
         ) : results.length ? (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {results.map((item) => (
               <CineMovieCard key={item.imdbID} item={item} />
             ))}
           </div>
         ) : (
-          <div className="section-shell py-16 text-center text-muted-foreground">No matches yet. Try a broader title, actor, genre, or release year.</div>
+          <div className="py-16 text-center text-muted-foreground">No matches. Try a broader title, actor, genre, or year.</div>
         )}
       </main>
       <DNAFooter />
