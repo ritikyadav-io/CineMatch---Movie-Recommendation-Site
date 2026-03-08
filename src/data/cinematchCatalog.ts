@@ -404,14 +404,17 @@ export const sectionMap: Record<DiscoverSectionKey, { title: string; description
 
 export const quizFieldsets = [
   { key: "contentType", label: "Content Type", options: ["movie", "series"] },
-  { key: "genre", label: "Genre", options: ["Action", "Thriller", "Horror", "Sci-Fi", "Romance", "Comedy", "Drama"] },
+  { key: "genre", label: "Genre", options: ["Action", "Thriller", "Horror", "Sci-Fi", "Romance", "Comedy", "Drama", "Fantasy", "Animation", "Sport"] },
   { key: "language", label: "Language", options: ["English", "Korean", "Japanese", "Spanish", "Hindi", "Any"] },
   { key: "mood", label: "Mood", options: ["Light and fun", "Dark and intense", "Emotional", "Mind-bending"] },
   { key: "violence", label: "Violence / Gore Level", options: ["None", "Moderate", "Extreme"] },
   { key: "nudity", label: "Nudity Level", options: ["None", "Some", "Doesn't matter"] },
   { key: "releasePeriod", label: "Release Period", options: ["2020+", "2010-2020", "Before 2010"] },
   { key: "runtime", label: "Runtime Preference", options: ["Short (<100 minutes)", "Medium", "Long epic"] },
-  { key: "complexity", label: "Story Complexity", options: ["Simple entertainment", "Thought-provoking", "Mind-bending"] }
+  { key: "complexity", label: "Story Complexity", options: ["Simple entertainment", "Thought-provoking", "Mind-bending"] },
+  { key: "bollywoodVibe", label: "🎬 Bollywood Vibe", options: ["Classic romance", "Modern thriller", "Musical extravaganza", "Social drama", "Any"] },
+  { key: "superheroPreference", label: "🦸 Superhero Preference", options: ["Marvel-style", "DC-style", "Indie/dark", "Animated", "Any"] },
+  { key: "animeStyle", label: "🌸 Anime Style", options: ["Shonen action", "Romance/slice-of-life", "Dark/psychological", "Fantasy adventure", "Any"] },
 ] as const;
 
 export const defaultQuizAnswers: QuizAnswers = {
@@ -423,7 +426,10 @@ export const defaultQuizAnswers: QuizAnswers = {
   nudity: "Doesn't matter",
   releasePeriod: "2010-2020",
   runtime: "Medium",
-  complexity: "Thought-provoking"
+  complexity: "Thought-provoking",
+  bollywoodVibe: "Any",
+  superheroPreference: "Any",
+  animeStyle: "Any",
 };
 
 const violenceRank = { None: 0, Moderate: 1, Extreme: 2 };
