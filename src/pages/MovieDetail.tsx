@@ -75,7 +75,23 @@ const MovieDetailPage = () => {
     }
   };
 
-  if (detailQuery.isLoading) {
+  const fetchSummary = async (lang: string) => {
+    setSummaryLang(lang);
+    setSummary("");
+    setSummaryLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("movie-summary", {
+        body: { title: movie?.title, overview: movie?.overview, language: lang },
+      });
+      if (error) throw error;
+      setSummary(data.summary);
+    } catch {
+      setSummary("Failed to load summary. Please try again.");
+    } finally {
+      setSummaryLoading(false);
+    }
+  };
+
     return (
       <div className="min-h-screen bg-background text-foreground">
         <DNANav />
