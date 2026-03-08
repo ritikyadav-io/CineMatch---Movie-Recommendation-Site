@@ -16,9 +16,19 @@ import {
 } from "@/lib/tmdb";
 
 const SearchPage = () => {
-  const [inputValue, setInputValue] = useState("");
-  const [query, setQuery] = useState("");
+  const [searchParams] = useSearchParams();
+  const urlQuery = searchParams.get("q") || "";
+  const [inputValue, setInputValue] = useState(urlQuery);
+  const [query, setQuery] = useState(urlQuery);
   const [selectedPerson, setSelectedPerson] = useState<TmdbPerson | null>(null);
+
+  useEffect(() => {
+    if (urlQuery) {
+      setInputValue(urlQuery);
+      setQuery(urlQuery);
+      setSelectedPerson(null);
+    }
+  }, [urlQuery]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
