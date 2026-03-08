@@ -7,8 +7,8 @@ import {
   Download,
   Film,
   Flame,
+  Heart,
   Home,
-  LogIn,
   Menu,
   Search,
   Sparkles,
@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import logo from "@/assets/moviedna-logo.png";
+import donateQr from "@/assets/donate-qr.jpeg";
 import { Button } from "@/components/ui/button";
 import { CineSearchBar } from "@/components/cinematch/CineSearchBar";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
@@ -38,6 +39,7 @@ export function DNANav() {
   const [hidden, setHidden] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showDonate, setShowDonate] = useState(false);
   const { canInstall, isInstalled, install } = usePwaInstall();
   const { user } = useAuth();
   const location = useLocation();
@@ -152,7 +154,17 @@ export function DNANav() {
               </Button>
             )}
 
-            {user ? (
+            <Button
+              onClick={() => setShowDonate(true)}
+              variant="hero"
+              size="sm"
+              className="hidden sm:flex"
+            >
+              <Heart className="size-3.5" />
+              Donate
+            </Button>
+
+            {user && (
               <Link
                 to="/profile"
                 className="flex size-9 items-center justify-center rounded-full bg-primary/20 text-primary transition hover:bg-primary hover:text-primary-foreground"
@@ -160,13 +172,6 @@ export function DNANav() {
               >
                 <User className="size-4" />
               </Link>
-            ) : (
-              <Button asChild variant="hero" size="sm" className="hidden sm:flex">
-                <Link to="/auth">
-                  <LogIn className="size-3.5" />
-                  Sign In
-                </Link>
-              </Button>
             )}
 
             {/* Mobile hamburger (shown on non-home pages too) */}
@@ -268,22 +273,42 @@ export function DNANav() {
                   Install App
                 </Button>
               )}
-              {user ? (
-                <Button asChild variant="hero" className="w-full">
-                  <Link to="/quiz" onClick={() => setMobileOpen(false)}>
-                    <Sparkles className="size-4" />
-                    Start Quiz
-                  </Link>
-                </Button>
-              ) : (
-                <Button asChild variant="hero" className="w-full">
-                  <Link to="/auth" onClick={() => setMobileOpen(false)}>
-                    <LogIn className="size-4" />
-                    Sign In / Sign Up
-                  </Link>
-                </Button>
-              )}
+              <Button
+                onClick={() => { setShowDonate(true); setMobileOpen(false); }}
+                variant="hero"
+                className="w-full"
+              >
+                <Heart className="size-4" />
+                Donate
+              </Button>
             </div>
+          </div>
+        </div>
+      )}
+      {/* Donate Modal */}
+      {showDonate && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center" onClick={() => setShowDonate(false)}>
+          <div className="absolute inset-0 bg-background/90 backdrop-blur-sm" />
+          <div
+            className="relative w-[90vw] max-w-sm rounded-2xl bg-card border border-border p-6 shadow-2xl space-y-4 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowDonate(false)}
+              className="absolute right-3 top-3 rounded-full p-1.5 hover:bg-muted text-foreground"
+              aria-label="Close"
+            >
+              <X className="size-4" />
+            </button>
+            <Heart className="size-8 text-primary mx-auto" />
+            <h2 className="text-lg font-bold text-foreground">Support Movie DNA</h2>
+            <p className="text-xs text-muted-foreground">Scan the QR code to donate via UPI</p>
+            <img
+              src={donateQr}
+              alt="Donate QR Code"
+              className="mx-auto w-56 rounded-lg"
+            />
+            <p className="text-xs text-muted-foreground font-mono">UPI: 8000802710@ybl</p>
           </div>
         </div>
       )}
