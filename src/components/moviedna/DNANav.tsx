@@ -31,6 +31,7 @@ const navItems = [
   { to: "/browse", label: "Browse", icon: Film },
   { to: "/discover", label: "Discover", icon: Compass },
   { to: "/quiz", label: "Quiz", icon: Sparkles },
+  { to: "/actresses", label: "Actresses", icon: Users },
   { to: "/browse?cat=bollywood", label: "Bollywood", icon: Clapperboard },
   { to: "/browse?cat=anime", label: "Anime", icon: Flame },
 ];
