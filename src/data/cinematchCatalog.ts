@@ -1203,12 +1203,21 @@ export const sectionMap: Record<DiscoverSectionKey, { title: string; description
   "hidden-gems": {
     title: "Hidden Gems",
     description: "Less obvious picks with elite taste-maker appeal.",
-    ids: [
-      "tt3799694", "tt2194499", "tt12477480", "tt0457430", "tt0455944", "tt5311514",
-      "tt1954470", "tt0790636", "tt0347149", "tt1131729", "tt0469494",
-      "tt0208092", "tt0838221", "tt0092005", "tt0070735", "tt1280558",
-      "tt2278388", "tt0112573", "tt0119217", "tt0169547", "tt0120689",
-    ]
+    get ids() {
+      const pool = [
+        "tt3799694", "tt2194499", "tt12477480", "tt0457430", "tt0455944", "tt5311514",
+        "tt1954470", "tt0790636", "tt0347149", "tt1131729", "tt0469494",
+        "tt0208092", "tt0838221", "tt0092005", "tt0070735", "tt1280558",
+        "tt2278388", "tt0112573", "tt0119217", "tt0169547", "tt0120689",
+        "tt0993846", "tt1392214", "tt0477348", "tt0758758", "tt0405094",
+        "tt0266697", "tt0180093", "tt0338013", "tt0245429", "tt0062622",
+        "tt0114814", "tt0353969", "tt0477347", "tt0118799", "tt0317248",
+        "tt0211915", "tt0268978", "tt0186566", "tt0364569", "tt0978762",
+      ];
+      // Shuffle and return 10 random picks
+      const shuffled = [...pool].sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, 10);
+    }
   },
   series: {
     title: "Popular Series",
