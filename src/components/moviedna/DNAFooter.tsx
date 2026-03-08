@@ -1,19 +1,16 @@
 import { Heart, Popcorn, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import logo from "@/assets/moviedna-logo.png";
+
 export function DNAFooter() {
   return (
     <footer className="border-t border-border bg-background">
       <div className="container grid gap-8 py-10 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <div className="flex size-7 items-center justify-center rounded bg-primary">
-              <span className="text-xs font-black text-primary-foreground">M</span>
-            </div>
-            <span className="text-base font-extrabold tracking-tight text-foreground">
-              Movie <span className="text-primary">DNA</span>
-            </span>
-          </div>
+          <Link to="/">
+            <img src={logo} alt="Movie DNA" className="h-7 w-auto" />
+          </Link>
           <p className="max-w-md text-xs leading-5 text-muted-foreground">
             Movie DNA decodes your cinematic taste — blending Hollywood, Bollywood, superhero, and anime universes into one discovery engine.
           </p>
