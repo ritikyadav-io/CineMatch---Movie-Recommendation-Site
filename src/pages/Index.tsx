@@ -230,7 +230,7 @@ const Index = () => {
       </main>
 
       {/* ═══════════ PERSONALITY TYPES ═══════════ */}
-      <section className="container px-3 sm:px-6 py-10 sm:py-16">
+      <section className="container px-3 sm:px-6 py-6 sm:py-16">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
