@@ -45,11 +45,12 @@ const MovieDetailPage = () => {
   const [summaryLoading, setSummaryLoading] = useState(false);
 
   const tmdbId = imdbID.startsWith("tmdb-") ? Number(imdbID.replace("tmdb-", "")) : null;
+  const isImdbId = imdbID.startsWith("tt");
 
   const detailQuery = useQuery({
     queryKey: ["movie-detail", imdbID],
-    queryFn: () => fetchTmdbFullDetail(tmdbId!),
-    enabled: Boolean(tmdbId),
+    queryFn: () => tmdbId ? fetchTmdbFullDetail(tmdbId) : fetchTmdbFullDetailByImdb(imdbID),
+    enabled: Boolean(tmdbId || isImdbId),
     staleTime: 1000 * 60 * 60,
   });
 
