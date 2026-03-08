@@ -164,7 +164,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent" />
 
-        <div className="container relative flex h-full items-end pb-12 sm:pb-16 lg:items-center lg:pb-0 px-4 sm:px-6">
+        <div className="container relative flex h-full items-end pb-8 sm:pb-16 lg:items-center lg:pb-0 px-3 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
