@@ -156,6 +156,12 @@ export async function searchTmdb(query: string, page = 1): Promise<MediaCardData
     .map((m: TmdbMovie) => mapTmdbToCard(m, m.media_type === "tv" ? "series" : "movie"));
 }
 
+// ── Similar movies ──
+export async function fetchTmdbSimilar(tmdbId: number, page = 1): Promise<MediaCardData[]> {
+  const data = await tmdbFetch(`/movie/${tmdbId}/similar`, { page: String(page) });
+  return (data.results || []).map((m: TmdbMovie) => mapTmdbToCard(m));
+}
+
 // ── Search by person (actor/actress) ──
 export interface TmdbPerson {
   id: number;

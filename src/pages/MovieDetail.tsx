@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft,
+  Copy,
   DollarSign,
   Eye,
   Flame,
   Loader2,
   PlayCircle,
-  Shield,
+  Share2,
   Star,
   Tv,
   User,
@@ -14,12 +15,15 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
 import { Button } from "@/components/ui/button";
 import { WatchlistButton } from "@/components/moviedna/WatchlistButton";
 import { fetchTmdbFullDetail, TmdbFullDetail } from "@/lib/tmdb-detail";
+import { fetchTmdbSimilar } from "@/lib/tmdb";
+import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { getWatchSearchUrl } from "@/lib/omdb";
 
 const MovieDetailPage = () => {
@@ -37,6 +41,26 @@ const MovieDetailPage = () => {
   });
 
   const movie = detailQuery.data;
+
+  const similarQuery = useQuery({
+    queryKey: ["movie-similar", tmdbId],
+    queryFn: () => fetchTmdbSimilar(tmdbId!),
+    enabled: Boolean(tmdbId),
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    const text = `Check out "${movie?.title}" on Movie DNA!`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: movie?.title, text, url });
+      } catch {}
+    } else {
+      await navigator.clipboard.writeText(url);
+      toast.success("Link copied to clipboard!");
+    }
+  };
 
   if (detailQuery.isLoading) {
     return (
@@ -233,6 +257,17 @@ const MovieDetailPage = () => {
                 </div>
                 <Tv className="size-5 text-primary" />
               </a>
+              {/* Share button */}
+              <button
+                onClick={handleShare}
+                className="flex items-center justify-between rounded-lg bg-card border border-border p-4 transition hover:bg-secondary"
+              >
+                <div className="text-left">
+                  <p className="text-xs font-bold uppercase tracking-wider text-primary">Share</p>
+                  <p className="text-sm font-semibold text-foreground mt-0.5">Share with Friends</p>
+                </div>
+                <Share2 className="size-5 text-primary" />
+              </button>
             </div>
           </div>
         </section>
@@ -307,6 +342,18 @@ const MovieDetailPage = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </section>
+        )}
+
+        {/* Similar Movies */}
+        {(similarQuery.data?.length ?? 0) > 0 && (
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-foreground">🎬 Similar Movies</h2>
+            <div className="grid gap-2 sm:gap-3 grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {similarQuery.data!.slice(0, 10).map((item) => (
+                <CineMovieCard key={item.imdbID} item={item} />
+              ))}
             </div>
           </section>
         )}
