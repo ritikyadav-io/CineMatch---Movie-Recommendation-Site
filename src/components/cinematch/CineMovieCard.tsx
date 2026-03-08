@@ -52,6 +52,18 @@ export function CineMovieCard({ item, priority = false }: CineMovieCardProps) {
           onLoad={() => setLoaded(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
+        {/* Type badge */}
+        <div className="absolute top-1 left-1 sm:top-1.5 sm:left-1.5">
+          {item.type === "series" ? (
+            <span className="flex items-center gap-0.5 rounded bg-accent/90 backdrop-blur-sm px-1 sm:px-1.5 py-0.5 text-[7px] sm:text-[8px] font-bold uppercase tracking-wide text-accent-foreground">
+              <Tv className="size-2 sm:size-2.5" /> Series
+            </span>
+          ) : (
+            <span className="flex items-center gap-0.5 rounded bg-primary/90 backdrop-blur-sm px-1 sm:px-1.5 py-0.5 text-[7px] sm:text-[8px] font-bold uppercase tracking-wide text-primary-foreground">
+              <Film className="size-2 sm:size-2.5" /> Movie
+            </span>
+          )}
+        </div>
         <div className="absolute top-1 right-1 sm:top-2 sm:right-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <WatchlistButton movie={item} />
         </div>
