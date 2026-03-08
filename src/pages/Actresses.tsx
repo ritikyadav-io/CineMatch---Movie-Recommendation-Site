@@ -43,9 +43,14 @@ interface ActressDetail {
 
 async function fetchActressDetails(id: number): Promise<ActressDetail | null> {
   try {
-    const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/tmdb-proxy?path=/person/${id}&append_to_response=movie_credits`;
+    const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/tmdb-proxy`;
     const res = await fetch(url, {
-      headers: { Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}` },
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ endpoint: `/person/${id}`, params: { append_to_response: "movie_credits" } }),
     });
     if (!res.ok) return null;
     const data = await res.json();
