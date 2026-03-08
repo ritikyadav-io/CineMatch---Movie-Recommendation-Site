@@ -144,7 +144,7 @@ const MovieDetailPage = () => {
           <div className="space-y-5">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-primary">Movie Detail</span>
-              <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl mt-1">
+              <h1 className="text-xl sm:text-3xl lg:text-5xl font-black tracking-tight text-foreground mt-1">
                 {movie.title}
               </h1>
               {movie.tagline && (
