@@ -3,6 +3,7 @@ import { MediaCardData, OmdbDetail } from "@/types/cinematch";
 
 const OMDB_API_URL = "https://www.omdbapi.com/";
 const OMDB_API_KEY = "6a2ef45d";
+const YOUTUBE_API_KEY = "AIzaSyAmsOCTFZOxfkTN2gMqswoezcjMp3OTQbQ";
 const FALLBACK_POSTER = "/placeholder.svg";
 
 function normalizePoster(poster: string) {
@@ -59,6 +60,34 @@ export async function searchOmdbTitles(query: string) {
     language: catalogById[item.imdbID]?.language || "English",
     type: item.Type === "series" ? "series" : "movie"
   } satisfies MediaCardData));
+}
+
+// YouTube Data API v3 — search for a trailer and return the video ID
+export async function fetchYouTubeTrailerId(title: string, year?: string): Promise<string | null> {
+  try {
+    const query = `${title} ${year || ""} official trailer`;
+    const params = new URLSearchParams({
+      part: "snippet",
+      q: query,
+      type: "video",
+      maxResults: "1",
+      key: YOUTUBE_API_KEY,
+    });
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?${params.toString()}`);
+    if (!response.ok) return null;
+    const data = await response.json();
+    return data.items?.[0]?.id?.videoId || null;
+  } catch {
+    return null;
+  }
+}
+
+export function getYouTubeEmbedUrl(videoId: string) {
+  return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+}
+
+export function getYouTubeWatchUrl(videoId: string) {
+  return `https://www.youtube.com/watch?v=${videoId}`;
 }
 
 export function getTrailerSearchUrl(title: string, year?: string) {

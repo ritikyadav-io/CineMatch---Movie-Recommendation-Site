@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 import hollywoodImg from "@/assets/universe-hollywood.jpg";
 import bollywoodImg from "@/assets/universe-bollywood.jpg";
@@ -42,6 +43,42 @@ const cardVariants = {
   visible: { opacity: 1, scale: 1, transition: { duration: 0.7, ease: "easeOut" as const } },
 };
 
+function ParallaxCard({ universe }: { universe: typeof universes[number] }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"],
+  });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      variants={cardVariants}
+      className="group relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-border/60 shadow-poster"
+    >
+      <motion.img
+        src={universe.image}
+        alt={universe.title}
+        className="h-[120%] w-full object-cover transition-transform duration-700 group-hover:scale-110"
+        loading="lazy"
+        style={{ y: imgY }}
+      />
+      <div className={`absolute inset-0 bg-gradient-to-t ${universe.accent}`} />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+
+      <div className="absolute inset-x-0 bottom-0 p-6 lg:p-8">
+        <h3 className="font-display text-3xl uppercase tracking-[0.06em] text-foreground lg:text-4xl">
+          {universe.title}
+        </h3>
+        <p className="mt-2 max-w-md text-sm text-muted-foreground">{universe.description}</p>
+      </div>
+
+      <div className="pointer-events-none absolute inset-0 rounded-[2rem] border-2 border-primary/0 transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-glow" />
+    </motion.div>
+  );
+}
+
 export function UniverseShowcase() {
   return (
     <section className="container py-20 lg:py-28">
@@ -69,30 +106,7 @@ export function UniverseShowcase() {
         className="grid gap-6 sm:grid-cols-2"
       >
         {universes.map((universe) => (
-          <motion.div
-            key={universe.title}
-            variants={cardVariants}
-            className="group relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-border/60 shadow-poster"
-          >
-            <img
-              src={universe.image}
-              alt={universe.title}
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-              loading="lazy"
-            />
-            <div className={`absolute inset-0 bg-gradient-to-t ${universe.accent}`} />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-
-            <div className="absolute inset-x-0 bottom-0 p-6 lg:p-8">
-              <h3 className="font-display text-3xl uppercase tracking-[0.06em] text-foreground lg:text-4xl">
-                {universe.title}
-              </h3>
-              <p className="mt-2 max-w-md text-sm text-muted-foreground">{universe.description}</p>
-            </div>
-
-            {/* Hover glow */}
-            <div className="pointer-events-none absolute inset-0 rounded-[2rem] border-2 border-primary/0 transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-glow" />
-          </motion.div>
+          <ParallaxCard key={universe.title} universe={universe} />
         ))}
       </motion.div>
     </section>

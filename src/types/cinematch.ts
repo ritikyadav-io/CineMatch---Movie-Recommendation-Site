@@ -4,6 +4,9 @@ export type NudityLevel = "None" | "Some" | "Doesn't matter";
 export type RuntimePreference = "Short (<100 minutes)" | "Medium" | "Long epic";
 export type ComplexityLevel = "Simple entertainment" | "Thought-provoking" | "Mind-bending";
 export type DiscoverSectionKey = "trending" | "top-rated" | "hidden-gems" | "series";
+export type BollywoodVibe = "Classic romance" | "Modern thriller" | "Musical extravaganza" | "Social drama" | "Any";
+export type SuperheroPreference = "Marvel-style" | "DC-style" | "Indie/dark" | "Animated" | "Any";
+export type AnimeStyle = "Shonen action" | "Romance/slice-of-life" | "Dark/psychological" | "Fantasy adventure" | "Any";
 
 export interface CatalogEntry {
   imdbID: string;
@@ -21,6 +24,9 @@ export interface CatalogEntry {
   shortDescription: string;
   hiddenGem?: boolean;
   searchTerms?: string[];
+  bollywoodVibe?: string;
+  superheroStyle?: string;
+  animeStyle?: string;
 }
 
 export interface QuizAnswers {
@@ -33,6 +39,9 @@ export interface QuizAnswers {
   releasePeriod: "2020+" | "2010-2020" | "Before 2010";
   runtime: RuntimePreference;
   complexity: ComplexityLevel;
+  bollywoodVibe: BollywoodVibe;
+  superheroPreference: SuperheroPreference;
+  animeStyle: AnimeStyle;
 }
 
 export interface MediaCardData {

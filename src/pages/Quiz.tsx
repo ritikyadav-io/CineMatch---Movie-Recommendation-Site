@@ -23,9 +23,9 @@ const QuizPage = () => {
       <main className="container py-12 lg:py-16">
         <div className="mx-auto max-w-5xl space-y-8">
           <div className="section-shell space-y-4 text-center">
-            <p className="text-xs uppercase tracking-[0.28em] text-primary">CineMatch Quiz</p>
-            <h1 className="font-display text-5xl uppercase tracking-[0.08em] sm:text-6xl">Dial in your taste</h1>
-            <p className="mx-auto max-w-2xl text-muted-foreground">Pick your vibe across nine quick questions and let CineMatch assemble a tailored watchlist.</p>
+            <p className="text-xs uppercase tracking-[0.28em] text-primary">Movie DNA Quiz</p>
+            <h1 className="font-display text-5xl uppercase tracking-[0.08em] sm:text-6xl">Decode Your Taste</h1>
+            <p className="mx-auto max-w-2xl text-muted-foreground">Pick your vibe across twelve questions — including Bollywood, superhero, and anime preferences — and let Movie DNA assemble a tailored watchlist.</p>
           </div>
 
           <div className="grid gap-6">

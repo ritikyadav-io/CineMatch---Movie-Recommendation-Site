@@ -166,23 +166,6 @@ export const cineMatchCatalog: CatalogEntry[] = [
     searchTerms: ["guillermo del toro", "fantasy", "spanish"]
   },
   {
-    imdbID: "tt5074352",
-    title: "Dangal",
-    type: "movie",
-    year: 2016,
-    genres: ["Drama", "Sport", "Biography"],
-    language: "Hindi",
-    mood: "Emotional",
-    violence: "None",
-    nudity: "None",
-    runtime: "Long epic",
-    complexity: "Simple entertainment",
-    actors: ["Aamir Khan", "Fatima Sana Shaikh"],
-    shortDescription: "An uplifting underdog sports drama with powerful emotional payoff.",
-    hiddenGem: true,
-    searchTerms: ["sports", "wrestling", "inspiring"]
-  },
-  {
     imdbID: "tt12477480",
     title: "Decision to Leave",
     type: "movie",
@@ -374,6 +357,249 @@ export const cineMatchCatalog: CatalogEntry[] = [
     actors: ["Jeremy Allen White", "Ayo Edebiri"],
     shortDescription: "Kitchen panic, messy ambition, and raw human drama in a razor-fast binge.",
     searchTerms: ["chef", "restaurant", "fx"]
+  },
+  // Bollywood entries
+  {
+    imdbID: "tt0248126",
+    title: "3 Idiots",
+    type: "movie",
+    year: 2009,
+    genres: ["Comedy", "Drama"],
+    language: "Hindi",
+    mood: "Light and fun",
+    violence: "None",
+    nudity: "None",
+    runtime: "Long epic",
+    complexity: "Thought-provoking",
+    actors: ["Aamir Khan", "R. Madhavan"],
+    shortDescription: "A hilarious and heartfelt satire on India's education system with unforgettable charm.",
+    bollywoodVibe: "Social drama",
+    searchTerms: ["bollywood", "college", "comedy"]
+  },
+  {
+    imdbID: "tt0986264",
+    title: "Dilwale Dulhania Le Jayenge",
+    type: "movie",
+    year: 1995,
+    genres: ["Romance", "Drama", "Comedy"],
+    language: "Hindi",
+    mood: "Emotional",
+    violence: "None",
+    nudity: "None",
+    runtime: "Long epic",
+    complexity: "Simple entertainment",
+    actors: ["Shah Rukh Khan", "Kajol"],
+    shortDescription: "The quintessential Bollywood romance — sweeping, musical, and iconic.",
+    bollywoodVibe: "Classic romance",
+    searchTerms: ["srk", "bollywood", "romance", "ddlj"]
+  },
+  {
+    imdbID: "tt5074352",
+    title: "Dangal",
+    type: "movie",
+    year: 2016,
+    genres: ["Drama", "Sport", "Biography"],
+    language: "Hindi",
+    mood: "Emotional",
+    violence: "None",
+    nudity: "None",
+    runtime: "Long epic",
+    complexity: "Simple entertainment",
+    actors: ["Aamir Khan", "Fatima Sana Shaikh"],
+    shortDescription: "An uplifting underdog sports drama with powerful emotional payoff.",
+    bollywoodVibe: "Social drama",
+    hiddenGem: true,
+    searchTerms: ["sports", "wrestling", "inspiring"]
+  },
+  {
+    imdbID: "tt10272386",
+    title: "Andhadhun",
+    type: "movie",
+    year: 2018,
+    genres: ["Thriller", "Crime", "Comedy"],
+    language: "Hindi",
+    mood: "Mind-bending",
+    violence: "Moderate",
+    nudity: "None",
+    runtime: "Medium",
+    complexity: "Mind-bending",
+    actors: ["Ayushmann Khurrana", "Tabu"],
+    shortDescription: "A blind pianist caught in a twisted murder mystery — Bollywood's sharpest thriller.",
+    bollywoodVibe: "Modern thriller",
+    hiddenGem: true,
+    searchTerms: ["bollywood", "thriller", "twist"]
+  },
+  {
+    imdbID: "tt2631186",
+    title: "Gully Boy",
+    type: "movie",
+    year: 2019,
+    genres: ["Drama", "Romance"],
+    language: "Hindi",
+    mood: "Emotional",
+    violence: "Moderate",
+    nudity: "None",
+    runtime: "Long epic",
+    complexity: "Thought-provoking",
+    actors: ["Ranveer Singh", "Alia Bhatt"],
+    shortDescription: "A Mumbai rapper rises from the slums — raw energy meets musical extravaganza.",
+    bollywoodVibe: "Musical extravaganza",
+    searchTerms: ["bollywood", "rap", "mumbai"]
+  },
+  // Superhero entries
+  {
+    imdbID: "tt4154796",
+    title: "Avengers: Endgame",
+    type: "movie",
+    year: 2019,
+    genres: ["Action", "Sci-Fi", "Drama"],
+    language: "English",
+    mood: "Emotional",
+    violence: "Moderate",
+    nudity: "None",
+    runtime: "Long epic",
+    complexity: "Simple entertainment",
+    actors: ["Robert Downey Jr.", "Chris Evans"],
+    shortDescription: "The ultimate Marvel spectacle — an epic conclusion to a decade of cinematic storytelling.",
+    superheroStyle: "Marvel-style",
+    searchTerms: ["marvel", "avengers", "superhero", "mcu"]
+  },
+  {
+    imdbID: "tt1825683",
+    title: "Black Panther",
+    type: "movie",
+    year: 2018,
+    genres: ["Action", "Sci-Fi", "Drama"],
+    language: "English",
+    mood: "Emotional",
+    violence: "Moderate",
+    nudity: "None",
+    runtime: "Medium",
+    complexity: "Thought-provoking",
+    actors: ["Chadwick Boseman", "Michael B. Jordan"],
+    shortDescription: "A culturally groundbreaking superhero film with Afrofuturism and political depth.",
+    superheroStyle: "Marvel-style",
+    searchTerms: ["marvel", "wakanda", "superhero"]
+  },
+  {
+    imdbID: "tt7286456",
+    title: "Joker",
+    type: "movie",
+    year: 2019,
+    genres: ["Crime", "Drama", "Thriller"],
+    language: "English",
+    mood: "Dark and intense",
+    violence: "Extreme",
+    nudity: "None",
+    runtime: "Medium",
+    complexity: "Thought-provoking",
+    actors: ["Joaquin Phoenix", "Robert De Niro"],
+    shortDescription: "A haunting character study that transforms a villain origin into prestige cinema.",
+    superheroStyle: "DC-style",
+    searchTerms: ["dc", "joker", "villain", "dark"]
+  },
+  {
+    imdbID: "tt4633694",
+    title: "Spider-Man: Into the Spider-Verse",
+    type: "movie",
+    year: 2018,
+    genres: ["Animation", "Action", "Sci-Fi"],
+    language: "English",
+    mood: "Light and fun",
+    violence: "Moderate",
+    nudity: "None",
+    runtime: "Medium",
+    complexity: "Thought-provoking",
+    actors: ["Shameik Moore", "Jake Johnson"],
+    shortDescription: "A visually revolutionary animated superhero film that reinvented the genre.",
+    superheroStyle: "Animated",
+    searchTerms: ["spider-man", "animated", "multiverse"]
+  },
+  {
+    imdbID: "tt6320628",
+    title: "Spider-Man: No Way Home",
+    type: "movie",
+    year: 2021,
+    genres: ["Action", "Sci-Fi", "Fantasy"],
+    language: "English",
+    mood: "Emotional",
+    violence: "Moderate",
+    nudity: "None",
+    runtime: "Long epic",
+    complexity: "Simple entertainment",
+    actors: ["Tom Holland", "Zendaya"],
+    shortDescription: "A multiverse-spanning Spider-Man adventure packed with nostalgia and heart.",
+    superheroStyle: "Marvel-style",
+    searchTerms: ["spider-man", "marvel", "multiverse"]
+  },
+  // Anime entries
+  {
+    imdbID: "tt0245429",
+    title: "Spirited Away",
+    type: "movie",
+    year: 2001,
+    genres: ["Animation", "Fantasy", "Adventure"],
+    language: "Japanese",
+    mood: "Emotional",
+    violence: "None",
+    nudity: "None",
+    runtime: "Medium",
+    complexity: "Thought-provoking",
+    actors: ["Rumi Hiiragi", "Miyu Irino"],
+    shortDescription: "Miyazaki's masterpiece — a dreamlike journey through a magical spirit world.",
+    animeStyle: "Fantasy adventure",
+    searchTerms: ["studio ghibli", "miyazaki", "anime"]
+  },
+  {
+    imdbID: "tt10886166",
+    title: "Demon Slayer: Mugen Train",
+    type: "movie",
+    year: 2020,
+    genres: ["Animation", "Action", "Fantasy"],
+    language: "Japanese",
+    mood: "Emotional",
+    violence: "Extreme",
+    nudity: "None",
+    runtime: "Medium",
+    complexity: "Simple entertainment",
+    actors: ["Natsuki Hanae", "Akari Kitô"],
+    shortDescription: "A breathtaking anime spectacle with intense battles and devastating emotional stakes.",
+    animeStyle: "Shonen action",
+    searchTerms: ["demon slayer", "anime", "kimetsu"]
+  },
+  {
+    imdbID: "tt0988824",
+    title: "Death Note",
+    type: "series",
+    year: 2006,
+    genres: ["Animation", "Crime", "Drama"],
+    language: "Japanese",
+    mood: "Dark and intense",
+    violence: "Moderate",
+    nudity: "None",
+    runtime: "Short (<100 minutes)",
+    complexity: "Mind-bending",
+    actors: ["Mamoru Miyano", "Brad Swaile"],
+    shortDescription: "A genius student finds a notebook that kills anyone whose name is written in it.",
+    animeStyle: "Dark/psychological",
+    searchTerms: ["death note", "anime", "psychological"]
+  },
+  {
+    imdbID: "tt0877057",
+    title: "Attack on Titan",
+    type: "series",
+    year: 2013,
+    genres: ["Animation", "Action", "Drama"],
+    language: "Japanese",
+    mood: "Dark and intense",
+    violence: "Extreme",
+    nudity: "None",
+    runtime: "Short (<100 minutes)",
+    complexity: "Thought-provoking",
+    actors: ["Yuki Kaji", "Yui Ishikawa"],
+    shortDescription: "Humanity fights for survival against giant humanoid titans in a dark, epic saga.",
+    animeStyle: "Shonen action",
+    searchTerms: ["attack on titan", "aot", "anime"]
   }
 ];
 
@@ -404,14 +630,17 @@ export const sectionMap: Record<DiscoverSectionKey, { title: string; description
 
 export const quizFieldsets = [
   { key: "contentType", label: "Content Type", options: ["movie", "series"] },
-  { key: "genre", label: "Genre", options: ["Action", "Thriller", "Horror", "Sci-Fi", "Romance", "Comedy", "Drama"] },
+  { key: "genre", label: "Genre", options: ["Action", "Thriller", "Horror", "Sci-Fi", "Romance", "Comedy", "Drama", "Fantasy", "Animation", "Sport"] },
   { key: "language", label: "Language", options: ["English", "Korean", "Japanese", "Spanish", "Hindi", "Any"] },
   { key: "mood", label: "Mood", options: ["Light and fun", "Dark and intense", "Emotional", "Mind-bending"] },
   { key: "violence", label: "Violence / Gore Level", options: ["None", "Moderate", "Extreme"] },
   { key: "nudity", label: "Nudity Level", options: ["None", "Some", "Doesn't matter"] },
   { key: "releasePeriod", label: "Release Period", options: ["2020+", "2010-2020", "Before 2010"] },
   { key: "runtime", label: "Runtime Preference", options: ["Short (<100 minutes)", "Medium", "Long epic"] },
-  { key: "complexity", label: "Story Complexity", options: ["Simple entertainment", "Thought-provoking", "Mind-bending"] }
+  { key: "complexity", label: "Story Complexity", options: ["Simple entertainment", "Thought-provoking", "Mind-bending"] },
+  { key: "bollywoodVibe", label: "🎬 Bollywood Vibe", options: ["Classic romance", "Modern thriller", "Musical extravaganza", "Social drama", "Any"] },
+  { key: "superheroPreference", label: "🦸 Superhero Preference", options: ["Marvel-style", "DC-style", "Indie/dark", "Animated", "Any"] },
+  { key: "animeStyle", label: "🌸 Anime Style", options: ["Shonen action", "Romance/slice-of-life", "Dark/psychological", "Fantasy adventure", "Any"] },
 ] as const;
 
 export const defaultQuizAnswers: QuizAnswers = {
@@ -423,7 +652,10 @@ export const defaultQuizAnswers: QuizAnswers = {
   nudity: "Doesn't matter",
   releasePeriod: "2010-2020",
   runtime: "Medium",
-  complexity: "Thought-provoking"
+  complexity: "Thought-provoking",
+  bollywoodVibe: "Any",
+  superheroPreference: "Any",
+  animeStyle: "Any",
 };
 
 const violenceRank = { None: 0, Moderate: 1, Extreme: 2 };
@@ -446,6 +678,12 @@ export function filterCatalogByQuiz(answers: QuizAnswers) {
       ) score += 2;
       if (entry.runtime === answers.runtime) score += 2;
       if (entry.complexity === answers.complexity) score += 3;
+      // Bollywood vibe bonus
+      if (answers.bollywoodVibe !== "Any" && entry.bollywoodVibe && entry.bollywoodVibe === answers.bollywoodVibe) score += 3;
+      // Superhero preference bonus
+      if (answers.superheroPreference !== "Any" && entry.superheroStyle && entry.superheroStyle === answers.superheroPreference) score += 3;
+      // Anime style bonus
+      if (answers.animeStyle !== "Any" && entry.animeStyle && entry.animeStyle === answers.animeStyle) score += 3;
       if (entry.hiddenGem) score += 0.3;
       return { ...entry, score };
     })

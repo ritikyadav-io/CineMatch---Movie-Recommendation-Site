@@ -25,6 +25,9 @@ const DiscoverPage = () => {
     releasePeriod: (searchParams.get("releasePeriod") as QuizAnswers["releasePeriod"]) || defaultQuizAnswers.releasePeriod,
     runtime: (searchParams.get("runtime") as QuizAnswers["runtime"]) || defaultQuizAnswers.runtime,
     complexity: (searchParams.get("complexity") as QuizAnswers["complexity"]) || defaultQuizAnswers.complexity,
+    bollywoodVibe: (searchParams.get("bollywoodVibe") as QuizAnswers["bollywoodVibe"]) || defaultQuizAnswers.bollywoodVibe,
+    superheroPreference: (searchParams.get("superheroPreference") as QuizAnswers["superheroPreference"]) || defaultQuizAnswers.superheroPreference,
+    animeStyle: (searchParams.get("animeStyle") as QuizAnswers["animeStyle"]) || defaultQuizAnswers.animeStyle,
   };
 
   const selectedIds = (() => {

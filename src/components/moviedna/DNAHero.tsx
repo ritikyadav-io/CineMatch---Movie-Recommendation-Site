@@ -1,24 +1,35 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Dna } from "lucide-react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 import heroImage from "@/assets/moviedna-hero.jpg";
 import { Button } from "@/components/ui/button";
 
 export function DNAHero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   return (
-    <section className="relative min-h-screen overflow-hidden">
-      {/* Background layers */}
-      <div className="absolute inset-0">
+    <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
+      {/* Parallax background */}
+      <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <img
           src={heroImage}
           alt="Cinematic collage of Hollywood, Bollywood, Superhero, and Anime universes"
-          className="h-full w-full object-cover"
+          className="h-[120%] w-full object-cover"
           loading="eager"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
         <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80" />
-      </div>
+      </motion.div>
 
       {/* Animated spotlight orbs */}
       <motion.div
@@ -32,8 +43,11 @@ export function DNAHero() {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
 
-      {/* Content */}
-      <div className="container relative flex min-h-screen flex-col items-center justify-center px-4 py-24 text-center">
+      {/* Parallax content */}
+      <motion.div
+        className="container relative flex min-h-screen flex-col items-center justify-center px-4 py-24 text-center"
+        style={{ y: contentY, opacity }}
+      >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -105,7 +119,7 @@ export function DNAHero() {
             />
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }
