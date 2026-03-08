@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft,
-  Copy,
   BookOpen,
   DollarSign,
   Eye,
@@ -42,7 +41,6 @@ const WATCH_LINKS = [
 const MovieDetailPage = () => {
   const { imdbID = "" } = useParams();
   const [showTrailer, setShowTrailer] = useState(false);
-  const [showPlayer, setShowPlayer] = useState(false);
   const [summaryLang, setSummaryLang] = useState<string | null>(null);
   const [summary, setSummary] = useState("");
   const [selectedActorId, setSelectedActorId] = useState<number | null>(null);
