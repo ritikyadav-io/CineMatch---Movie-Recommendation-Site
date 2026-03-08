@@ -156,24 +156,15 @@ function StatsGrid() {
 
 /* ── Main page ── */
 const Index = () => {
-  const trending = useQuery({ queryKey: ["home-trending"], queryFn: () => fetchTmdbTrending(1), staleTime: 1000 * 60 * 30 });
-  const nowPlaying = useQuery({ queryKey: ["home-nowplaying"], queryFn: () => fetchTmdbNowPlaying(1), staleTime: 1000 * 60 * 30 });
-  const topRated = useQuery({ queryKey: ["home-toprated"], queryFn: () => fetchTmdbTopRated(1), staleTime: 1000 * 60 * 30 });
-  const bollywood = useQuery({ queryKey: ["home-bollywood"], queryFn: () => fetchTmdbBollywood(1), staleTime: 1000 * 60 * 30 });
-  const superhero = useQuery({ queryKey: ["home-superhero"], queryFn: () => fetchTmdbSuperhero(1), staleTime: 1000 * 60 * 30 });
-  const anime = useQuery({ queryKey: ["home-anime"], queryFn: () => fetchTmdbAnime(1), staleTime: 1000 * 60 * 30 });
-  const scifi = useQuery({ queryKey: ["home-scifi"], queryFn: () => fetchTmdbSciFi(1), staleTime: 1000 * 60 * 30 });
-  const horror = useQuery({ queryKey: ["home-horror"], queryFn: () => fetchTmdbHorror(1), staleTime: 1000 * 60 * 30 });
-
   const sections = [
-    { title: "🔥 Trending Now", data: trending.data, loading: trending.isLoading, link: "/browse?cat=trending" },
-    { title: "🎬 Now Playing", data: nowPlaying.data, loading: nowPlaying.isLoading, link: "/browse?cat=nowplaying" },
-    { title: "⭐ Top Rated", data: topRated.data, loading: topRated.isLoading, link: "/browse?cat=toprated" },
-    { title: "🇮🇳 Bollywood", data: bollywood.data, loading: bollywood.isLoading, link: "/browse?cat=bollywood" },
-    { title: "🦸 Superhero", data: superhero.data, loading: superhero.isLoading, link: "/browse?cat=superhero" },
-    { title: "🌸 Anime", data: anime.data, loading: anime.isLoading, link: "/browse?cat=anime" },
-    { title: "🚀 Sci-Fi", data: scifi.data, loading: scifi.isLoading, link: "/browse?cat=scifi" },
-    { title: "👻 Horror", data: horror.data, loading: horror.isLoading, link: "/browse?cat=horror" },
+    { title: "🔥 Trending Now", fetchFn: () => fetchTmdbTrending(1), link: "/browse?cat=trending", queryKey: "home-trending" },
+    { title: "🎬 Now Playing", fetchFn: () => fetchTmdbNowPlaying(1), link: "/browse?cat=nowplaying", queryKey: "home-nowplaying" },
+    { title: "⭐ Top Rated", fetchFn: () => fetchTmdbTopRated(1), link: "/browse?cat=toprated", queryKey: "home-toprated" },
+    { title: "🇮🇳 Bollywood", fetchFn: () => fetchTmdbBollywood(1), link: "/browse?cat=bollywood", queryKey: "home-bollywood" },
+    { title: "🦸 Superhero", fetchFn: () => fetchTmdbSuperhero(1), link: "/browse?cat=superhero", queryKey: "home-superhero" },
+    { title: "🌸 Anime", fetchFn: () => fetchTmdbAnime(1), link: "/browse?cat=anime", queryKey: "home-anime" },
+    { title: "🚀 Sci-Fi", fetchFn: () => fetchTmdbSciFi(1), link: "/browse?cat=scifi", queryKey: "home-scifi" },
+    { title: "👻 Horror", fetchFn: () => fetchTmdbHorror(1), link: "/browse?cat=horror", queryKey: "home-horror" },
   ];
 
   return (
