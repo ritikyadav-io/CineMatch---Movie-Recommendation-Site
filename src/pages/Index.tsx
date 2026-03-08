@@ -210,13 +210,40 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ═══════════ MADE BY ═══════════ */}
+      {/* ═══════════ FUN STATS ═══════════ */}
       <section className="container px-3 sm:px-6 pb-10 sm:pb-16">
-        <div className="rounded-2xl bg-card/50 border border-border px-5 py-10 sm:py-14 text-center space-y-3">
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-foreground">
-            Movie <span className="text-primary">DNA</span>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="rounded-2xl bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-5 py-10 sm:py-14 text-center space-y-6"
+        >
+          <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">
+            Movie <span className="text-primary">DNA</span> in Numbers
           </h2>
-        </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+            {[
+              { num: "10K+", label: "Movies to Explore" },
+              { num: "8", label: "Genre Universes" },
+              { num: "50+", label: "Countries Covered" },
+              { num: "∞", label: "Movie Nights Saved" },
+            ].map((stat) => (
+              <div key={stat.label} className="space-y-1">
+                <p className="text-2xl sm:text-3xl font-black text-primary">{stat.num}</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto">
+            Your perfect movie is one quiz away. Stop scrolling, start watching. 🍿
+          </p>
+          <Button asChild variant="hero" size="sm" className="group sm:!h-11 sm:!px-6 sm:!text-sm">
+            <Link to="/quiz">
+              Take the Quiz <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Button>
+        </motion.div>
       </section>
 
       <DNAFooter />
