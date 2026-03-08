@@ -35,7 +35,7 @@ const SearchPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <CineMatchNav />
+      <DNANav />
       <main className="container space-y-10 py-12 lg:py-16">
         <section className="section-shell space-y-4">
           <p className="text-xs uppercase tracking-[0.28em] text-primary">Global Search</p>
