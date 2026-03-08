@@ -813,22 +813,6 @@ export const cineMatchCatalog: CatalogEntry[] = [
     searchTerms: ["fincher", "actress", "rosamund pike", "marriage", "thriller"]
   },
   {
-    imdbID: "tt2267998",
-    title: "Gone Girl",
-    type: "movie",
-    year: 2023,
-    genres: ["Drama", "Comedy"],
-    language: "English",
-    mood: "Emotional",
-    violence: "None",
-    nudity: "Some",
-    runtime: "Medium",
-    complexity: "Thought-provoking",
-    actors: ["Margot Robbie", "Ryan Gosling"],
-    shortDescription: "A plastic icon's existential crisis becomes a candy-colored feminist manifesto.",
-    searchTerms: ["barbie", "actress", "margot robbie", "comedy"]
-  },
-  {
     imdbID: "tt9032400",
     title: "Eternals",
     type: "movie",
