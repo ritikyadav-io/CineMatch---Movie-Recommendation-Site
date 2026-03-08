@@ -92,6 +92,7 @@ const MovieDetailPage = () => {
     }
   };
 
+  if (detailQuery.isLoading) {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <DNANav />
