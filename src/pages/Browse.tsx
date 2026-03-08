@@ -50,7 +50,7 @@ const CATEGORIES: Record<string, { title: string; fetcher: (page: number) => Pro
 const BrowsePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const cat = searchParams.get("cat") || "trending";
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(() => Number(searchParams.get("page")) || 1);
 
   const category = CATEGORIES[cat] || CATEGORIES.trending;
 

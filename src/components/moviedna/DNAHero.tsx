@@ -80,11 +80,18 @@ export function DNAHero() {
                 Start Quiz
               </Link>
             </Button>
-            <Button asChild variant="heroSecondary" size="xl">
-              <Link to="/browse">
-                <Info className="size-5" />
-                Explore
-              </Link>
+            <Button
+              variant="heroSecondary"
+              size="xl"
+              onClick={() => {
+                const cats = ["trending", "toprated", "popular", "bollywood", "superhero", "anime", "scifi", "horror", "series", "nowplaying"];
+                const randomCat = cats[Math.floor(Math.random() * cats.length)];
+                const randomPage = Math.floor(Math.random() * 5) + 1;
+                window.location.href = `/browse?cat=${randomCat}&page=${randomPage}`;
+              }}
+            >
+              <Info className="size-5" />
+              Explore
             </Button>
           </motion.div>
 
