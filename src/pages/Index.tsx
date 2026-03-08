@@ -146,7 +146,7 @@ function StatsGrid() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
   return (
-    <div ref={ref} className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+    <div ref={ref} className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-8 max-w-2xl lg:max-w-4xl mx-auto">
       {statsData.map((s) => (
         <AnimatedStat key={s.label} {...s} inView={inView} />
       ))}
