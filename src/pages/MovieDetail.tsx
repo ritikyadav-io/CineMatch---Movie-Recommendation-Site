@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft,
+  Copy,
   DollarSign,
   Eye,
   Flame,
   Loader2,
   PlayCircle,
-  Shield,
+  Share2,
   Star,
   Tv,
   User,
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
