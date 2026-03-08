@@ -196,12 +196,12 @@ const Index = () => {
             <p className="max-w-md text-[10px] sm:text-sm lg:text-base leading-relaxed text-secondary-foreground hidden sm:block">
               Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more — plus full details, trailers, and where to watch.
             </p>
-            <div className="flex items-center gap-2 sm:gap-3">
-              <Button asChild variant="hero" size="sm" className="sm:!h-11 sm:!px-6 sm:!text-sm">
-                <Link to="/quiz"><Play className="size-3.5 sm:size-4 fill-current" /> Start Quiz</Link>
+            <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
+              <Button asChild variant="hero" size="sm" className="sm:!h-11 sm:!px-6 sm:!text-sm lg:!h-13 lg:!px-8 lg:!text-base">
+                <Link to="/quiz"><Play className="size-3.5 sm:size-4 lg:size-5 fill-current" /> Start Quiz</Link>
               </Button>
-              <Button asChild variant="heroSecondary" size="sm" className="sm:!h-11 sm:!px-6 sm:!text-sm">
-                <Link to="/browse"><Film className="size-3.5 sm:size-4" /> Browse All</Link>
+              <Button asChild variant="heroSecondary" size="sm" className="sm:!h-11 sm:!px-6 sm:!text-sm lg:!h-13 lg:!px-8 lg:!text-base">
+                <Link to="/browse"><Film className="size-3.5 sm:size-4 lg:size-5" /> Browse All</Link>
               </Button>
             </div>
           </motion.div>
