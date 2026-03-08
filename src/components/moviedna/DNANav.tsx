@@ -198,21 +198,21 @@ export function DNANav() {
           />
 
           {/* Drawer */}
-          <div className="absolute right-0 top-0 bottom-0 w-72 bg-card shadow-2xl animate-slide-in-right flex flex-col">
+          <div className="absolute right-0 top-0 bottom-0 w-60 bg-card shadow-2xl animate-slide-in-right flex flex-col">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-border">
-              <span className="text-lg font-black tracking-tight text-foreground">Movies <span className="text-primary">DNA</span></span>
+            <div className="flex items-center justify-between p-3 border-b border-border">
+              <span className="text-sm font-black tracking-tight text-foreground">Movies <span className="text-primary">DNA</span></span>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="p-2 rounded-full hover:bg-muted text-foreground"
+                className="p-1.5 rounded-full hover:bg-muted text-foreground"
                 aria-label="Close menu"
               >
-                <X className="size-5" />
+                <X className="size-4" />
               </button>
             </div>
 
             {/* Nav links */}
-            <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+            <nav className="flex-1 overflow-y-auto p-3 space-y-0.5">
               {navItems.map((item) => {
                 const isActive =
                   location.pathname === item.to ||
@@ -224,42 +224,42 @@ export function DNANav() {
                     to={item.to}
                     onClick={() => setMobileOpen(false)}
                     className={[
-                      "flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition",
+                      "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-medium transition",
                       isActive
                         ? "bg-primary text-primary-foreground"
                         : "text-foreground hover:bg-muted",
                     ].join(" ")}
                   >
-                    <item.icon className="size-5" />
+                    <item.icon className="size-4" />
                     {item.label}
                   </Link>
                 );
               })}
 
-              <div className="border-t border-border my-3" />
+              <div className="border-t border-border my-2" />
 
               <Link
                 to="/search"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-foreground hover:bg-muted transition"
+                className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-medium text-foreground hover:bg-muted transition"
               >
-                <Search className="size-5" />
+                <Search className="size-4" />
                 Search
               </Link>
               {user && (
                 <Link
                   to="/profile"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-foreground hover:bg-muted transition"
+                  className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-medium text-foreground hover:bg-muted transition"
                 >
-                  <Bookmark className="size-5" />
+                  <Bookmark className="size-4" />
                   My Profile & Watchlist
                 </Link>
               )}
             </nav>
 
             {/* Bottom actions */}
-            <div className="p-4 space-y-2 border-t border-border">
+            <div className="p-3 space-y-1.5 border-t border-border">
               {canInstall && !isInstalled && (
                 <Button
                   onClick={() => {
@@ -267,18 +267,20 @@ export function DNANav() {
                     setMobileOpen(false);
                   }}
                   variant="heroSecondary"
-                  className="w-full"
+                  size="sm"
+                  className="w-full text-xs"
                 >
-                  <Download className="size-4" />
+                  <Download className="size-3.5" />
                   Install App
                 </Button>
               )}
               <Button
                 onClick={() => { setShowDonate(true); setMobileOpen(false); }}
                 variant="hero"
-                className="w-full"
+                size="sm"
+                className="w-full text-xs"
               >
-                <Heart className="size-4" />
+                <Heart className="size-3.5" />
                 Donate
               </Button>
             </div>
