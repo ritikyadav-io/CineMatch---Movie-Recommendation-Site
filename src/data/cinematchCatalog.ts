@@ -1230,7 +1230,7 @@ export const sectionMap: Record<DiscoverSectionKey, { title: string; description
 
 export const quizFieldsets = [
   { key: "contentType", label: "Content Type", options: ["movie", "series"] },
-  { key: "genre", label: "Genre", options: ["Action", "Thriller", "Horror", "Sci-Fi", "Romance", "Comedy", "Drama", "Fantasy", "Animation", "Sport"] },
+  { key: "genre", label: "Genre", options: ["Action", "Thriller", "Horror", "Sci-Fi", "Romance", "Comedy", "Drama", "Fantasy", "Animation", "Crime", "Adventure", "War", "Sport"] },
   { key: "language", label: "Language", options: ["English", "Korean", "Japanese", "Spanish", "Hindi", "Any"] },
   { key: "mood", label: "Mood", options: ["Light and fun", "Dark and intense", "Emotional", "Mind-bending"] },
   { key: "violence", label: "Violence / Gore Level", options: ["None", "Moderate", "Extreme"] },
