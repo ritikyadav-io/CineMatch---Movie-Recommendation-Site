@@ -13,7 +13,7 @@ const PrivacyPage = () => {
           <p className="text-muted-foreground">Third-party movie data and poster assets are fetched from OMDb for title discovery and detail views.</p>
         </section>
       </main>
-      <CineFooter />
+      <DNAFooter />
     </div>
   );
 };
