@@ -129,10 +129,10 @@ export function DNANav() {
             ) : (
               <button
                 onClick={() => setShowSearch(true)}
-                className="p-2 text-muted-foreground transition hover:text-foreground"
+                className="p-1 sm:p-2 text-muted-foreground transition hover:text-foreground"
                 aria-label="Search"
               >
-                <Search className="size-5" />
+                <Search className="size-4 sm:size-5" />
               </button>
             )}
             <button
