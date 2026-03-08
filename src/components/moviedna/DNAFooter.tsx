@@ -28,8 +28,8 @@ export function DNAFooter() {
           </div>
           <div className="space-y-2 text-muted-foreground">
             <p className="font-semibold text-foreground text-xs">Info</p>
-            <a className="flex items-center gap-1.5 hover:text-foreground transition" href="mailto:hello@moviedna.app">
-              <Heart className="size-3 text-primary" />hello@moviedna.app
+            <a className="flex items-center gap-1.5 hover:text-foreground transition" href="mailto:primehrithik@gmail.com">
+              <Heart className="size-3 text-primary" />primehrithik@gmail.com
             </a>
             <Link className="block hover:text-foreground transition" to="/privacy">Privacy Policy</Link>
             <a className="flex items-center gap-1.5 hover:text-foreground transition" href="https://www.omdbapi.com/" target="_blank" rel="noreferrer">
