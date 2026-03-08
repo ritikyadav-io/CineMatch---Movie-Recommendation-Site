@@ -273,22 +273,22 @@ const Index = () => {
       </section>
 
       {/* ═══════════ FUN STATS ═══════════ */}
-      <section className="container px-3 sm:px-6 lg:px-8 pb-4 sm:pb-10 lg:pb-16">
+      <section className="container px-4 sm:px-6 lg:px-8 pb-6 sm:pb-10 lg:pb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="rounded-lg lg:rounded-2xl bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-3 py-4 sm:px-4 sm:py-8 lg:px-8 lg:py-14 text-center space-y-2 sm:space-y-4 lg:space-y-6"
+          className="rounded-xl lg:rounded-2xl bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border px-4 py-6 sm:px-4 sm:py-8 lg:px-8 lg:py-14 text-center space-y-3 sm:space-y-4 lg:space-y-6"
         >
-          <h2 className="text-sm sm:text-2xl lg:text-4xl font-black tracking-tight text-foreground">
+          <h2 className="text-base sm:text-2xl lg:text-4xl font-black tracking-tight text-foreground">
             Movies <span className="text-primary">DNA</span> in Numbers
           </h2>
           <StatsGrid />
-          <p className="text-[8px] sm:text-xs lg:text-sm text-muted-foreground max-w-sm lg:max-w-lg mx-auto">
+          <p className="text-[10px] sm:text-xs lg:text-sm text-muted-foreground max-w-sm lg:max-w-lg mx-auto">
             Your perfect movie is one quiz away. Stop scrolling, start watching. 🍿
           </p>
-          <Button asChild variant="hero" size="sm" className="group sm:!h-9 sm:!px-5 sm:!text-xs lg:!h-12 lg:!px-8 lg:!text-sm">
+          <Button asChild variant="hero" size="default" className="group sm:!h-9 sm:!px-5 sm:!text-xs lg:!h-12 lg:!px-8 lg:!text-sm">
             <Link to="/quiz">
               Take the Quiz <ArrowRight className="size-3.5 lg:size-4 transition-transform group-hover:translate-x-1" />
             </Link>
