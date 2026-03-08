@@ -45,6 +45,7 @@ const MovieDetailPage = () => {
   const [showPlayer, setShowPlayer] = useState(false);
   const [summaryLang, setSummaryLang] = useState<string | null>(null);
   const [summary, setSummary] = useState("");
+  const [selectedActorId, setSelectedActorId] = useState<number | null>(null);
   const [summaryLoading, setSummaryLoading] = useState(false);
 
   const tmdbId = imdbID.startsWith("tmdb-") ? Number(imdbID.replace("tmdb-", "")) : null;
