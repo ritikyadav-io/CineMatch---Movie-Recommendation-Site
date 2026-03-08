@@ -33,82 +33,49 @@ export function QuizPreview() {
         </p>
       </motion.div>
 
-      <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-        {/* Sliders */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="rounded-lg bg-card p-5 space-y-4"
-        >
-          {sliders.map((slider, index) => (
-            <div key={slider.label} className="space-y-1.5">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-medium text-foreground">{slider.label}</span>
-                <span className="text-muted-foreground">{values[index]}%</span>
-              </div>
-              <div className="relative h-1.5 overflow-hidden rounded-full bg-muted">
-                <motion.div
-                  className={`absolute inset-y-0 left-0 rounded-full ${slider.color}`}
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${values[index]}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: index * 0.06, ease: "easeOut" }}
-                />
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={values[index]}
-                  onChange={(e) => {
-                    const next = [...values];
-                    next[index] = Number(e.target.value);
-                    setValues(next);
-                  }}
-                  className="absolute inset-0 w-full cursor-pointer opacity-0"
-                  aria-label={slider.label}
-                />
-              </div>
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="rounded-lg bg-card p-5 space-y-4 max-w-xl"
+      >
+        {sliders.map((slider, index) => (
+          <div key={slider.label} className="space-y-1.5">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-medium text-foreground">{slider.label}</span>
+              <span className="text-muted-foreground">{values[index]}%</span>
             </div>
-          ))}
-        </motion.div>
-
-        {/* Sample result */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="rounded-lg bg-card p-5 flex flex-col justify-center space-y-4"
-        >
-          <span className="text-xs font-bold uppercase tracking-wider text-primary">Sample Result</span>
-          <div className="overflow-hidden rounded-lg bg-muted aspect-video" />
-          <div className="space-y-2">
-            <div className="flex items-center gap-3">
-              <span className="rounded bg-primary/20 px-3 py-1 text-xs font-bold text-primary">92% Match</span>
-              <span className="flex items-center gap-1 text-sm text-foreground">
-                <Star className="size-3.5 fill-yellow-500 text-yellow-500" />
-                8.6
-              </span>
+            <div className="relative h-1.5 overflow-hidden rounded-full bg-muted">
+              <motion.div
+                className={`absolute inset-y-0 left-0 rounded-full ${slider.color}`}
+                initial={{ width: 0 }}
+                whileInView={{ width: `${values[index]}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.06, ease: "easeOut" }}
+              />
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={values[index]}
+                onChange={(e) => {
+                  const next = [...values];
+                  next[index] = Number(e.target.value);
+                  setValues(next);
+                }}
+                className="absolute inset-0 w-full cursor-pointer opacity-0"
+                aria-label={slider.label}
+              />
             </div>
-            <h3 className="text-xl font-bold text-foreground">Inception</h3>
-            <div className="flex gap-2">
-              {["Action", "Sci-Fi", "Thriller"].map((g) => (
-                <span key={g} className="rounded bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">{g}</span>
-              ))}
-            </div>
-            <p className="text-xs leading-relaxed text-muted-foreground">
-              Your high action and mind-bending preferences perfectly align with this dream-heist masterpiece.
-            </p>
           </div>
-          <Button asChild variant="hero" size="sm" className="w-fit">
-            <Link to="/quiz">
-              Take the Quiz <ArrowRight className="size-3.5" />
-            </Link>
-          </Button>
-        </motion.div>
-      </div>
+        ))}
+        <Button asChild variant="hero" size="sm" className="w-fit mt-2">
+          <Link to="/quiz">
+            Take the Quiz <ArrowRight className="size-3.5" />
+          </Link>
+        </Button>
+      </motion.div>
     </section>
   );
 }
