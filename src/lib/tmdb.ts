@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 const TMDB_IMG = "https://image.tmdb.org/t/p";
 
-function tmdbPoster(path: string | null, size = "w500") {
+function tmdbPoster(path: string | null, size = "w342") {
   return path ? `${TMDB_IMG}/${size}${path}` : "/placeholder.svg";
 }
 
