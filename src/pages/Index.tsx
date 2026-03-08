@@ -44,7 +44,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <main className="container pt-24 pb-12 space-y-12">
+      <main className="container px-3 sm:px-4 lg:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12 space-y-6 sm:space-y-10 lg:space-y-12">
         {/* Hero Banner */}
         <div className="relative overflow-hidden rounded-xl h-[240px] sm:h-[340px] lg:h-[400px]">
           <img src={heroImage} alt="Movie DNA" className="absolute inset-0 h-full w-full object-cover" />
