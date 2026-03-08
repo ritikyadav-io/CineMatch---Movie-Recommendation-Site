@@ -49,7 +49,7 @@ const QuizPage = () => {
       </div>
 
       <DNANav />
-      <main className="container pt-16 pb-6 sm:pt-20 sm:pb-10 px-3 sm:px-6">
+      <main className="container pt-14 pb-6 sm:pt-16 sm:pb-10 px-3 sm:px-6">
         <div className="mx-auto max-w-3xl space-y-3 sm:space-y-4">
           <div className="space-y-1">
             <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider text-primary">Movies DNA Quiz</span>

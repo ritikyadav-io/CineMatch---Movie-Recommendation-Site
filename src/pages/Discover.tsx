@@ -71,7 +71,7 @@ const DiscoverPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <main className="container space-y-4 sm:space-y-8 pt-20 pb-8 sm:pt-24 sm:pb-12 lg:pt-28 lg:pb-16 px-3 sm:px-6">
+      <main className="container space-y-4 sm:space-y-8 pt-14 pb-8 sm:pt-16 sm:pb-12 lg:pt-18 lg:pb-16 px-3 sm:px-6">
         <section className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">Discover</span>

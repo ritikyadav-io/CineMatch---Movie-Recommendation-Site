@@ -88,7 +88,7 @@ const TrailersPage = () => {
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
 
-      <main className="container px-3 sm:px-6 pt-20 pb-8">
+      <main className="container px-3 sm:px-6 pt-14 sm:pt-16 pb-8">
         <div className="mb-4 sm:mb-6">
           <h1 className="text-base sm:text-2xl font-black text-foreground">🎬 Trailers</h1>
           <p className="text-[9px] sm:text-xs text-muted-foreground mt-0.5">Preview before you watch</p>

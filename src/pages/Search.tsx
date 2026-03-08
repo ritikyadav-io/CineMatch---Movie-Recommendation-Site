@@ -67,7 +67,7 @@ const SearchPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <main className="container space-y-8 pt-24 pb-12 lg:pt-28 lg:pb-16 px-4 sm:px-6">
+      <main className="container space-y-8 pt-14 pb-12 sm:pt-16 lg:pt-18 lg:pb-16 px-4 sm:px-6">
         {/* ── Search Input Section ── */}
         <section className="text-center space-y-4 max-w-xl mx-auto">
           <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">
