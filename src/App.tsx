@@ -20,6 +20,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const PrivacyPage = lazy(() => import("./pages/Privacy"));
 const ProfilePage = lazy(() => import("./pages/Profile"));
 const QuizPage = lazy(() => import("./pages/Quiz"));
+const ActressesPage = lazy(() => import("./pages/Actresses"));
 const SearchPage = lazy(() => import("./pages/Search"));
 const TrailersPage = lazy(() => import("./pages/Trailers"));
 
