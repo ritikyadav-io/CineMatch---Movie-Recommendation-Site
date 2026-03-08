@@ -32,7 +32,7 @@ const MovieDetailPage = () => {
   if (!detailQuery.data) {
     return (
       <div className="min-h-screen bg-background text-foreground">
-        <CineMatchNav />
+        <DNANav />
         <main className="container py-24">
           <div className="section-shell py-16 text-center text-muted-foreground">We couldn’t load that title right now.</div>
         </main>
