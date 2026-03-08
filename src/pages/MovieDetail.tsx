@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { CastBioModal } from "@/components/moviedna/CastBioModal";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -44,6 +45,7 @@ const MovieDetailPage = () => {
   const [showPlayer, setShowPlayer] = useState(false);
   const [summaryLang, setSummaryLang] = useState<string | null>(null);
   const [summary, setSummary] = useState("");
+  const [selectedActorId, setSelectedActorId] = useState<number | null>(null);
   const [summaryLoading, setSummaryLoading] = useState(false);
 
   const tmdbId = imdbID.startsWith("tmdb-") ? Number(imdbID.replace("tmdb-", "")) : null;
@@ -389,7 +391,11 @@ const MovieDetailPage = () => {
             <h2 className="text-sm sm:text-lg font-bold text-foreground">🎭 Cast</h2>
             <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
               {movie.cast.map((actor) => (
-                <div key={actor.id} className="shrink-0 flex items-center gap-2 rounded-md bg-card border border-border p-2 w-[140px] sm:w-[180px]">
+                <button
+                  key={actor.id}
+                  onClick={() => setSelectedActorId(actor.id)}
+                  className="shrink-0 flex items-center gap-2 rounded-md bg-card border border-border p-2 w-[140px] sm:w-[180px] text-left transition hover:border-primary hover:bg-secondary cursor-pointer"
+                >
                   {actor.profile_path ? (
                     <img src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`} alt={actor.name} className="size-8 sm:size-10 rounded-full object-cover shrink-0" loading="lazy" />
                   ) : (
@@ -399,7 +405,7 @@ const MovieDetailPage = () => {
                     <p className="text-[10px] sm:text-xs font-semibold text-foreground truncate">{actor.name}</p>
                     <p className="text-[8px] sm:text-[10px] text-muted-foreground truncate">{actor.character}</p>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </section>
@@ -456,6 +462,11 @@ const MovieDetailPage = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Cast Bio Modal */}
+      {selectedActorId && (
+        <CastBioModal actorId={selectedActorId} onClose={() => setSelectedActorId(null)} />
       )}
     </div>
   );
