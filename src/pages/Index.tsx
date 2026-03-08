@@ -112,9 +112,9 @@ function AnimatedStat({ target, suffix, label, inView }: { target: number; suffi
   const count = useCountUp(target, target > 100 ? 2000 : 1200, inView);
   const display = target === 0 ? suffix : `${count.toLocaleString()}${suffix}`;
   return (
-    <div className="space-y-1">
-      <p className="text-lg sm:text-3xl font-black text-primary">{display}</p>
-      <p className="text-[8px] sm:text-xs text-muted-foreground font-medium">{label}</p>
+    <div className="space-y-0.5">
+      <p className="text-sm sm:text-xl font-black text-primary">{display}</p>
+      <p className="text-[7px] sm:text-[10px] text-muted-foreground font-medium">{label}</p>
     </div>
   );
 }

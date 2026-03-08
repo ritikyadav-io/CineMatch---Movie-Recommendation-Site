@@ -1222,9 +1222,6 @@ export const quizFieldsets = [
   { key: "releasePeriod", label: "Release Period", options: ["2020+", "2010-2020", "Before 2010"] },
   { key: "runtime", label: "Runtime Preference", options: ["Short (<100 minutes)", "Medium", "Long epic"] },
   { key: "complexity", label: "Story Complexity", options: ["Simple entertainment", "Thought-provoking", "Mind-bending"] },
-  { key: "bollywoodVibe", label: "🎬 Bollywood Vibe", options: ["Classic romance", "Modern thriller", "Musical extravaganza", "Social drama", "Any"] },
-  { key: "superheroPreference", label: "🦸 Superhero Preference", options: ["Marvel-style", "DC-style", "Indie/dark", "Animated", "Any"] },
-  { key: "animeStyle", label: "🌸 Anime Style", options: ["Shonen action", "Romance/slice-of-life", "Dark/psychological", "Fantasy adventure", "Any"] },
 ] as const;
 
 export const defaultQuizAnswers: QuizAnswers = {
