@@ -87,7 +87,7 @@ const Index = () => {
               </div>
             ) : section.data?.length ? (
               <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                {section.data.slice(0, 10).map((item) => (
+                {section.data.slice(0, 8).map((item) => (
                   <CineMovieCard key={item.imdbID} item={item} />
                 ))}
               </div>

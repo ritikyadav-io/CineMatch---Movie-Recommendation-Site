@@ -5,10 +5,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
-import { TmdbMiniRow } from "@/components/moviedna/TmdbRows";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
-import { findCatalogMatches } from "@/data/cinematchCatalog";
-import { fetchOmdbBatch, searchOmdbTitles } from "@/lib/omdb";
 import {
   searchTmdb,
   searchTmdbPerson,
@@ -22,21 +19,7 @@ const SearchPage = () => {
   const query = searchParams.get("q") || "";
   const [selectedPerson, setSelectedPerson] = useState<TmdbPerson | null>(null);
 
-  const catalogMatches = findCatalogMatches(query);
-  const catalogQuery = useQuery({
-    queryKey: ["search", "catalog", query],
-    queryFn: () => fetchOmdbBatch(catalogMatches.map((item) => item.imdbID)),
-    enabled: catalogMatches.length > 0,
-    staleTime: 1000 * 60 * 60,
-  });
-
-  const titleQuery = useQuery({
-    queryKey: ["search", "titles", query],
-    queryFn: () => searchOmdbTitles(query),
-    enabled: query.trim().length > 1,
-    staleTime: 1000 * 60 * 20,
-  });
-
+  // Single fast TMDB search — covers movies + TV
   const tmdbQuery = useQuery({
     queryKey: ["search", "tmdb", query],
     queryFn: () => searchTmdb(query),
@@ -59,19 +42,8 @@ const SearchPage = () => {
     staleTime: 1000 * 60 * 30,
   });
 
-  const results = useMemo(() => {
-    const merged = [
-      ...(catalogQuery.data || []),
-      ...(titleQuery.data || []),
-      ...(tmdbQuery.data || []),
-    ];
-    return merged.filter(
-      (item, index, array) =>
-        array.findIndex((c) => c.imdbID === item.imdbID) === index
-    );
-  }, [catalogQuery.data, titleQuery.data, tmdbQuery.data]);
-
-  const isLoading = catalogQuery.isLoading || titleQuery.isLoading || tmdbQuery.isLoading;
+  const results = tmdbQuery.data || [];
+  const isLoading = tmdbQuery.isLoading;
   const actors = personQuery.data || [];
 
   return (
@@ -95,7 +67,7 @@ const SearchPage = () => {
         {actors.length > 0 && (
           <section className="space-y-3">
             <h2 className="text-lg font-bold text-foreground">🎭 Actors & Actresses</h2>
-            <div className="scroll-row gap-3">
+            <div className="flex gap-3 overflow-x-auto pb-2">
               {actors.map((person) => {
                 const img = tmdbProfileImage(person.profile_path);
                 const isActive = selectedPerson?.id === person.id;
@@ -159,32 +131,27 @@ const SearchPage = () => {
         )}
 
         {/* Title search results */}
-        <section className="space-y-3">
-          {!selectedPerson && (
-            <>
-              <h2 className="text-lg font-bold text-foreground">🎬 Movies & Shows</h2>
-              {isLoading ? (
-                <div className="flex items-center justify-center gap-3 py-20 text-muted-foreground">
-                  <Loader2 className="size-5 animate-spin text-primary" />
-                  Searching...
-                </div>
-              ) : results.length ? (
-                <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                  {results.map((item) => (
-                    <CineMovieCard key={item.imdbID} item={item} />
-                  ))}
-                </div>
-              ) : (
-                <div className="py-16 text-center text-muted-foreground">
-                  No matches. Try a broader title, actor name, genre, or year.
-                </div>
-              )}
-            </>
-          )}
-        </section>
-        <div className="container pb-12">
-          <TmdbMiniRow category="toprated" />
-        </div>
+        {!selectedPerson && (
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-foreground">🎬 Movies & Shows</h2>
+            {isLoading ? (
+              <div className="flex items-center justify-center gap-3 py-20 text-muted-foreground">
+                <Loader2 className="size-5 animate-spin text-primary" />
+                Searching...
+              </div>
+            ) : results.length ? (
+              <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                {results.map((item) => (
+                  <CineMovieCard key={item.imdbID} item={item} />
+                ))}
+              </div>
+            ) : (
+              <div className="py-16 text-center text-muted-foreground">
+                No matches. Try a broader title, actor name, genre, or year.
+              </div>
+            )}
+          </section>
+        )}
       </main>
       <DNAFooter />
     </div>
