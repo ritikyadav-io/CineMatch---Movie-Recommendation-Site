@@ -6,6 +6,8 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
 
 import { AuthProvider } from "@/hooks/use-auth";
+import { InstallBanner } from "@/components/moviedna/InstallBanner";
+import { PageLoadingBar } from "@/components/moviedna/PageLoadingBar";
 
 // Eagerly load the home page; lazy-load everything else
 import Index from "./pages/Index";
@@ -30,8 +32,8 @@ function ScrollToTop() {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 10,    // 10 min default stale
-      gcTime: 1000 * 60 * 30,       // 30 min garbage collection
+      staleTime: 1000 * 60 * 10,
+      gcTime: 1000 * 60 * 30,
       retry: 1,
       refetchOnWindowFocus: false,
     },
@@ -54,6 +56,8 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
+          <PageLoadingBar />
+          <InstallBanner />
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Index />} />
