@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import heroImage from "@/assets/moviedna-hero.jpg";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
-import { CategoryBar } from "@/components/moviedna/CategoryBar";
 import { CTASection } from "@/components/moviedna/CTASection";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
@@ -45,53 +44,35 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-
-      {/* Hero Section — inline to avoid layout collapse */}
-      <section className="relative overflow-hidden" style={{ height: '75vh', minHeight: 500 }}>
-        <div className="absolute inset-0">
-          <img src={heroImage} alt="Movie DNA hero" className="h-full w-full object-cover" loading="eager" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
-        </div>
-        <div className="container relative flex h-full items-end pb-16 lg:items-center lg:pb-0">
-          <div className="max-w-2xl space-y-5">
-            <div className="inline-flex items-center gap-2 rounded bg-primary/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary">
+      <main className="container pt-24 pb-12 space-y-12">
+        {/* Hero Banner */}
+        <div className="relative overflow-hidden rounded-xl" style={{ height: 400 }}>
+          <img src={heroImage} alt="Movie DNA" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+          <div className="relative flex h-full flex-col justify-end p-8">
+            <div className="inline-flex items-center gap-2 rounded bg-primary/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary w-fit mb-3">
               <span className="size-1.5 rounded-full bg-primary animate-pulse" />
               Now Streaming
             </div>
-            <h1 className="text-5xl font-black leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-              Discover Your<br />
-              <span className="text-primary">Movie DNA</span>
+            <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">
+              Discover Your <span className="text-primary">Movie DNA</span>
             </h1>
-            <p className="max-w-lg text-base leading-relaxed text-secondary-foreground sm:text-lg">
-              Answer a few questions and find movies perfectly matched to your taste —
-              from Hollywood blockbusters to Bollywood epics, superhero sagas to anime adventures.
+            <p className="mt-2 max-w-lg text-sm text-secondary-foreground">
+              Personalized movie recommendations from Hollywood, Bollywood, Superhero & Anime universes.
             </p>
-            <div className="flex items-center gap-3 pt-2">
-              <Button asChild variant="hero" size="xl">
-                <Link to="/quiz"><Play className="size-5 fill-current" /> Start Quiz</Link>
+            <div className="flex items-center gap-3 mt-4">
+              <Button asChild variant="hero" size="lg">
+                <Link to="/quiz"><Play className="size-4 fill-current" /> Start Quiz</Link>
               </Button>
-              <Button
-                variant="heroSecondary"
-                size="xl"
-                onClick={() => {
-                  const cats = ["trending", "toprated", "bollywood", "superhero", "anime", "scifi", "horror", "nowplaying"];
-                  window.location.href = `/browse?cat=${cats[Math.floor(Math.random() * cats.length)]}`;
-                }}
-              >
-                <Info className="size-5" /> Explore
+              <Button asChild variant="heroSecondary" size="lg">
+                <Link to="/browse"><Info className="size-4" /> Browse All</Link>
               </Button>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Category Bar — outside main container */}
-      <CategoryBar />
-
-      {/* Main content with movie grids */}
-      <main className="container space-y-12 py-10 lg:py-14">
+        {/* Movie Sections */}
         {sections.map((section) => (
           <div key={section.title}>
             <div className="flex items-center justify-between mb-4">
@@ -113,9 +94,10 @@ const Index = () => {
             ) : null}
           </div>
         ))}
-      </main>
 
-      <MoviePersonality />
+        {/* Personality Types */}
+        <MoviePersonality />
+      </main>
       <CTASection />
       <DNAFooter />
     </div>
