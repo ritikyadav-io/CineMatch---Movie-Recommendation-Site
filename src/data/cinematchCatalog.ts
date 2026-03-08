@@ -1243,7 +1243,7 @@ export const defaultQuizAnswers: QuizAnswers = {
 };
 
 const violenceRank = { None: 0, Moderate: 1, Extreme: 2 };
-const nudityRank = { None: 0, Some: 1, "Doesn't matter": 2 };
+const nudityRank = { None: 0, Some: 1, "Full Nude": 2, "Doesn't matter": 3 };
 
 export function filterCatalogByQuiz(answers: QuizAnswers) {
   return cineMatchCatalog
