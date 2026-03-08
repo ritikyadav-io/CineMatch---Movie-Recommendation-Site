@@ -167,7 +167,7 @@ const SearchPage = () => {
                 Loading filmography...
               </div>
             ) : personMoviesQuery.data?.length ? (
-              <div className="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+              <div className="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 [&>*]:min-w-0">
                 {personMoviesQuery.data.map((item) => (
                   <CineMovieCard key={item.imdbID} item={item} />
                 ))}
