@@ -84,7 +84,7 @@ export function DNANav() {
                 className="p-2 text-muted-foreground transition hover:text-foreground"
                 aria-label="Go back"
               >
-                <ArrowLeft className="size-5" />
+                <ArrowLeft className="size-4" />
               </button>
             ) : (
               <button
