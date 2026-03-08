@@ -75,24 +75,24 @@ export function DNANav() {
             : "bg-gradient-to-b from-background/80 to-transparent",
         ].join(" ")}
       >
-        <div className="container flex items-center gap-4 py-3">
+        <div className="container flex items-center gap-2 sm:gap-4 py-2 sm:py-3">
           {/* Mobile: Back button or Hamburger */}
           <div className="flex lg:hidden">
             {!isHome ? (
               <button
                 onClick={() => navigate(-1)}
-                className="p-2 text-muted-foreground transition hover:text-foreground"
+                className="p-1 text-muted-foreground transition hover:text-foreground"
                 aria-label="Go back"
               >
-                <ArrowLeft className="size-5" />
+                <ArrowLeft className="size-4" />
               </button>
             ) : (
               <button
                 onClick={() => setMobileOpen(true)}
-                className="p-2 text-muted-foreground transition hover:text-foreground"
+                className="p-1 text-muted-foreground transition hover:text-foreground"
                 aria-label="Open menu"
               >
-                <Menu className="size-5" />
+                <Menu className="size-4" />
               </button>
             )}
           </div>
@@ -129,17 +129,17 @@ export function DNANav() {
             ) : (
               <button
                 onClick={() => setShowSearch(true)}
-                className="p-2 text-muted-foreground transition hover:text-foreground"
+                className="p-1 sm:p-2 text-muted-foreground transition hover:text-foreground"
                 aria-label="Search"
               >
-                <Search className="size-5" />
+                <Search className="size-4 sm:size-5" />
               </button>
             )}
             <button
-              className="p-2 text-muted-foreground transition hover:text-foreground hidden sm:block"
+              className="p-1 sm:p-2 text-muted-foreground transition hover:text-foreground hidden sm:block"
               aria-label="Notifications"
             >
-              <Bell className="size-5" />
+              <Bell className="size-4 sm:size-5" />
             </button>
 
             {canInstall && !isInstalled && (
