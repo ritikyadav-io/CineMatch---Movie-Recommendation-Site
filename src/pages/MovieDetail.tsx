@@ -39,6 +39,7 @@ const WATCH_LINKS = [
 const MovieDetailPage = () => {
   const { imdbID = "" } = useParams();
   const [showTrailer, setShowTrailer] = useState(false);
+  const [showPlayer, setShowPlayer] = useState(false);
 
   const tmdbId = imdbID.startsWith("tmdb-") ? Number(imdbID.replace("tmdb-", "")) : null;
 
