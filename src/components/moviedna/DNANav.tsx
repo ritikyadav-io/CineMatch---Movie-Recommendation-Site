@@ -13,6 +13,7 @@ import {
   Search,
   Sparkles,
   User,
+  Users,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
