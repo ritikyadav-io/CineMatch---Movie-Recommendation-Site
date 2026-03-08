@@ -4,6 +4,7 @@ import {
   Copy,
   DollarSign,
   Eye,
+  ExternalLink,
   Flame,
   Loader2,
   PlayCircle,
@@ -26,11 +27,19 @@ import { fetchTmdbSimilar } from "@/lib/tmdb";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { getWatchSearchUrl } from "@/lib/omdb";
 
+const WATCH_LINKS = [
+  { name: "JioCinema", url: (t: string) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`, color: "bg-pink-600" },
+  { name: "Netflix", url: (t: string) => `https://www.netflix.com/search?q=${encodeURIComponent(t)}`, color: "bg-red-600" },
+  { name: "Prime Video", url: (t: string) => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`, color: "bg-blue-500" },
+  { name: "Hotstar", url: (t: string) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`, color: "bg-blue-700" },
+  { name: "YouTube", url: (t: string) => `https://www.youtube.com/results?search_query=${encodeURIComponent(t + " full movie")}`, color: "bg-red-500" },
+  { name: "Google", url: (t: string) => `https://www.google.com/search?q=${encodeURIComponent(t + " watch online free")}`, color: "bg-green-600" },
+];
+
 const MovieDetailPage = () => {
   const { imdbID = "" } = useParams();
   const [showTrailer, setShowTrailer] = useState(false);
 
-  // Extract tmdb id from "tmdb-123" format or use as-is for imdb ids
   const tmdbId = imdbID.startsWith("tmdb-") ? Number(imdbID.replace("tmdb-", "")) : null;
 
   const detailQuery = useQuery({
@@ -51,11 +60,9 @@ const MovieDetailPage = () => {
 
   const handleShare = async () => {
     const url = window.location.href;
-    const text = `Check out "${movie?.title}" on Movie DNA!`;
+    const text = `Check out "${movie?.title}" on Movies DNA!`;
     if (navigator.share) {
-      try {
-        await navigator.share({ title: movie?.title, text, url });
-      } catch {}
+      try { await navigator.share({ title: movie?.title, text, url }); } catch {}
     } else {
       await navigator.clipboard.writeText(url);
       toast.success("Link copied to clipboard!");
@@ -66,10 +73,10 @@ const MovieDetailPage = () => {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <DNANav />
-        <main className="container pt-24 pb-12">
-          <div className="flex items-center justify-center gap-3 py-20 text-muted-foreground">
-            <Loader2 className="size-5 animate-spin text-primary" />
-            Loading movie details...
+        <main className="container pt-20 pb-8">
+          <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground text-xs">
+            <Loader2 className="size-4 animate-spin text-primary" />
+            Loading...
           </div>
         </main>
       </div>
@@ -80,12 +87,10 @@ const MovieDetailPage = () => {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <DNANav />
-        <main className="container pt-24 pb-12 text-center space-y-4">
-          <div className="py-16 text-muted-foreground">We couldn't load that title right now.</div>
-          <Button asChild variant="heroSecondary">
-            <Link to="/">
-              <ArrowLeft className="size-4" /> Back Home
-            </Link>
+        <main className="container pt-20 pb-8 text-center space-y-3">
+          <div className="py-12 text-muted-foreground text-xs">We couldn't load that title.</div>
+          <Button asChild variant="heroSecondary" size="sm">
+            <Link to="/"><ArrowLeft className="size-3.5" /> Back Home</Link>
           </Button>
         </main>
       </div>
@@ -99,7 +104,6 @@ const MovieDetailPage = () => {
     return "N/A";
   };
 
-  // Content level estimation based on certification
   const certLevels: Record<string, { nudity: string; action: string }> = {
     G: { nudity: "None", action: "Low" },
     PG: { nudity: "None", action: "Mild" },
@@ -112,7 +116,6 @@ const MovieDetailPage = () => {
   };
   const levels = certLevels[movie.certification] || { nudity: "Unknown", action: "Unknown" };
 
-  // Flatten watch providers
   const allProviders = [
     ...(movie.watch_providers_us?.flatrate || []),
     ...(movie.watch_providers_in?.flatrate || []),
@@ -127,9 +130,9 @@ const MovieDetailPage = () => {
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
 
-      {/* Backdrop */}
+      {/* Backdrop — compact */}
       {movie.backdrop_path && (
-        <div className="relative h-[30vh] sm:h-[40vh] lg:h-[50vh] overflow-hidden">
+        <div className="relative h-[25vh] sm:h-[35vh] lg:h-[45vh] overflow-hidden">
           <img
             src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
             alt=""
@@ -140,186 +143,126 @@ const MovieDetailPage = () => {
         </div>
       )}
 
-      <main className={`container px-3 sm:px-4 lg:px-8 space-y-6 sm:space-y-8 pb-8 sm:pb-12 ${movie.backdrop_path ? "-mt-24 sm:-mt-40 relative z-10" : "pt-20 sm:pt-24"}`}>
-        {/* Top section: Poster + Info */}
-        <section className="grid gap-4 sm:gap-6 grid-cols-[120px_1fr] sm:grid-cols-[180px_1fr] lg:grid-cols-[280px_1fr]">
-          <div className="space-y-3">
-            <img
-              src={movie.poster}
-              alt={`${movie.title} poster`}
-              className="w-full rounded-xl shadow-2xl"
-              loading="eager"
-            />
+      <main className={`container px-3 sm:px-4 lg:px-8 space-y-4 sm:space-y-6 pb-6 sm:pb-10 ${movie.backdrop_path ? "-mt-20 sm:-mt-32 relative z-10" : "pt-16 sm:pt-20"}`}>
+        {/* Poster + Info */}
+        <section className="grid gap-3 sm:gap-5 grid-cols-[100px_1fr] sm:grid-cols-[160px_1fr] lg:grid-cols-[240px_1fr]">
+          <div className="space-y-2">
+            <img src={movie.poster} alt={`${movie.title} poster`} className="w-full rounded-lg shadow-xl" loading="eager" />
             <WatchlistButton
               movie={{
-                imdbID: movie.imdbID,
-                title: movie.title,
-                year: movie.year,
-                rating: movie.rating,
-                genres: movie.genres,
-                poster: movie.poster,
-                overview: movie.overview,
-                language: movie.language,
-                type: "movie",
+                imdbID: movie.imdbID, title: movie.title, year: movie.year,
+                rating: movie.rating, genres: movie.genres, poster: movie.poster,
+                overview: movie.overview, language: movie.language, type: "movie",
               }}
             />
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-3 sm:space-y-4">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-primary">Movie Detail</span>
-              <h1 className="text-xl sm:text-3xl lg:text-5xl font-black tracking-tight text-foreground mt-1">
-                {movie.title}
-              </h1>
-              {movie.tagline && (
-                <p className="text-sm italic text-muted-foreground mt-1">"{movie.tagline}"</p>
-              )}
-              <p className="mt-2 sm:mt-3 text-xs sm:text-sm leading-relaxed text-secondary-foreground max-w-3xl line-clamp-4 sm:line-clamp-none">
-                {movie.overview}
-              </p>
+              <span className="text-[8px] sm:text-xs font-bold uppercase tracking-wider text-primary">Movie Detail</span>
+              <h1 className="text-base sm:text-2xl lg:text-4xl font-black tracking-tight text-foreground mt-0.5">{movie.title}</h1>
+              {movie.tagline && <p className="text-[10px] sm:text-sm italic text-muted-foreground">"{movie.tagline}"</p>}
+              <p className="mt-1 sm:mt-2 text-[10px] sm:text-xs leading-relaxed text-secondary-foreground max-w-3xl line-clamp-3 sm:line-clamp-none">{movie.overview}</p>
             </div>
 
             {/* Meta pills */}
-            <div className="flex flex-wrap gap-2 text-xs">
-              <span className="rounded bg-secondary px-3 py-1.5 text-secondary-foreground font-medium">{movie.year}</span>
-              <span className="flex items-center gap-1 rounded bg-secondary px-3 py-1.5 text-secondary-foreground font-medium">
-                <Star className="size-3 fill-yellow-500 text-yellow-500" /> {movie.rating}
+            <div className="flex flex-wrap gap-1 sm:gap-2 text-[8px] sm:text-xs">
+              <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground font-medium">{movie.year}</span>
+              <span className="flex items-center gap-0.5 rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground font-medium">
+                <Star className="size-2 sm:size-3 fill-yellow-500 text-yellow-500" /> {movie.rating}
               </span>
-              {movie.runtime && (
-                <span className="rounded bg-secondary px-3 py-1.5 text-secondary-foreground font-medium">{movie.runtime}</span>
-              )}
-              {movie.certification && (
-                <span className="rounded bg-primary/20 px-3 py-1.5 text-primary font-bold">{movie.certification}</span>
-              )}
-              {movie.director && (
-                <span className="rounded bg-secondary px-3 py-1.5 text-secondary-foreground font-medium">🎬 {movie.director}</span>
-              )}
+              {movie.runtime && <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground font-medium">{movie.runtime}</span>}
+              {movie.certification && <span className="rounded bg-primary/20 px-1.5 sm:px-3 py-0.5 sm:py-1 text-primary font-bold">{movie.certification}</span>}
+              {movie.director && <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground font-medium">🎬 {movie.director}</span>}
             </div>
 
             {/* Genres */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1">
               {movie.genres.map((g) => (
-                <span key={g} className="rounded-full border border-border bg-card px-3 py-1 text-xs text-foreground">{g}</span>
+                <span key={g} className="rounded-full border border-border bg-card px-2 py-0.5 text-[8px] sm:text-xs text-foreground">{g}</span>
               ))}
             </div>
 
-            {/* Budget & Earnings */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="rounded-lg bg-card p-3 border border-border">
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
-                  <DollarSign className="size-3" /> Budget
+            {/* Budget & Earnings — compact */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2">
+              {[
+                { icon: DollarSign, label: "Budget", value: formatMoney(movie.budget) },
+                { icon: DollarSign, label: "Revenue", value: formatMoney(movie.revenue) },
+                { icon: Eye, label: "Nudity", value: levels.nudity },
+                { icon: Flame, label: "Action", value: levels.action },
+              ].map((s) => (
+                <div key={s.label} className="rounded-md bg-card p-2 border border-border">
+                  <div className="flex items-center gap-1 text-[8px] sm:text-xs text-muted-foreground">
+                    <s.icon className="size-2.5 sm:size-3" /> {s.label}
+                  </div>
+                  <p className="text-[10px] sm:text-sm font-bold text-foreground">{s.value}</p>
                 </div>
-                <p className="text-sm font-bold text-foreground">{formatMoney(movie.budget)}</p>
-              </div>
-              <div className="rounded-lg bg-card p-3 border border-border">
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
-                  <DollarSign className="size-3" /> Revenue
-                </div>
-                <p className="text-sm font-bold text-foreground">{formatMoney(movie.revenue)}</p>
-              </div>
-              <div className="rounded-lg bg-card p-3 border border-border">
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
-                  <Eye className="size-3" /> Nudity Level
-                </div>
-                <p className="text-sm font-bold text-foreground">{levels.nudity}</p>
-              </div>
-              <div className="rounded-lg bg-card p-3 border border-border">
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
-                  <Flame className="size-3" /> Action Level
-                </div>
-                <p className="text-sm font-bold text-foreground">{levels.action}</p>
-              </div>
+              ))}
             </div>
 
-            {/* Trailer + Where to Watch buttons */}
-            <div className="grid gap-3 sm:grid-cols-2">
-              {movie.trailer ? (
+            {/* Action buttons */}
+            <div className="grid gap-1.5 sm:gap-2 grid-cols-3">
+              {movie.trailer && (
                 <button
                   onClick={() => setShowTrailer(true)}
-                  className="flex items-center justify-between rounded-lg bg-primary p-4 text-primary-foreground transition hover:opacity-90"
+                  className="flex items-center justify-center gap-1.5 rounded-md bg-primary p-2 sm:p-3 text-primary-foreground transition hover:opacity-90"
                 >
-                  <div className="text-left">
-                    <p className="text-xs font-bold uppercase tracking-wider opacity-80">Trailer</p>
-                    <p className="text-sm font-semibold mt-0.5">Watch Trailer</p>
-                  </div>
-                  <PlayCircle className="size-5" />
+                  <PlayCircle className="size-3.5 sm:size-4" />
+                  <span className="text-[9px] sm:text-xs font-bold">Trailer</span>
                 </button>
-              ) : null}
+              )}
               <a
                 href={getWatchSearchUrl(movie.title, movie.year)}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-between rounded-lg bg-card border border-border p-4 transition hover:bg-secondary"
+                className="flex items-center justify-center gap-1.5 rounded-md bg-card border border-border p-2 sm:p-3 transition hover:bg-secondary"
               >
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-primary">Streaming</p>
-                  <p className="text-sm font-semibold text-foreground mt-0.5">Find Where to Watch</p>
-                </div>
-                <Tv className="size-5 text-primary" />
+                <Tv className="size-3.5 sm:size-4 text-primary" />
+                <span className="text-[9px] sm:text-xs font-bold text-foreground">Stream</span>
               </a>
-              {/* Share button */}
               <button
                 onClick={handleShare}
-                className="flex items-center justify-between rounded-lg bg-card border border-border p-4 transition hover:bg-secondary"
+                className="flex items-center justify-center gap-1.5 rounded-md bg-card border border-border p-2 sm:p-3 transition hover:bg-secondary"
               >
-                <div className="text-left">
-                  <p className="text-xs font-bold uppercase tracking-wider text-primary">Share</p>
-                  <p className="text-sm font-semibold text-foreground mt-0.5">Share with Friends</p>
-                </div>
-                <Share2 className="size-5 text-primary" />
+                <Share2 className="size-3.5 sm:size-4 text-primary" />
+                <span className="text-[9px] sm:text-xs font-bold text-foreground">Share</span>
               </button>
             </div>
           </div>
         </section>
 
+        {/* ═══ Watch Online ═══ */}
+        <section className="space-y-2 sm:space-y-3">
+          <h2 className="text-sm sm:text-lg font-bold text-foreground">🎬 Watch Online</h2>
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 sm:gap-2">
+            {WATCH_LINKS.map((w) => (
+              <a
+                key={w.name}
+                href={w.url(movie.title)}
+                target="_blank"
+                rel="noreferrer"
+                className={`${w.color} rounded-md p-2 sm:p-3 text-center text-white transition hover:opacity-80`}
+              >
+                <ExternalLink className="size-3 sm:size-4 mx-auto mb-0.5" />
+                <p className="text-[8px] sm:text-xs font-bold">{w.name}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+
         {/* Watch Providers */}
         {uniqueProviders.length > 0 && (
-          <section className="space-y-3">
-            <h2 className="text-lg font-bold text-foreground">📺 Available On</h2>
-            <div className="flex flex-wrap gap-3">
+          <section className="space-y-2">
+            <h2 className="text-sm sm:text-lg font-bold text-foreground">📺 Available On</h2>
+            <div className="flex flex-wrap gap-2">
               {uniqueProviders.map((p) => (
-                <div key={p.provider_id} className="flex items-center gap-2 rounded-lg bg-card border border-border px-3 py-2">
+                <div key={p.provider_id} className="flex items-center gap-1.5 rounded-md bg-card border border-border px-2 py-1.5">
                   {p.logo_path ? (
-                    <img
-                      src={`https://image.tmdb.org/t/p/w92${p.logo_path}`}
-                      alt={p.provider_name}
-                      className="size-8 rounded"
-                    />
+                    <img src={`https://image.tmdb.org/t/p/w92${p.logo_path}`} alt={p.provider_name} className="size-6 rounded" />
                   ) : (
-                    <div className="flex size-8 items-center justify-center rounded bg-muted">
-                      <Tv className="size-4 text-muted-foreground" />
-                    </div>
+                    <div className="flex size-6 items-center justify-center rounded bg-muted"><Tv className="size-3 text-muted-foreground" /></div>
                   )}
-                  <span className="text-xs font-medium text-foreground">{p.provider_name}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Cast */}
-        {movie.cast.length > 0 && (
-          <section className="space-y-3">
-            <h2 className="text-lg font-bold text-foreground">🎭 Cast</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
-              {movie.cast.map((actor) => (
-                <div key={actor.id} className="flex items-center gap-3 rounded-lg bg-card border border-border p-3">
-                  {actor.profile_path ? (
-                    <img
-                      src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                      alt={actor.name}
-                      className="size-12 rounded-full object-cover shrink-0"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-muted">
-                      <User className="size-5 text-muted-foreground" />
-                    </div>
-                  )}
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-foreground truncate">{actor.name}</p>
-                    <p className="text-xs text-muted-foreground truncate">{actor.character}</p>
-                  </div>
+                  <span className="text-[10px] font-medium text-foreground">{p.provider_name}</span>
                 </div>
               ))}
             </div>
@@ -329,16 +272,12 @@ const MovieDetailPage = () => {
         {/* Trailer thumbnail */}
         {movie.trailer && !showTrailer && (
           <section>
-            <div className="overflow-hidden rounded-xl border border-border cursor-pointer" onClick={() => setShowTrailer(true)}>
+            <div className="overflow-hidden rounded-lg border border-border cursor-pointer" onClick={() => setShowTrailer(true)}>
               <div className="relative aspect-video">
-                <img
-                  src={`https://img.youtube.com/vi/${movie.trailer}/maxresdefault.jpg`}
-                  alt={`${movie.title} trailer`}
-                  className="h-full w-full object-cover"
-                />
+                <img src={`https://img.youtube.com/vi/${movie.trailer}/maxresdefault.jpg`} alt={`${movie.title} trailer`} className="h-full w-full object-cover" />
                 <div className="absolute inset-0 flex items-center justify-center bg-background/30 transition hover:bg-background/10">
-                  <div className="flex size-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg">
-                    <PlayCircle className="size-8" />
+                  <div className="flex size-12 sm:size-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg">
+                    <PlayCircle className="size-6 sm:size-8" />
                   </div>
                 </div>
               </div>
@@ -346,49 +285,61 @@ const MovieDetailPage = () => {
           </section>
         )}
 
-        {/* Similar Movies */}
-        {(similarQuery.data?.length ?? 0) > 0 && (
-          <section className="space-y-3">
-            <h2 className="text-lg font-bold text-foreground">🎬 Similar Movies</h2>
-            <div className="grid gap-2 sm:gap-3 grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {similarQuery.data!.slice(0, 10).map((item) => (
-                <CineMovieCard key={item.imdbID} item={item} />
+        {/* Cast */}
+        {movie.cast.length > 0 && (
+          <section className="space-y-2">
+            <h2 className="text-sm sm:text-lg font-bold text-foreground">🎭 Cast</h2>
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+              {movie.cast.map((actor) => (
+                <div key={actor.id} className="shrink-0 flex items-center gap-2 rounded-md bg-card border border-border p-2 w-[140px] sm:w-[180px]">
+                  {actor.profile_path ? (
+                    <img src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`} alt={actor.name} className="size-8 sm:size-10 rounded-full object-cover shrink-0" loading="lazy" />
+                  ) : (
+                    <div className="flex size-8 sm:size-10 shrink-0 items-center justify-center rounded-full bg-muted"><User className="size-3.5 text-muted-foreground" /></div>
+                  )}
+                  <div className="min-w-0">
+                    <p className="text-[10px] sm:text-xs font-semibold text-foreground truncate">{actor.name}</p>
+                    <p className="text-[8px] sm:text-[10px] text-muted-foreground truncate">{actor.character}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </section>
         )}
 
-        <Button asChild variant="heroSecondary">
-          <Link to="/">
-            <ArrowLeft className="size-4" /> Back Home
-          </Link>
+        {/* Similar Movies */}
+        {(similarQuery.data?.length ?? 0) > 0 && (
+          <section className="space-y-2">
+            <h2 className="text-sm sm:text-lg font-bold text-foreground">🎬 Similar Movies</h2>
+            <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-2 scrollbar-hide">
+              {similarQuery.data!.slice(0, 12).map((item) => (
+                <div key={item.imdbID} className="shrink-0 w-[80px] sm:w-[120px] lg:w-[140px]">
+                  <CineMovieCard item={item} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <Button asChild variant="heroSecondary" size="sm" className="text-xs">
+          <Link to="/"><ArrowLeft className="size-3.5" /> Back Home</Link>
         </Button>
       </main>
 
       <DNAFooter />
 
-      {/* Trailer Modal — YouTube-style top layout */}
+      {/* Trailer Modal — YouTube-style */}
       {showTrailer && movie.trailer && (
-        <div
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col"
-          onClick={() => setShowTrailer(false)}
-        >
-          {/* Top bar */}
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col" onClick={() => setShowTrailer(false)}>
           <div className="flex items-center justify-between px-3 sm:px-6 py-2 sm:py-3 bg-black/80" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center gap-2 min-w-0">
               <PlayCircle className="size-4 sm:size-5 text-primary shrink-0" />
               <h3 className="text-xs sm:text-sm font-bold text-white truncate">{movie.title} — Trailer</h3>
             </div>
-            <button
-              onClick={() => setShowTrailer(false)}
-              className="shrink-0 rounded-full bg-white/10 p-1.5 sm:p-2 text-white hover:bg-white/20 transition"
-              aria-label="Close"
-            >
+            <button onClick={() => setShowTrailer(false)} className="shrink-0 rounded-full bg-white/10 p-1.5 sm:p-2 text-white hover:bg-white/20 transition" aria-label="Close">
               <X className="size-4 sm:size-5" />
             </button>
           </div>
-
-          {/* Video */}
           <div className="flex-1 flex items-start justify-center pt-0 sm:pt-4 px-0 sm:px-6" onClick={(e) => e.stopPropagation()}>
             <div className="w-full max-w-5xl">
               <div className="relative aspect-video overflow-hidden sm:rounded-lg bg-black">
@@ -400,12 +351,9 @@ const MovieDetailPage = () => {
                   title={`${movie.title} trailer`}
                 />
               </div>
-              {/* Info below video */}
-              <div className="px-3 sm:px-0 py-3 space-y-1">
+              <div className="px-3 sm:px-0 py-2 space-y-0.5">
                 <h4 className="text-sm sm:text-lg font-bold text-white">{movie.title}</h4>
-                <p className="text-[10px] sm:text-xs text-white/60">
-                  {movie.year} • {movie.genres?.join(", ")} • IMDb {movie.rating}
-                </p>
+                <p className="text-[10px] sm:text-xs text-white/60">{movie.year} • {movie.genres?.join(", ")} • IMDb {movie.rating}</p>
               </div>
             </div>
           </div>
