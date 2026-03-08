@@ -15,37 +15,48 @@ serve(async (req) => {
   }
 
   try {
-    const { endpoint, params, detail } = await req.json();
+    const { endpoint, params, detail, mediaType } = await req.json();
 
-    // Full detail mode: fetch movie + credits + watch providers + release dates in parallel
+    // Full detail mode: fetch movie/tv + credits + watch providers + release dates in parallel
     if (detail && endpoint) {
       const base = `${TMDB_BASE}${endpoint}`;
       const key = `api_key=${TMDB_API_KEY}`;
+      const isTV = mediaType === "tv";
       
-      const [movieRes, creditsRes, providersRes, releaseDatesRes, videosRes] = await Promise.all([
+      const fetches = [
         fetch(`${base}?${key}`),
-        fetch(`${base}/credits?${key}`),
+        fetch(`${base}/${isTV ? "aggregate_credits" : "credits"}?${key}`),
         fetch(`${base}/watch/providers?${key}`),
-        fetch(`${base}/release_dates?${key}`),
+        isTV ? fetch(`${base}/content_ratings?${key}`) : fetch(`${base}/release_dates?${key}`),
         fetch(`${base}/videos?${key}`),
-      ]);
+      ];
 
-      const [movie, credits, providers, releaseDates, videos] = await Promise.all([
+      const [movieRes, creditsRes, providersRes, ratingsRes, videosRes] = await Promise.all(fetches);
+
+      const [movie, credits, providers, ratings, videos] = await Promise.all([
         movieRes.json(),
         creditsRes.json(),
         providersRes.json(),
-        releaseDatesRes.json(),
+        ratingsRes.json(),
         videosRes.json(),
       ]);
 
-      // Extract certification from US or IN release dates
+      // Extract certification
       let certification = "";
-      const rdResults = releaseDates?.results || [];
-      const usRelease = rdResults.find((r: any) => r.iso_3166_1 === "US");
-      const inRelease = rdResults.find((r: any) => r.iso_3166_1 === "IN");
-      const releaseEntry = usRelease || inRelease || rdResults[0];
-      if (releaseEntry?.release_dates?.length) {
-        certification = releaseEntry.release_dates.find((d: any) => d.certification)?.certification || "";
+      if (isTV) {
+        const tvResults = ratings?.results || [];
+        const usRating = tvResults.find((r: any) => r.iso_3166_1 === "US");
+        const inRating = tvResults.find((r: any) => r.iso_3166_1 === "IN");
+        const ratingEntry = usRating || inRating || tvResults[0];
+        certification = ratingEntry?.rating || "";
+      } else {
+        const rdResults = ratings?.results || [];
+        const usRelease = rdResults.find((r: any) => r.iso_3166_1 === "US");
+        const inRelease = rdResults.find((r: any) => r.iso_3166_1 === "IN");
+        const releaseEntry = usRelease || inRelease || rdResults[0];
+        if (releaseEntry?.release_dates?.length) {
+          certification = releaseEntry.release_dates.find((d: any) => d.certification)?.certification || "";
+        }
       }
 
       // Get watch providers for US and IN

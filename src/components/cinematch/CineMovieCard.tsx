@@ -17,11 +17,14 @@ export function CineMovieCard({ item, priority = false }: CineMovieCardProps) {
   const [loaded, setLoaded] = useState(false);
 
   const prefetch = useCallback(() => {
-    const tmdbId = item.imdbID.startsWith("tmdb-") ? Number(item.imdbID.replace("tmdb-", "")) : null;
+    const isTmdbTv = item.imdbID.startsWith("tmdb-tv-");
+    const isTmdbMovie = !isTmdbTv && item.imdbID.startsWith("tmdb-");
+    const tmdbId = isTmdbTv ? Number(item.imdbID.replace("tmdb-tv-", "")) : isTmdbMovie ? Number(item.imdbID.replace("tmdb-", "")) : null;
+    const mediaType = isTmdbTv ? "tv" as const : "movie" as const;
     if (tmdbId) {
       queryClient.prefetchQuery({
         queryKey: ["movie-detail", item.imdbID],
-        queryFn: () => fetchTmdbFullDetail(tmdbId),
+        queryFn: () => fetchTmdbFullDetail(tmdbId, mediaType),
         staleTime: 1000 * 60 * 60,
       });
     }

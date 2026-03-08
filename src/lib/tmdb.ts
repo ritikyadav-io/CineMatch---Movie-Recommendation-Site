@@ -31,8 +31,9 @@ const GENRE_MAP: Record<number, string> = {
 };
 
 function mapTmdbToCard(movie: TmdbMovie, type: "movie" | "series" = "movie"): MediaCardData {
+  const prefix = type === "series" ? "tmdb-tv" : "tmdb";
   return {
-    imdbID: `tmdb-${movie.id}`,
+    imdbID: `${prefix}-${movie.id}`,
     title: movie.title || movie.name || "Untitled",
     year: (movie.release_date || movie.first_air_date || "").slice(0, 4),
     rating: movie.vote_average?.toFixed(1) || "N/A",
