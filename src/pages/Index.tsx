@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   ChevronRight,
@@ -75,6 +76,57 @@ function MovieScrollRow({ title, data, loading, link }: { title: string; data?: 
           ))}
         </div>
       ) : null}
+    </div>
+  );
+}
+
+/* ── Animated counter hook ── */
+function useCountUp(target: number, duration = 1500, inView: boolean) {
+  const [count, setCount] = useState(0);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (!inView || hasAnimated.current) return;
+    hasAnimated.current = true;
+    const startTime = performance.now();
+    const step = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [inView, target, duration]);
+
+  return count;
+}
+
+const statsData = [
+  { target: 10000, suffix: "+", label: "Movies to Explore" },
+  { target: 8, suffix: "", label: "Genre Universes" },
+  { target: 50, suffix: "+", label: "Countries Covered" },
+  { target: 0, suffix: "∞", label: "Movie Nights Saved" },
+];
+
+function AnimatedStat({ target, suffix, label, inView }: { target: number; suffix: string; label: string; inView: boolean }) {
+  const count = useCountUp(target, target > 100 ? 2000 : 1200, inView);
+  const display = target === 0 ? suffix : `${count.toLocaleString()}${suffix}`;
+  return (
+    <div className="space-y-1">
+      <p className="text-2xl sm:text-3xl font-black text-primary">{display}</p>
+      <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{label}</p>
+    </div>
+  );
+}
+
+function StatsGrid() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  return (
+    <div ref={ref} className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+      {statsData.map((s) => (
+        <AnimatedStat key={s.label} {...s} inView={inView} />
+      ))}
     </div>
   );
 }
@@ -222,19 +274,7 @@ const Index = () => {
           <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">
             Movie <span className="text-primary">DNA</span> in Numbers
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
-            {[
-              { num: "10K+", label: "Movies to Explore" },
-              { num: "8", label: "Genre Universes" },
-              { num: "50+", label: "Countries Covered" },
-              { num: "∞", label: "Movie Nights Saved" },
-            ].map((stat) => (
-              <div key={stat.label} className="space-y-1">
-                <p className="text-2xl sm:text-3xl font-black text-primary">{stat.num}</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{stat.label}</p>
-              </div>
-            ))}
-          </div>
+          <StatsGrid />
           <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto">
             Your perfect movie is one quiz away. Stop scrolling, start watching. 🍿
           </p>
