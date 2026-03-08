@@ -81,7 +81,7 @@ export function DNANav() {
             {!isHome ? (
               <button
                 onClick={() => navigate(-1)}
-                className="p-2 text-muted-foreground transition hover:text-foreground"
+                className="p-1 text-muted-foreground transition hover:text-foreground"
                 aria-label="Go back"
               >
                 <ArrowLeft className="size-4" />
