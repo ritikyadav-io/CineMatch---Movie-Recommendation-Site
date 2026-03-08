@@ -16,6 +16,7 @@ import PrivacyPage from "./pages/Privacy";
 import ProfilePage from "./pages/Profile";
 import QuizPage from "./pages/Quiz";
 import SearchPage from "./pages/Search";
+import TrailersPage from "./pages/Trailers";
 
 const queryClient = new QueryClient();
 
