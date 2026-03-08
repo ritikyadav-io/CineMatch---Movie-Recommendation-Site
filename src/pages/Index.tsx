@@ -3,12 +3,8 @@ import { ChevronRight, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
-import { CategoryBar } from "@/components/moviedna/CategoryBar";
-import { CTASection } from "@/components/moviedna/CTASection";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
-import { DNAHero } from "@/components/moviedna/DNAHero";
 import { DNANav } from "@/components/moviedna/DNANav";
-import { MoviePersonality } from "@/components/moviedna/MoviePersonality";
 import {
   fetchTmdbTrending,
   fetchTmdbBollywood,
@@ -35,27 +31,25 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <DNAHero />
-      <CategoryBar />
+      <main className="container pt-24 pb-12 space-y-10">
+        <div>
+          <h1 className="text-4xl font-black tracking-tight text-foreground">
+            Discover Your <span className="text-primary">Movie DNA</span>
+          </h1>
+          <p className="mt-2 text-muted-foreground">Explore movies across Hollywood, Bollywood, Superhero, and Anime universes.</p>
+        </div>
 
-      {/* Movie Sections */}
-      <section className="container space-y-12 py-10 lg:py-14">
         {sections.map((section) => (
           <div key={section.title}>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-foreground">{section.title}</h2>
-              <Link
-                to={section.link}
-                className="flex items-center gap-0.5 text-xs font-semibold text-muted-foreground transition hover:text-foreground"
-              >
+              <Link to={section.link} className="flex items-center gap-0.5 text-xs font-semibold text-muted-foreground hover:text-foreground">
                 See All <ChevronRight className="size-4" />
               </Link>
             </div>
-
             {section.loading ? (
               <div className="flex items-center justify-center py-12 text-muted-foreground">
-                <Loader2 className="size-5 animate-spin text-primary mr-2" />
-                Loading...
+                <Loader2 className="size-5 animate-spin text-primary mr-2" /> Loading...
               </div>
             ) : section.data?.length ? (
               <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
@@ -66,10 +60,7 @@ const Index = () => {
             ) : null}
           </div>
         ))}
-      </section>
-
-      <MoviePersonality />
-      <CTASection />
+      </main>
       <DNAFooter />
     </div>
   );
