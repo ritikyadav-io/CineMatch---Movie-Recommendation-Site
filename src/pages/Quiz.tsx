@@ -2,8 +2,8 @@ import { Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { CineFooter } from "@/components/cinematch/CineFooter";
-import { CineMatchNav } from "@/components/cinematch/CineMatchNav";
+import { DNAFooter } from "@/components/moviedna/DNAFooter";
+import { DNANav } from "@/components/moviedna/DNANav";
 import { Button } from "@/components/ui/button";
 import { defaultQuizAnswers, quizFieldsets } from "@/data/cinematchCatalog";
 import { QuizAnswers } from "@/types/cinematch";
