@@ -64,15 +64,30 @@ serve(async (req) => {
       const usProviders = watchProviders["US"] || {};
       const inProviders = watchProviders["IN"] || {};
 
+      // Normalize TV fields to movie-like structure
+      const title = movie.title || movie.name || "Untitled";
+      const release_date = movie.release_date || movie.first_air_date || "";
+      const runtime = movie.runtime || (movie.episode_run_time?.[0]) || null;
+
+      // TV aggregate_credits has roles array instead of character
+      const castList = (credits?.cast || []).slice(0, 12).map((c: any) => ({
+        id: c.id,
+        name: c.name,
+        character: isTV ? (c.roles?.[0]?.character || c.character || "") : (c.character || ""),
+        profile_path: c.profile_path,
+      }));
+
+      const director = isTV
+        ? null
+        : (credits?.crew || []).find((c: any) => c.job === "Director")?.name || null;
+
       const result = {
         ...movie,
-        cast: (credits?.cast || []).slice(0, 12).map((c: any) => ({
-          id: c.id,
-          name: c.name,
-          character: c.character,
-          profile_path: c.profile_path,
-        })),
-        director: (credits?.crew || []).find((c: any) => c.job === "Director")?.name || null,
+        title,
+        release_date,
+        runtime,
+        cast: castList,
+        director,
         watch_providers_us: usProviders,
         watch_providers_in: inProviders,
         certification,
