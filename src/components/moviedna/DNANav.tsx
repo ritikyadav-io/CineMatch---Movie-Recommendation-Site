@@ -70,7 +70,7 @@ export function DNANav() {
         className={[
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           hidden ? "-translate-y-full" : "translate-y-0",
-          scrolled
+          scrolled || !isHome
             ? "bg-background/95 shadow-lg backdrop-blur-md"
             : "bg-gradient-to-b from-background/80 to-transparent",
         ].join(" ")}
