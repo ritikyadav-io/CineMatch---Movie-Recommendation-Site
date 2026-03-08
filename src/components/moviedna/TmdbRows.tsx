@@ -46,7 +46,7 @@ function MovieRow({ config }: { config: RowConfig }) {
     return (
       <div className="space-y-3">
         <div className="h-5 w-40 animate-pulse rounded bg-muted" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
           {Array.from({ length: 5 }).map((_, i) => (
             <div key={i} className="aspect-[2/3] rounded-md bg-muted animate-pulse" />
           ))}
@@ -68,7 +68,7 @@ function MovieRow({ config }: { config: RowConfig }) {
           See All <ChevronRight className="size-4" />
         </Link>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
         {data.slice(0, 5).map((item) => (
           <CineMovieCard key={item.imdbID} item={item} />
         ))}
@@ -110,7 +110,7 @@ export function TmdbMiniRow({ category = "trending" }: { category?: string }) {
           See All <ChevronRight className="size-4" />
         </Link>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
         {data.slice(0, 5).map((item) => (
           <CineMovieCard key={item.imdbID} item={item} />
         ))}
