@@ -69,7 +69,7 @@ function MovieScrollRow({ title, data, loading, link }: { title: string; data?: 
       ) : data?.length ? (
         <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
           {data.slice(0, 10).map((item) => (
-            <div key={item.imdbID} className="shrink-0 w-[110px] sm:w-[150px] lg:w-[180px]">
+            <div key={item.imdbID} className="shrink-0 w-[90px] sm:w-[120px] lg:w-[140px]">
               <CineMovieCard item={item} />
             </div>
           ))}
