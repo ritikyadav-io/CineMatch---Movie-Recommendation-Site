@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft,
   Copy,
+  BookOpen,
   DollarSign,
   Eye,
   ExternalLink,
