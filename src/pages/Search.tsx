@@ -114,8 +114,8 @@ const SearchPage = () => {
         {/* ── Actor/Actress matches ── */}
         {actors.length > 0 && (
           <section className="space-y-3">
-            <h2 className="text-lg font-bold text-foreground">🎭 People Found</h2>
-            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+            <h2 className="text-base sm:text-lg font-bold text-foreground">🎭 People Found</h2>
+            <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide">
               {actors.map((person) => {
                 const img = tmdbProfileImage(person.profile_path);
                 const isActive = selectedPerson?.id === person.id;
