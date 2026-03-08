@@ -1,3 +1,4 @@
+import { CategoryBar } from "@/components/moviedna/CategoryBar";
 import { CTASection } from "@/components/moviedna/CTASection";
 import { CoupleMode } from "@/components/moviedna/CoupleMode";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
@@ -16,6 +17,7 @@ const Index = () => {
       <DNANav />
       <main>
         <DNAHero />
+        <CategoryBar />
         <TmdbRows />
         <FeatureCards />
         <QuizPreview />
