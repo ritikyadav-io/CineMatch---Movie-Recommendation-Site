@@ -307,7 +307,48 @@ const MovieDetailPage = () => {
           </div>
         </section>
 
-        {/* Watch Providers */}
+        {/* ═══ Movie Summary ═══ */}
+        <section className="space-y-2 sm:space-y-3">
+          <h2 className="text-sm sm:text-lg font-bold text-foreground">📖 Full Story Summary</h2>
+          <div className="flex flex-wrap gap-1 sm:gap-1.5">
+            {[
+              { code: "en", label: "English" },
+              { code: "hi", label: "हिंदी" },
+              { code: "es", label: "Español" },
+              { code: "fr", label: "Français" },
+              { code: "de", label: "Deutsch" },
+              { code: "ja", label: "日本語" },
+              { code: "ko", label: "한국어" },
+              { code: "pt", label: "Português" },
+              { code: "ar", label: "العربية" },
+              { code: "zh", label: "中文" },
+            ].map((lang) => (
+              <button
+                key={lang.code}
+                onClick={() => fetchSummary(lang.code)}
+                className={`rounded-md px-2 py-1 text-[8px] sm:text-[10px] font-bold transition ${
+                  summaryLang === lang.code
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-card border border-border text-foreground hover:bg-secondary"
+                }`}
+              >
+                <BookOpen className="size-2.5 sm:size-3 inline mr-0.5" />
+                {lang.label}
+              </button>
+            ))}
+          </div>
+          {summaryLoading && (
+            <div className="flex items-center gap-2 py-4 text-muted-foreground text-xs">
+              <Loader2 className="size-3.5 animate-spin text-primary" /> Generating summary...
+            </div>
+          )}
+          {summary && !summaryLoading && (
+            <div className="rounded-lg bg-card border border-border p-3 sm:p-4">
+              <p className="text-[10px] sm:text-xs leading-relaxed text-secondary-foreground whitespace-pre-line">{summary}</p>
+            </div>
+          )}
+        </section>
+
         {uniqueProviders.length > 0 && (
           <section className="space-y-2">
             <h2 className="text-sm sm:text-lg font-bold text-foreground">📺 Available On</h2>
