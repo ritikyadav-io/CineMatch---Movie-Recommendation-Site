@@ -27,6 +27,7 @@ import { fetchTmdbFullDetail, TmdbFullDetail } from "@/lib/tmdb-detail";
 import { fetchTmdbSimilar } from "@/lib/tmdb";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { getWatchSearchUrl } from "@/lib/omdb";
+import { supabase } from "@/integrations/supabase/client";
 
 const WATCH_LINKS = [
   { name: "JioCinema", url: (t: string) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`, color: "bg-pink-600" },
