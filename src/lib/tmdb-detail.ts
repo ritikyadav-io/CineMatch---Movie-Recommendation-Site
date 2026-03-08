@@ -45,6 +45,24 @@ export async function fetchTmdbFullDetail(tmdbId: number): Promise<TmdbFullDetai
 
   if (error) throw new Error(`Detail fetch error: ${error.message}`);
 
+  return parseTmdbDetail(data, tmdbId);
+}
+
+export async function fetchTmdbFullDetailByImdb(imdbId: string): Promise<TmdbFullDetail> {
+  // Use TMDB's find endpoint to convert IMDB ID → TMDB ID
+  const { data: findData, error: findError } = await supabase.functions.invoke("tmdb-proxy", {
+    body: { endpoint: `/find/${imdbId}`, params: { external_source: "imdb_id" } },
+  });
+
+  if (findError) throw new Error(`Find error: ${findError.message}`);
+
+  const tmdbId = findData?.movie_results?.[0]?.id || findData?.tv_results?.[0]?.id;
+  if (!tmdbId) throw new Error("Movie not found on TMDB");
+
+  return fetchTmdbFullDetail(tmdbId);
+}
+
+function parseTmdbDetail(data: any, tmdbId: number): TmdbFullDetail {
   return {
     imdbID: data.imdb_id || `tmdb-${tmdbId}`,
     tmdbId,
