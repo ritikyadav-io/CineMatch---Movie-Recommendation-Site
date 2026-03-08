@@ -54,7 +54,7 @@ const AuthPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <main className="container flex items-center justify-center pt-24 pb-12 lg:pt-28">
+      <main className="container flex items-center justify-center pt-14 pb-12 sm:pt-16 lg:pt-18">
         <div className="w-full max-w-md space-y-6">
           <div className="text-center space-y-2">
             <h1 className="text-3xl font-black tracking-tight text-foreground">
