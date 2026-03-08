@@ -1,15 +1,18 @@
 import {
   ArrowLeft,
   Bell,
+  Bookmark,
   Clapperboard,
   Compass,
   Download,
   Film,
   Flame,
   Home,
+  LogIn,
   Menu,
   Search,
   Sparkles,
+  User,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -19,6 +22,7 @@ import logo from "@/assets/moviedna-logo.png";
 import { Button } from "@/components/ui/button";
 import { CineSearchBar } from "@/components/cinematch/CineSearchBar";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
+import { useAuth } from "@/hooks/use-auth";
 
 const navItems = [
   { to: "/", label: "Home", icon: Home },
@@ -34,6 +38,7 @@ export function DNANav() {
   const [showSearch, setShowSearch] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { canInstall, isInstalled, install } = usePwaInstall();
+  const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -139,12 +144,22 @@ export function DNANav() {
               </Button>
             )}
 
-            <Button asChild variant="hero" size="sm" className="hidden sm:flex">
-              <Link to="/quiz">
-                <Sparkles className="size-3.5" />
-                Start Quiz
+            {user ? (
+              <Link
+                to="/profile"
+                className="flex size-9 items-center justify-center rounded-full bg-primary/20 text-primary transition hover:bg-primary hover:text-primary-foreground"
+                aria-label="Profile"
+              >
+                <User className="size-4" />
               </Link>
-            </Button>
+            ) : (
+              <Button asChild variant="hero" size="sm" className="hidden sm:flex">
+                <Link to="/auth">
+                  <LogIn className="size-3.5" />
+                  Sign In
+                </Link>
+              </Button>
+            )}
 
             {/* Mobile hamburger (shown on non-home pages too) */}
             {isHome ? null : (
@@ -218,6 +233,16 @@ export function DNANav() {
                 <Search className="size-5" />
                 Search
               </Link>
+              {user && (
+                <Link
+                  to="/profile"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-foreground hover:bg-muted transition"
+                >
+                  <Bookmark className="size-5" />
+                  My Profile & Watchlist
+                </Link>
+              )}
             </nav>
 
             {/* Bottom actions */}
@@ -235,12 +260,21 @@ export function DNANav() {
                   Install App
                 </Button>
               )}
-              <Button asChild variant="hero" className="w-full">
-                <Link to="/quiz" onClick={() => setMobileOpen(false)}>
-                  <Sparkles className="size-4" />
-                  Start Quiz
-                </Link>
-              </Button>
+              {user ? (
+                <Button asChild variant="hero" className="w-full">
+                  <Link to="/quiz" onClick={() => setMobileOpen(false)}>
+                    <Sparkles className="size-4" />
+                    Start Quiz
+                  </Link>
+                </Button>
+              ) : (
+                <Button asChild variant="hero" className="w-full">
+                  <Link to="/auth" onClick={() => setMobileOpen(false)}>
+                    <LogIn className="size-4" />
+                    Sign In / Sign Up
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
         </div>
