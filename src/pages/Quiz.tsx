@@ -52,10 +52,10 @@ const QuizPage = () => {
       <main className="container pt-24 pb-12 lg:pt-28 lg:pb-16">
         <div className="mx-auto max-w-4xl space-y-6">
           <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">Movie DNA Quiz</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">Movies DNA Quiz</span>
             <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">Decode Your Taste</h1>
             <p className="max-w-2xl text-sm text-muted-foreground">
-              Pick your vibe across twelve questions — including Bollywood, superhero, and anime preferences — and let Movie DNA assemble a tailored watchlist.
+              Pick your vibe across twelve questions — including Bollywood, superhero, and anime preferences — and let Movies DNA assemble a tailored watchlist.
             </p>
           </div>
 

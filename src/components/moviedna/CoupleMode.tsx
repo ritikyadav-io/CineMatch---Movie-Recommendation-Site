@@ -52,7 +52,7 @@ export function CoupleMode() {
             Date Night, Solved
           </h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Both partners take the quiz independently. Movie DNA cross-references your
+            Both partners take the quiz independently. Movies DNA cross-references your
             taste profiles and finds movies in the sweet spot — no more 30-minute debates.
           </p>
           <Button asChild variant="hero" size="default" className="w-fit">

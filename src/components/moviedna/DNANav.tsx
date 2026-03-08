@@ -301,7 +301,7 @@ export function DNANav() {
               <X className="size-4" />
             </button>
             <Heart className="size-8 text-primary mx-auto" />
-            <h2 className="text-lg font-bold text-foreground">Support Movie DNA</h2>
+            <h2 className="text-lg font-bold text-foreground">Support Movies DNA</h2>
             <p className="text-xs text-muted-foreground">Scan the QR code to donate via UPI</p>
             <img
               src={donateQr}
