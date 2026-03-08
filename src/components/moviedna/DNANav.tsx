@@ -88,8 +88,8 @@ export function DNANav() {
           </div>
 
           {/* Logo */}
-          <Link to="/" className="shrink-0">
-            <img src={logo} alt="Movie DNA" className="h-8 w-auto" />
+          <Link to="/" className="shrink-0 text-lg font-black tracking-tight text-foreground">
+            Movie <span className="text-primary">DNA</span>
           </Link>
 
           {/* Desktop nav links */}
