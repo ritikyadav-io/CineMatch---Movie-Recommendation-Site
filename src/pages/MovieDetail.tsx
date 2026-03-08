@@ -257,6 +257,17 @@ const MovieDetailPage = () => {
                 </div>
                 <Tv className="size-5 text-primary" />
               </a>
+              {/* Share button */}
+              <button
+                onClick={handleShare}
+                className="flex items-center justify-between rounded-lg bg-card border border-border p-4 transition hover:bg-secondary"
+              >
+                <div className="text-left">
+                  <p className="text-xs font-bold uppercase tracking-wider text-primary">Share</p>
+                  <p className="text-sm font-semibold text-foreground mt-0.5">Share with Friends</p>
+                </div>
+                <Share2 className="size-5 text-primary" />
+              </button>
             </div>
           </div>
         </section>
