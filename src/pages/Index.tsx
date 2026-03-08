@@ -75,9 +75,9 @@ const Index = () => {
         {/* Movie Sections */}
         {sections.map((section) => (
           <div key={section.title}>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-foreground">{section.title}</h2>
-              <Link to={section.link} className="flex items-center gap-0.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition">
+            <div className="flex items-center justify-between mb-2 sm:mb-4">
+              <h2 className="text-base sm:text-xl font-bold text-foreground">{section.title}</h2>
+              <Link to={section.link} className="flex items-center gap-0.5 text-[10px] sm:text-xs font-semibold text-muted-foreground hover:text-foreground transition">
                 See All <ChevronRight className="size-4" />
               </Link>
             </div>
