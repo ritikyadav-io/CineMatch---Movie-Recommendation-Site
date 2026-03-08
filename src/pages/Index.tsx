@@ -8,7 +8,6 @@ import {
   Film,
   Flame,
   Heart,
-  Loader2,
   Play,
   Rocket,
   Search,
@@ -24,6 +23,7 @@ import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   fetchTmdbTrending,
   fetchTmdbBollywood,
@@ -53,20 +53,43 @@ const personalities = [
   { icon: Film, title: "Horror Lover", color: "from-red-500/20 to-red-600/5 border-red-500/20", iconColor: "text-red-400", link: "/browse?cat=horror" },
 ];
 
-/* ── Horizontal scroll movie row ── */
-function MovieScrollRow({ title, data, loading, link }: { title: string; data?: any[]; loading: boolean; link: string }) {
+/* ── Skeleton row placeholder ── */
+function SkeletonRow() {
   return (
-    <div>
+    <div className="flex gap-1.5 sm:gap-3 overflow-hidden pb-2">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="shrink-0 w-[80px] sm:w-[120px] lg:w-[140px]">
+          <Skeleton className="aspect-[2/3] w-full rounded-md" />
+          <Skeleton className="h-3 w-3/4 mt-1 rounded" />
+          <Skeleton className="h-2 w-1/2 mt-0.5 rounded" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── Lazy-loaded movie row — only fetches when visible ── */
+function LazyMovieRow({ title, fetchFn, link, queryKey }: { title: string; fetchFn: () => Promise<any[]>; link: string; queryKey: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isVisible = useInView(ref, { once: true, margin: "200px" });
+
+  const { data, isLoading } = useQuery({
+    queryKey: [queryKey],
+    queryFn: fetchFn,
+    staleTime: 1000 * 60 * 30,
+    enabled: isVisible,
+  });
+
+  return (
+    <div ref={ref}>
       <div className="flex items-center justify-between mb-1 sm:mb-3 px-0.5">
         <h2 className="text-xs sm:text-lg font-bold text-foreground">{title}</h2>
         <Link to={link} className="flex items-center gap-0.5 text-[8px] sm:text-xs font-semibold text-muted-foreground hover:text-primary transition">
           See All <ChevronRight className="size-2.5 sm:size-4" />
         </Link>
       </div>
-      {loading ? (
-        <div className="flex items-center justify-center py-10 text-muted-foreground">
-          <Loader2 className="size-4 animate-spin text-primary mr-2" /> Loading...
-        </div>
+      {!isVisible || isLoading ? (
+        <SkeletonRow />
       ) : data?.length ? (
         <div className="flex gap-1.5 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
           {data.slice(0, 12).map((item) => (
