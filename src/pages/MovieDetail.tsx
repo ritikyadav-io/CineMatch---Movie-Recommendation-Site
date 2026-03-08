@@ -264,8 +264,12 @@ const MovieDetailPage = () => {
                 key={w.name}
                 href={w.url(movie.title)}
                 target="_blank"
-                rel="noreferrer"
-                className={`${w.color} rounded-md p-2 sm:p-3 text-center text-white transition hover:opacity-80`}
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(w.url(movie.title), "_blank", "noopener,noreferrer");
+                }}
+                className={`${w.color} rounded-md p-2 sm:p-3 text-center text-white transition hover:opacity-80 cursor-pointer`}
               >
                 <ExternalLink className="size-3 sm:size-4 mx-auto mb-0.5" />
                 <p className="text-[8px] sm:text-xs font-bold">{w.name}</p>
