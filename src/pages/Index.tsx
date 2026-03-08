@@ -113,8 +113,8 @@ function AnimatedStat({ target, suffix, label, inView }: { target: number; suffi
   const display = target === 0 ? suffix : `${count.toLocaleString()}${suffix}`;
   return (
     <div className="space-y-1">
-      <p className="text-2xl sm:text-3xl font-black text-primary">{display}</p>
-      <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{label}</p>
+      <p className="text-lg sm:text-3xl font-black text-primary">{display}</p>
+      <p className="text-[8px] sm:text-xs text-muted-foreground font-medium">{label}</p>
     </div>
   );
 }
