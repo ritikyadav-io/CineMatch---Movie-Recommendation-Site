@@ -157,6 +157,35 @@ export async function searchTmdb(query: string, page = 1): Promise<MediaCardData
     .map((m: TmdbMovie) => mapTmdbToCard(m, m.media_type === "tv" ? "series" : "movie"));
 }
 
+// ── Search by person (actor/actress) ──
+export interface TmdbPerson {
+  id: number;
+  name: string;
+  profile_path: string | null;
+  known_for_department: string;
+  known_for: TmdbMovie[];
+}
+
+export async function searchTmdbPerson(query: string): Promise<TmdbPerson[]> {
+  const data = await tmdbFetch("/search/person", { query });
+  return data.results
+    .filter((p: TmdbPerson) => p.known_for_department === "Acting")
+    .slice(0, 5);
+}
+
+export async function fetchTmdbPersonMovies(personId: number, page = 1): Promise<MediaCardData[]> {
+  const data = await tmdbFetch(`/discover/movie`, {
+    with_cast: String(personId),
+    sort_by: "popularity.desc",
+    page: String(page),
+  });
+  return data.results.map((m: TmdbMovie) => mapTmdbToCard(m));
+}
+
+export function tmdbProfileImage(path: string | null, size = "w185") {
+  return path ? `https://image.tmdb.org/t/p/${size}${path}` : null;
+}
+
 // ── Movie detail ──
 export async function fetchTmdbDetail(tmdbId: number): Promise<MediaCardData & { tmdbId: number }> {
   const data = await tmdbFetch(`/movie/${tmdbId}`);
