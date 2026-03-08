@@ -116,9 +116,11 @@
 
   /* Netflix-style horizontal scroll row */
   .scroll-row {
-    @apply flex gap-2 overflow-x-auto pb-4 scrollbar-none;
+    @apply flex gap-2 overflow-x-auto pb-4;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   .scroll-row::-webkit-scrollbar {
     display: none;
