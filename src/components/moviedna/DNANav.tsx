@@ -2,6 +2,7 @@ import { Bell, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
+import logo from "@/assets/moviedna-logo.png";
 import { Button } from "@/components/ui/button";
 import { CineSearchBar } from "@/components/cinematch/CineSearchBar";
 
