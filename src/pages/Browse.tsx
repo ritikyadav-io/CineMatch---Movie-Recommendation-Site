@@ -78,16 +78,16 @@ const BrowsePage = () => {
         </div>
       </div>
 
-      <main className="container px-3 sm:px-4 lg:px-8 pt-4 sm:pt-6 pb-8 sm:pb-12 space-y-4 sm:space-y-6">
+      <main className="container px-4 sm:px-4 lg:px-8 pt-4 sm:pt-6 pb-8 sm:pb-12 space-y-4 sm:space-y-6">
 
         {/* Category pills */}
-        <div className="scroll-row gap-1 sm:gap-1.5 pb-2">
+        <div className="scroll-row gap-1.5 sm:gap-1.5 pb-2">
           {Object.entries(CATEGORIES).map(([key, val]) => (
             <button
               key={key}
               onClick={() => { setSearchParams({ cat: key }); setPage(1); }}
               className={[
-                "shrink-0 rounded-md px-2 sm:px-3 py-1 sm:py-1.5 text-[9px] sm:text-[11px] font-medium transition",
+                "shrink-0 rounded-md px-2.5 sm:px-3 py-1.5 sm:py-1.5 text-[10px] sm:text-[11px] font-medium transition",
                 cat === key ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"
               ].join(" ")}
             >
