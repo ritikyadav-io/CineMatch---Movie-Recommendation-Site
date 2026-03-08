@@ -250,9 +250,9 @@ export function DNANav() {
                 <Link
                   to="/profile"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-foreground hover:bg-muted transition"
+                  className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-medium text-foreground hover:bg-muted transition"
                 >
-                  <Bookmark className="size-5" />
+                  <Bookmark className="size-4" />
                   My Profile & Watchlist
                 </Link>
               )}
