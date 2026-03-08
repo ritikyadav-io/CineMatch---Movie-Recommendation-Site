@@ -252,10 +252,10 @@ const Index = () => {
             >
               <Link
                 to={p.link}
-                className={`group flex flex-col items-center gap-2 rounded-xl bg-gradient-to-b ${p.color} border p-3 sm:p-5 text-center transition-all hover:scale-105`}
+                className={`group flex flex-col items-center gap-1 sm:gap-2 rounded-xl bg-gradient-to-b ${p.color} border p-2 sm:p-5 text-center transition-all hover:scale-105`}
               >
-                <p.icon className={`size-6 sm:size-8 ${p.iconColor}`} />
-                <span className="text-[10px] sm:text-xs font-bold text-foreground">{p.title}</span>
+                <p.icon className={`size-4 sm:size-8 ${p.iconColor}`} />
+                <span className="text-[8px] sm:text-xs font-bold text-foreground">{p.title}</span>
               </Link>
             </motion.div>
           ))}
