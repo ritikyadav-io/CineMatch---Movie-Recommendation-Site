@@ -91,9 +91,9 @@ function LazyMovieRow({ title, fetchFn, link, queryKey }: { title: string; fetch
       {!isVisible || isLoading ? (
         <SkeletonRow />
       ) : data?.length ? (
-        <div className="flex gap-1.5 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
-          {data.slice(0, 12).map((item) => (
-            <div key={item.imdbID} className="shrink-0 w-[80px] sm:w-[120px] lg:w-[140px]">
+        <div className="flex gap-1.5 sm:gap-3 lg:gap-4 overflow-x-auto pb-2 scrollbar-hide">
+          {data.slice(0, 15).map((item) => (
+            <div key={item.imdbID} className="shrink-0 w-[80px] sm:w-[120px] lg:w-[170px] xl:w-[190px]">
               <CineMovieCard item={item} />
             </div>
           ))}
