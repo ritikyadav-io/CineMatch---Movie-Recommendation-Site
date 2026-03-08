@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader2, Shuffle } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 
+import heroDiscover from "@/assets/hero-discover.jpg";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
@@ -30,12 +31,11 @@ const DiscoverPage = () => {
     animeStyle: (searchParams.get("animeStyle") as QuizAnswers["animeStyle"]) || defaultQuizAnswers.animeStyle,
   };
 
-  const selectedIds = (() => {
-    if (mode === "random") return [getRandomCatalogPick().imdbID];
-    if (mode === "quiz") return filterCatalogByQuiz(quizAnswers).map((entry) => entry.imdbID);
-    if (section && sectionMap[section]) return sectionMap[section].ids;
-    return sectionMap.trending.ids;
-  })();
+  const selectedIds = mode === "quiz"
+    ? filterCatalogByQuiz(quizAnswers).slice(0, 12).map((m) => m.imdbID)
+    : section && sectionMap[section]
+      ? sectionMap[section].ids.slice(0, 12)
+      : [];
 
   const recommendationsQuery = useQuery({
     queryKey: ["discover", mode, section, selectedIds.join("|")],
@@ -71,21 +71,30 @@ const DiscoverPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <main className="container space-y-4 sm:space-y-8 pt-14 pb-8 sm:pt-16 sm:pb-12 lg:pt-18 lg:pb-16 px-3 sm:px-6">
-        <section className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">Discover</span>
-            <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">{headline}</h1>
-            <p className="max-w-2xl text-[10px] sm:text-sm text-muted-foreground mt-0.5">{description}</p>
-          </div>
-          <Button asChild variant="heroSecondary" size="sm" className="self-start text-xs">
-            <Link to="/discover?mode=random">
-              <Shuffle className="size-3.5" />
-              Surprise Me
-            </Link>
-          </Button>
-        </section>
 
+      {/* Hero Banner */}
+      <div className="relative h-32 sm:h-44 lg:h-52 overflow-hidden">
+        <img src={heroDiscover} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent" />
+        <div className="container relative flex items-end h-full pb-4 sm:pb-6 px-3 sm:px-6">
+          <section className="flex flex-col gap-1 sm:gap-2 lg:flex-row lg:items-end lg:justify-between w-full">
+            <div>
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">Discover</span>
+              <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-foreground">{headline}</h1>
+              <p className="max-w-2xl text-[10px] sm:text-sm text-muted-foreground mt-0.5">{description}</p>
+            </div>
+            <Button asChild variant="heroSecondary" size="sm" className="self-start text-xs">
+              <Link to="/discover?mode=random">
+                <Shuffle className="size-3.5" />
+                Surprise Me
+              </Link>
+            </Button>
+          </section>
+        </div>
+      </div>
+
+      <main className="container space-y-4 sm:space-y-8 pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pb-16 px-3 sm:px-6">
         {recommendationsQuery.isLoading ? (
           <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground text-xs">
             <Loader2 className="size-4 animate-spin text-primary" />
