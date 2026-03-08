@@ -210,32 +210,13 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ═══════════ CTA ═══════════ */}
+      {/* ═══════════ MADE BY ═══════════ */}
       <section className="container px-3 sm:px-6 pb-10 sm:pb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 via-card to-accent/10 border border-border px-5 py-12 sm:px-12 sm:py-16 text-center"
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_hsl(var(--primary)/0.08),transparent_60%)]" />
-          <div className="relative space-y-4 sm:space-y-6">
-            <Star className="size-8 sm:size-10 text-primary mx-auto opacity-80" />
-            <h2 className="mx-auto max-w-lg text-2xl sm:text-4xl font-black tracking-tight text-foreground">
-              Unlock Your <span className="text-primary">Cinematic DNA</span>
-            </h2>
-            <p className="mx-auto max-w-md text-xs sm:text-sm text-muted-foreground">
-              Your perfect movie is waiting. Take the quiz and never waste another movie night.
-            </p>
-            <Button asChild variant="hero" size="sm" className="group sm:!h-12 sm:!px-8 sm:!text-base">
-              <Link to="/quiz">
-                Start the Quiz
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-          </div>
-        </motion.div>
+        <div className="rounded-2xl bg-card/50 border border-border px-5 py-10 sm:py-14 text-center">
+          <p className="text-lg sm:text-2xl font-black tracking-tight text-foreground">
+            MADE BY <span className="text-primary">RITIK YADAV</span>
+          </p>
+        </div>
       </section>
 
       <DNAFooter />
