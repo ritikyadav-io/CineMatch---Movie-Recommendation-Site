@@ -195,8 +195,8 @@ const Index = () => {
       </section>
 
       {/* ═══════════ FEATURES ═══════════ */}
-      <section className="container px-3 sm:px-6 -mt-8 sm:-mt-12 relative z-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+      <section className="container px-3 sm:px-6 -mt-6 sm:-mt-12 relative z-10">
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-3">
           {features.map((f, i) => (
             <motion.div
               key={f.title}
@@ -207,14 +207,14 @@ const Index = () => {
             >
               <Link
                 to={f.link}
-                className="group flex flex-col gap-2 sm:gap-3 rounded-xl bg-card/80 backdrop-blur-md border border-border p-3 sm:p-5 transition-all hover:bg-card hover:border-primary/30 hover:scale-[1.02]"
+                className="group flex flex-col items-center gap-1 sm:gap-3 rounded-lg bg-card/80 backdrop-blur-md border border-border p-2 sm:p-5 transition-all hover:bg-card hover:border-primary/30 hover:scale-[1.02] text-center"
               >
-                <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-primary/10">
-                  <f.icon className="size-4 sm:size-5 text-primary" />
+                <div className="flex size-6 sm:size-10 items-center justify-center rounded-md bg-primary/10">
+                  <f.icon className="size-3 sm:size-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xs sm:text-sm font-bold text-foreground">{f.title}</h3>
-                  <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 line-clamp-2">{f.desc}</p>
+                  <h3 className="text-[8px] sm:text-sm font-bold text-foreground leading-tight">{f.title}</h3>
+                  <p className="text-[7px] sm:text-xs text-muted-foreground mt-0.5 line-clamp-1 sm:line-clamp-2 hidden sm:block">{f.desc}</p>
                 </div>
               </Link>
             </motion.div>
