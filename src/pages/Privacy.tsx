@@ -4,7 +4,7 @@ import { DNANav } from "@/components/moviedna/DNANav";
 const PrivacyPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <CineMatchNav />
+      <DNANav />
       <main className="container py-12 lg:py-16">
         <section className="section-shell mx-auto max-w-4xl space-y-5">
           <p className="text-xs uppercase tracking-[0.28em] text-primary">Privacy Policy</p>
