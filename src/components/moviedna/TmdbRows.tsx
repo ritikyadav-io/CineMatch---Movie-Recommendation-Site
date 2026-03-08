@@ -68,7 +68,7 @@ function MovieRow({ config }: { config: RowConfig }) {
           See All <ChevronRight className="size-4" />
         </Link>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
         {data.slice(0, 5).map((item) => (
           <CineMovieCard key={item.imdbID} item={item} />
         ))}
