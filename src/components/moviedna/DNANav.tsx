@@ -38,6 +38,7 @@ export function DNANav() {
   const [showSearch, setShowSearch] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { canInstall, isInstalled, install } = usePwaInstall();
+  const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
