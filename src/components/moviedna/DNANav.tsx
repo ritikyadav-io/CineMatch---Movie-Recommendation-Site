@@ -76,26 +76,27 @@ export function DNANav() {
         ].join(" ")}
       >
         <div className="container flex items-center gap-2 sm:gap-4 py-2 sm:py-3">
-          {/* Mobile: Back button or Hamburger */}
-          <div className="flex lg:hidden">
-            {!isHome ? (
-              <button
-                onClick={() => navigate(-1)}
-                className="p-1 text-muted-foreground transition hover:text-foreground"
-                aria-label="Go back"
-              >
-                <ArrowLeft className="size-4" />
-              </button>
-            ) : (
-              <button
-                onClick={() => setMobileOpen(true)}
-                className="p-1 text-muted-foreground transition hover:text-foreground"
-                aria-label="Open menu"
-              >
-                <Menu className="size-4" />
-              </button>
-            )}
-          </div>
+          {/* Back button (all screens, non-home pages) */}
+          {!isHome && (
+            <button
+              onClick={() => navigate(-1)}
+              className="p-1 text-muted-foreground transition hover:text-foreground"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="size-4 sm:size-5" />
+            </button>
+          )}
+
+          {/* Mobile: Hamburger on home */}
+          {isHome && (
+            <button
+              onClick={() => setMobileOpen(true)}
+              className="p-1 text-muted-foreground transition hover:text-foreground lg:hidden"
+              aria-label="Open menu"
+            >
+              <Menu className="size-4" />
+            </button>
+          )}
 
           {/* Logo */}
           <Link to="/" className="shrink-0 text-base sm:text-xl font-black tracking-tight text-foreground">
