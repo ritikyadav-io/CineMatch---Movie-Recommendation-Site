@@ -387,9 +387,6 @@ const MovieDetailPage = () => {
           </section>
         )}
 
-        <Button asChild variant="heroSecondary" size="sm" className="text-xs">
-          <Link to="/"><ArrowLeft className="size-3.5" /> Back Home</Link>
-        </Button>
       </main>
 
       <DNAFooter />
