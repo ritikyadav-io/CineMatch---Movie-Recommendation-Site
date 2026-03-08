@@ -272,21 +272,14 @@ export function DNANav() {
                   Install App
                 </Button>
               )}
-              {user ? (
-                <Button asChild variant="hero" className="w-full">
-                  <Link to="/quiz" onClick={() => setMobileOpen(false)}>
-                    <Sparkles className="size-4" />
-                    Start Quiz
-                  </Link>
-                </Button>
-              ) : (
-                <Button asChild variant="hero" className="w-full">
-                  <Link to="/auth" onClick={() => setMobileOpen(false)}>
-                    <LogIn className="size-4" />
-                    Sign In / Sign Up
-                  </Link>
-                </Button>
-              )}
+              <Button
+                onClick={() => { setShowDonate(true); setMobileOpen(false); }}
+                variant="hero"
+                className="w-full"
+              >
+                <Heart className="size-4" />
+                Donate
+              </Button>
             </div>
           </div>
         </div>
