@@ -107,7 +107,7 @@ const MovieDetailPage = () => {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <DNANav />
-        <main className="container pt-20 pb-8 text-center space-y-3">
+        <main className="container pt-14 sm:pt-16 pb-8 text-center space-y-3">
           <div className="py-12 text-muted-foreground text-xs">We couldn't load that title.</div>
           <Button asChild variant="heroSecondary" size="sm">
             <Link to="/"><ArrowLeft className="size-3.5" /> Back Home</Link>
