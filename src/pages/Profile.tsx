@@ -51,7 +51,7 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
-      <main className="container space-y-8 pt-24 pb-12 lg:pt-28">
+      <main className="container space-y-8 pt-14 pb-12 sm:pt-16 lg:pt-18">
         {/* Profile header */}
         <section className="flex items-center gap-4">
           {profile?.avatar_url ? (

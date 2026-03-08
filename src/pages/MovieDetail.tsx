@@ -107,7 +107,7 @@ const MovieDetailPage = () => {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <DNANav />
-        <main className="container pt-20 pb-8 text-center space-y-3">
+        <main className="container pt-14 sm:pt-16 pb-8 text-center space-y-3">
           <div className="py-12 text-muted-foreground text-xs">We couldn't load that title.</div>
           <Button asChild variant="heroSecondary" size="sm">
             <Link to="/"><ArrowLeft className="size-3.5" /> Back Home</Link>
@@ -163,7 +163,7 @@ const MovieDetailPage = () => {
         </div>
       )}
 
-      <main className={`animate-fade-in container px-3 sm:px-4 lg:px-8 space-y-4 sm:space-y-6 pb-6 sm:pb-10 ${movie.backdrop_path ? "-mt-20 sm:-mt-32 relative z-10" : "pt-16 sm:pt-20"}`}>
+      <main className={`animate-fade-in container px-3 sm:px-4 lg:px-8 space-y-4 sm:space-y-6 pb-6 sm:pb-10 ${movie.backdrop_path ? "-mt-20 sm:-mt-32 relative z-10" : "pt-14 sm:pt-16"}`}>
         {/* Poster + Info */}
         <section className="grid gap-3 sm:gap-5 grid-cols-[100px_1fr] sm:grid-cols-[160px_1fr] lg:grid-cols-[240px_1fr]">
           <div className="space-y-2">
