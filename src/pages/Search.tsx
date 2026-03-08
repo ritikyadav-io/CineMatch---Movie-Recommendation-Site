@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Loader2, Search, User } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
@@ -15,9 +16,19 @@ import {
 } from "@/lib/tmdb";
 
 const SearchPage = () => {
-  const [inputValue, setInputValue] = useState("");
-  const [query, setQuery] = useState("");
+  const [searchParams] = useSearchParams();
+  const urlQuery = searchParams.get("q") || "";
+  const [inputValue, setInputValue] = useState(urlQuery);
+  const [query, setQuery] = useState(urlQuery);
   const [selectedPerson, setSelectedPerson] = useState<TmdbPerson | null>(null);
+
+  useEffect(() => {
+    if (urlQuery) {
+      setInputValue(urlQuery);
+      setQuery(urlQuery);
+      setSelectedPerson(null);
+    }
+  }, [urlQuery]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
