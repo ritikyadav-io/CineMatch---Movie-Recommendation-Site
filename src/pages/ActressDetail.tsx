@@ -236,18 +236,32 @@ const ActressDetailPage = () => {
                 </div>
 
                 {/* Stats */}
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-3">
                   <div className="flex items-center gap-1 text-xs bg-card rounded-md px-2.5 py-1.5">
                     <Film className="size-3 text-primary" />
-                    <span className="font-bold text-foreground">{d?.movies.length || 0}</span>
+                    <span className="font-bold text-foreground">{d?.totalMovies || 0}</span>
                     <span className="text-muted-foreground">Movies</span>
                   </div>
                   <div className="flex items-center gap-1 text-xs bg-card rounded-md px-2.5 py-1.5">
                     <Tv className="size-3 text-primary" />
-                    <span className="font-bold text-foreground">{d?.tvShows.length || 0}</span>
+                    <span className="font-bold text-foreground">{d?.totalTvShows || 0}</span>
                     <span className="text-muted-foreground">TV Shows</span>
                   </div>
                 </div>
+
+                {/* Latest Movie */}
+                {d?.latestMovie && (
+                  <Link
+                    to={`/movie/tmdb-${d.latestMovie.id}`}
+                    className="flex items-center gap-2 bg-card rounded-md px-2.5 py-1.5 hover:bg-muted transition w-fit"
+                  >
+                    <span className="text-[10px] sm:text-xs text-primary font-semibold">🎬 Latest:</span>
+                    <span className="text-[10px] sm:text-xs text-foreground font-medium">{d.latestMovie.title}</span>
+                    {d.latestMovie.release_date && (
+                      <span className="text-[9px] text-muted-foreground">({d.latestMovie.release_date.slice(0, 4)})</span>
+                    )}
+                  </Link>
+                )}
 
                 {/* Bio */}
                 {d?.biography && (
