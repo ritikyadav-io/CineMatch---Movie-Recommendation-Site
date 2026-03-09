@@ -65,7 +65,7 @@ const ACTRESS_LIST = [
   { id: 88167, name: "Anushka Shetty" },
   { id: 1756851, name: "Sanya Malhotra" },
   // ── Korean ──
-  { id: 1457244, name: "IU (Lee Ji-eun)" },
+  { id: 1252318, name: "IU (Lee Ji-eun)" },
   { id: 1254899, name: "Bae Suzy" },
   { id: 2056938, name: "Han So-hee" },
   { id: 1298103, name: "Kim Yoo-jung" },
