@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, Loader2, Calendar, MapPin, Heart, Film, Tv } from "lucide-react";
+import { ArrowLeft, Loader2, Calendar, MapPin, Heart, Film, Tv, Clapperboard } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
