@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 // Only store id + name. Images fetched live from TMDB.
 const ACTRESS_LIST = [
-  // ── Hollywood ──
+  // ── Hollywood (verified TMDB person IDs) ──
   { id: 90633, name: "Gal Gadot" },
   { id: 1245, name: "Scarlett Johansson" },
   { id: 224513, name: "Ana de Armas" },
@@ -24,7 +24,7 @@ const ACTRESS_LIST = [
   { id: 8691, name: "Zoe Saldana" },
   { id: 17018, name: "Angelina Jolie" },
   { id: 72129, name: "Jennifer Lawrence" },
-  { id: 9780, name: "Dakota Johnson" },
+  { id: 118545, name: "Dakota Johnson" },       // fixed: was 9780
   { id: 1283, name: "Helena Bonham Carter" },
   { id: 205, name: "Kirsten Dunst" },
   { id: 36662, name: "Emilia Clarke" },
@@ -32,13 +32,13 @@ const ACTRESS_LIST = [
   { id: 1903874, name: "Anya Taylor-Joy" },
   { id: 10990, name: "Emma Watson" },
   { id: 1038, name: "Jodie Foster" },
-  { id: 6161, name: "Jennifer Aniston" },
-  { id: 9827, name: "Rosario Dawson" },
-  { id: 8896, name: "Amy Adams" },
-  { id: 5588, name: "Brie Larson" },
-  { id: 17647, name: "Naomi Watts" },
-  { id: 51329, name: "Amanda Seyfried" },
-  { id: 11701, name: "Daisy Ridley" },
+  { id: 4491, name: "Jennifer Aniston" },       // fixed: was 6161
+  { id: 5916, name: "Rosario Dawson" },          // fixed: was 9827
+  { id: 9273, name: "Amy Adams" },               // fixed: was 8896
+  { id: 60073, name: "Brie Larson" },            // fixed: was 5588
+  { id: 3489, name: "Naomi Watts" },             // fixed: was 17647
+  { id: 71070, name: "Amanda Seyfried" },        // fixed: was 51329
+  { id: 1315036, name: "Daisy Ridley" },         // fixed: was 11701
   // ── Bollywood ──
   { id: 35742, name: "Katrina Kaif" },
   { id: 1445926, name: "Kiara Advani" },
@@ -54,7 +54,7 @@ const ACTRESS_LIST = [
   { id: 1209499, name: "Disha Patani" },
   { id: 1536926, name: "Sara Ali Khan" },
   { id: 1100569, name: "Shraddha Kapoor" },
-  { id: 1193657, name: "Nora Fatehi" },
+  { id: 1488785, name: "Nora Fatehi" },          // fixed: was 1193657
   // ── Korean ──
   { id: 1457244, name: "IU (Lee Ji-eun)" },
   { id: 1254899, name: "Bae Suzy" },
@@ -64,14 +64,14 @@ const ACTRESS_LIST = [
   { id: 1329674, name: "Jun Ji-hyun" },
   { id: 1339531, name: "Song Hye-kyo" },
   // ── Spanish / Latin ──
-  { id: 4785, name: "Penélope Cruz" },
+  { id: 955, name: "Penélope Cruz" },            // fixed: was 4785
   { id: 59174, name: "Úrsula Corberó" },
   { id: 1267, name: "Salma Hayek" },
   { id: 234722, name: "Blanca Suárez" },
   // ── Australian ──
-  { id: 6613, name: "Rebel Wilson" },
+  { id: 221581, name: "Rebel Wilson" },           // fixed: was 6613
   { id: 10978, name: "Isla Fisher" },
-  { id: 23931, name: "Teresa Palmer" },
+  { id: 20374, name: "Teresa Palmer" },           // fixed: was 23931
   { id: 17604, name: "Rose Byrne" },
 ]
   .filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
