@@ -45,29 +45,51 @@ async function fetchActressDetail(id: number): Promise<ActressData> {
   if (!res.ok) throw new Error("Failed to fetch");
   const data = await res.json();
 
-  const movies = (data.movie_credits?.cast || [])
-    .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
-    .slice(0, 20)
-    .map((m: any) => ({
-      id: m.id,
-      title: m.title,
-      poster_path: m.poster_path,
-      release_date: m.release_date,
-      vote_average: m.vote_average,
-      media_type: "movie" as const,
-    }));
+  const now = new Date();
+  const sixMonthsAgo = new Date(now);
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+  const threeMonthsAhead = new Date(now);
+  threeMonthsAhead.setMonth(threeMonthsAhead.getMonth() + 3);
 
-  const tvShows = (data.tv_credits?.cast || [])
+  const mapMovie = (m: any) => ({
+    id: m.id,
+    title: m.title || m.name,
+    poster_path: m.poster_path,
+    release_date: m.release_date || m.first_air_date,
+    vote_average: m.vote_average,
+    media_type: (m.first_air_date ? "tv" : "movie") as "movie" | "tv",
+    character: m.character || m.roles?.[0]?.character || "",
+  });
+
+  const allMovies = (data.movie_credits?.cast || []).map(mapMovie);
+  const allTv = (data.tv_credits?.cast || []).map((m: any) => ({
+    ...mapMovie(m),
+    title: m.name || m.title,
+    release_date: m.first_air_date,
+    media_type: "tv" as const,
+    character: m.roles?.[0]?.character || m.character || "",
+  }));
+
+  // Current projects: released in last 6 months OR upcoming within 3 months
+  const isCurrent = (item: MediaItem) => {
+    if (!item.release_date) return false;
+    const rd = new Date(item.release_date);
+    return rd >= sixMonthsAgo && rd <= threeMonthsAhead;
+  };
+
+  const currentProjects = [...allMovies, ...allTv]
+    .filter(isCurrent)
+    .filter((a, i, arr) => arr.findIndex(b => b.id === a.id && b.media_type === a.media_type) === i)
+    .sort((a, b) => new Date(b.release_date || "").getTime() - new Date(a.release_date || "").getTime());
+
+  const movies = allMovies
+    .sort((a: any, b: any) => (b.vote_average || 0) * (b.vote_average || 0) + (b.popularity || 0) - ((a.vote_average || 0) * (a.vote_average || 0) + (a.popularity || 0)))
+    .slice(0, 20);
+
+  const tvShows = allTv
+    .filter((a: any, i: number, arr: any[]) => arr.findIndex((b: any) => b.id === a.id) === i)
     .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
-    .slice(0, 12)
-    .map((m: any) => ({
-      id: m.id,
-      title: m.name || m.title,
-      poster_path: m.poster_path,
-      release_date: m.first_air_date,
-      vote_average: m.vote_average,
-      media_type: "tv" as const,
-    }));
+    .slice(0, 12);
 
   return {
     name: data.name,
@@ -77,6 +99,7 @@ async function fetchActressDetail(id: number): Promise<ActressData> {
     deathday: data.deathday,
     place_of_birth: data.place_of_birth,
     also_known_as: data.also_known_as || [],
+    currentProjects,
     movies,
     tvShows,
   };
