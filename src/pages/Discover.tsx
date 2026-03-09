@@ -232,17 +232,31 @@ const DiscoverPage = () => {
                   </div>
                 )}
 
-                <div className="flex gap-2 pt-1 sm:pt-2">
+                <div className="flex items-center gap-2 pt-1 sm:pt-2">
                   <Button asChild variant="hero" size="sm" className="text-[10px] sm:text-sm !h-7 sm:!h-9 !px-3 sm:!px-4">
                     <Link to={`/movie/${suggestion.detail.imdbID}`}>View Full Details</Link>
                   </Button>
                   {suggestion.detail.trailer && (
                     <Button asChild variant="heroSecondary" size="sm" className="text-[10px] sm:text-sm !h-7 sm:!h-9 !px-3 sm:!px-4">
                       <a href={`https://www.youtube.com/watch?v=${suggestion.detail.trailer}`} target="_blank" rel="noopener noreferrer">
-                        ▶ Watch Trailer
+                        ▶ Trailer
                       </a>
                     </Button>
                   )}
+                  <WatchlistButton
+                    movie={{
+                      imdbID: suggestion.detail.imdbID,
+                      title: suggestion.detail.title,
+                      year: suggestion.detail.year,
+                      rating: suggestion.detail.rating,
+                      genres: suggestion.detail.genres,
+                      poster: suggestion.detail.poster,
+                      overview: suggestion.detail.overview,
+                      language: suggestion.detail.language,
+                      type: "movie",
+                    }}
+                    className="!p-2"
+                  />
                 </div>
               </div>
             </section>
