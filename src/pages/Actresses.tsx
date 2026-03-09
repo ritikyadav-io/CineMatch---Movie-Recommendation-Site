@@ -127,24 +127,28 @@ export const TMDB_ACTRESSES = ACTRESS_LIST;
 
 const TMDB_IMG = "https://image.tmdb.org/t/p/w185";
 
-// Cache fetched profile images in memory
+// Cache fetched profile images + latest movie in memory
 const profileCache = new Map<number, string>();
+const latestMovieCache = new Map<number, string>();
 // Track IDs that failed so we can hide them
 const failedIds = new Set<number>();
 
-function ActressPhoto({ id, name, onFailed }: { id: number; name: string; onFailed: () => void }) {
+function ActressPhoto({ id, name, onFailed, onData }: { id: number; name: string; onFailed: () => void; onData?: (latestMovie: string) => void }) {
   const [src, setSrc] = useState<string | null>(profileCache.get(id) || null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     if (failedIds.has(id)) { onFailed(); return; }
-    if (src) return;
+    if (src) {
+      if (onData && latestMovieCache.has(id)) onData(latestMovieCache.get(id)!);
+      return;
+    }
     let cancelled = false;
 
     (async () => {
       try {
         const { data } = await supabase.functions.invoke("tmdb-proxy", {
-          body: { endpoint: `/person/${id}`, params: {} },
+          body: { endpoint: `/person/${id}`, params: { append_to_response: "movie_credits" } },
         });
         if (cancelled) return;
         const path = data?.profile_path;
@@ -152,6 +156,15 @@ function ActressPhoto({ id, name, onFailed }: { id: number; name: string; onFail
           const url = `${TMDB_IMG}${path}`;
           profileCache.set(id, url);
           setSrc(url);
+          // Extract latest movie by release date
+          const movies = (data?.movie_credits?.cast || [])
+            .filter((m: any) => m.release_date && new Date(m.release_date) <= new Date())
+            .sort((a: any, b: any) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
+          const latest = movies[0]?.title || "";
+          if (latest) {
+            latestMovieCache.set(id, latest);
+            if (onData) onData(latest);
+          }
         } else {
           failedIds.add(id);
           onFailed();
@@ -210,12 +223,11 @@ function fetchActressDetailForPrefetch(id: number) {
 
 function ActressCard({ actress }: { actress: { id: number; name: string } }) {
   const [hidden, setHidden] = useState(failedIds.has(actress.id));
+  const [latestMovie, setLatestMovie] = useState<string>(latestMovieCache.get(actress.id) || "");
   const queryClient = useQueryClient();
 
   const prefetch = useCallback(() => {
-    // Prefetch the JS chunk
     actressDetailChunk();
-    // Prefetch the API data
     queryClient.prefetchQuery({
       queryKey: ["actress-detail-v2", actress.id],
       queryFn: () => fetchActressDetailForPrefetch(actress.id),
@@ -230,14 +242,19 @@ function ActressCard({ actress }: { actress: { id: number; name: string } }) {
       to={`/actress/${actress.id}`}
       onMouseEnter={prefetch}
       onTouchStart={prefetch}
-      className="group relative flex flex-col items-center gap-1.5 rounded-lg p-2 sm:p-3 bg-card hover:bg-muted transition-all duration-200"
+      className="group relative flex flex-col items-center gap-1 rounded-lg p-2 sm:p-3 bg-card hover:bg-muted transition-all duration-200"
     >
       <div className="relative size-16 sm:size-20 md:size-24 overflow-hidden rounded-full bg-muted ring-2 ring-border group-hover:ring-primary/50 transition">
-        <ActressPhoto id={actress.id} name={actress.name} onFailed={() => setHidden(true)} />
+        <ActressPhoto id={actress.id} name={actress.name} onFailed={() => setHidden(true)} onData={(m) => setLatestMovie(m)} />
       </div>
       <span className="text-[10px] sm:text-xs font-semibold text-foreground text-center line-clamp-2 leading-tight">
         {actress.name}
       </span>
+      {latestMovie && (
+        <span className="text-[7px] sm:text-[8px] text-primary font-medium text-center line-clamp-1 leading-tight">
+          🎬 {latestMovie}
+        </span>
+      )}
     </Link>
   );
 }

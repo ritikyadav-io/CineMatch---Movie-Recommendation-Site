@@ -16,7 +16,7 @@ import {
   Users,
   X,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import logo from "@/assets/moviedna-logo.png";
@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { CineSearchBar } from "@/components/cinematch/CineSearchBar";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { useAuth } from "@/hooks/use-auth";
+import { routePrefetchMap } from "@/App";
 
 const navItems = [
   { to: "/", label: "Home", icon: Home },
@@ -46,6 +47,12 @@ export function DNANav() {
   const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const prefetchRoute = useCallback((to: string) => {
+    const basePath = to.split("?")[0];
+    const loader = routePrefetchMap[basePath];
+    if (loader) loader();
+  }, []);
 
   const isHome = location.pathname === "/";
 
@@ -111,6 +118,7 @@ export function DNANav() {
               <NavLink
                 key={item.to}
                 to={item.to}
+                onMouseEnter={() => prefetchRoute(item.to)}
                 className={({ isActive }) =>
                   [
                     "px-3 py-1.5 rounded transition-colors duration-200 hover:text-foreground",
@@ -225,7 +233,7 @@ export function DNANav() {
                   <Link
                     key={item.to}
                     to={item.to}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={() => { prefetchRoute(item.to); setMobileOpen(false); }}
                     className={[
                       "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-medium transition",
                       isActive
