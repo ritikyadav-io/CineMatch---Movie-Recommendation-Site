@@ -1,32 +1,63 @@
 import { motion } from "framer-motion";
 import { Info, Play } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import heroImage from "@/assets/moviedna-hero.jpg";
 import { Button } from "@/components/ui/button";
+import { fetchTmdbTrending } from "@/lib/tmdb";
 
-const categoryLinks = [
+const allCategoryLinks = [
   { label: "Hollywood", to: "/browse?cat=trending" },
   { label: "Bollywood", to: "/browse?cat=bollywood" },
   { label: "Superhero", to: "/browse?cat=superhero" },
   { label: "Anime", to: "/browse?cat=anime" },
   { label: "Sci-Fi", to: "/browse?cat=scifi" },
-  { label: "Gaming", to: "/browse?cat=action" },
+  { label: "Horror", to: "/browse?cat=horror" },
+  { label: "Top Rated", to: "/browse?cat=toprated" },
 ];
 
 export function DNAHero() {
+  const [bgUrl, setBgUrl] = useState<string | null>(null);
+  const randomPage = useMemo(() => Math.floor(Math.random() * 5) + 1, []);
+
+  const { data: trendingMovies } = useQuery({
+    queryKey: ["hero-random-bg", randomPage],
+    queryFn: () => fetchTmdbTrending(randomPage),
+    staleTime: 0,
+  });
+
+  useEffect(() => {
+    if (trendingMovies?.length) {
+      const pick = trendingMovies[Math.floor(Math.random() * trendingMovies.length)];
+      const url = pick.poster?.replace("/w185/", "/original/");
+      if (url && url !== "/placeholder.svg") setBgUrl(url);
+    }
+  }, [trendingMovies]);
+
+  // Shuffle categories each visit
+  const categoryLinks = useMemo(() => {
+    const copy = [...allCategoryLinks];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy.slice(0, 6);
+  }, []);
+
   return (
     <section className="relative h-[85vh] min-h-[600px] overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0">
         <img
-          src={heroImage}
-          alt="Cinematic collage of Hollywood, Bollywood, Superhero, and Anime universes"
-          className="h-full w-full object-cover"
+          src={bgUrl || heroImage}
+          alt="Cinematic hero backdrop"
+          className="h-full w-full object-cover transition-opacity duration-700"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
       </div>
 
