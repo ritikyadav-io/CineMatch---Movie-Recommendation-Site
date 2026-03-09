@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChevronRight } from "lucide-react";
+import { useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
@@ -35,19 +36,37 @@ const rows: RowConfig[] = [
   { title: "📺 Trending Series", queryKey: "tmdb-series", fetcher: fetchTmdbSeries, link: "/browse?cat=series" },
 ];
 
-function MovieRow({ config }: { config: RowConfig }) {
+/** Fisher-Yates shuffle seeded by a per-mount random value */
+function shuffleArray<T>(arr: T[], seed: number): T[] {
+  const copy = [...arr];
+  let s = seed;
+  for (let i = copy.length - 1; i > 0; i--) {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    const j = Math.abs(s) % (i + 1);
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function MovieRow({ config, seed }: { config: RowConfig; seed: number }) {
   const { data, isLoading } = useQuery({
     queryKey: [config.queryKey],
     queryFn: () => config.fetcher(1),
     staleTime: 1000 * 60 * 30,
   });
 
+  // Shuffle once per mount (seed is stable per page visit, changes on each new visit)
+  const displayed = useMemo(() => {
+    if (!data?.length) return [];
+    return shuffleArray(data, seed + config.queryKey.charCodeAt(5)).slice(0, 6);
+  }, [data, seed, config.queryKey]);
+
   if (isLoading) {
     return (
       <div className="space-y-3">
         <div className="h-5 w-40 animate-pulse rounded bg-muted" />
         <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
-          {Array.from({ length: 5 }).map((_, i) => (
+          {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="aspect-[2/3] rounded-md bg-muted animate-pulse" />
           ))}
         </div>
@@ -55,7 +74,7 @@ function MovieRow({ config }: { config: RowConfig }) {
     );
   }
 
-  if (!data?.length) return null;
+  if (!displayed.length) return null;
 
   return (
     <div className="space-y-3">
@@ -69,7 +88,7 @@ function MovieRow({ config }: { config: RowConfig }) {
         </Link>
       </div>
       <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
-        {data.slice(0, 5).map((item) => (
+        {displayed.map((item) => (
           <CineMovieCard key={item.imdbID} item={item} />
         ))}
       </div>
@@ -78,10 +97,13 @@ function MovieRow({ config }: { config: RowConfig }) {
 }
 
 export function TmdbRows() {
+  // New random seed per page visit — stable during the session, different each time you land
+  const seed = useRef(Math.floor(Math.random() * 0x7fffffff)).current;
+
   return (
     <section className="container space-y-10 py-10 lg:py-14">
       {rows.map((config) => (
-        <MovieRow key={config.queryKey} config={config} />
+        <MovieRow key={config.queryKey} config={config} seed={seed} />
       ))}
     </section>
   );
