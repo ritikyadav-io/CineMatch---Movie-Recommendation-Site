@@ -176,6 +176,42 @@ function MediaCard({ item }: { item: MediaItem }) {
   );
 }
 
+const INITIAL_SHOW = 12;
+
+function CollapsibleMediaSection({ icon, title, totalCount, items, keyPrefix }: {
+  icon: React.ReactNode;
+  title: string;
+  totalCount: number;
+  items: MediaItem[];
+  keyPrefix: string;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? items : items.slice(0, INITIAL_SHOW);
+  const hasMore = items.length > INITIAL_SHOW;
+
+  return (
+    <section className="mb-8">
+      <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-3">
+        {icon}
+        {title} <span className="text-xs font-normal text-muted-foreground">({totalCount} total)</span>
+      </h2>
+      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
+        {visible.map((item) => (
+          <MediaCard key={`${keyPrefix}-${item.id}`} item={item} />
+        ))}
+      </div>
+      {hasMore && (
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="mt-3 text-xs font-semibold text-primary hover:text-primary/80 transition"
+        >
+          {expanded ? `Show Less ▲` : `Show More (${items.length - INITIAL_SHOW} more) ▼`}
+        </button>
+      )}
+    </section>
+  );
+}
+
 const ActressDetailPage = () => {
   const { actressId } = useParams();
   const navigate = useNavigate();

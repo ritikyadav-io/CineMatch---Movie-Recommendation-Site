@@ -93,9 +93,12 @@ export async function fetchTmdbByGenre(genreId: number, page = 1): Promise<Media
 
 // ── Bollywood / Hindi ──
 export async function fetchTmdbBollywood(page = 1): Promise<MediaCardData[]> {
+  const threeYearsAgo = new Date();
+  threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);
   const data = await tmdbFetch("/discover/movie", {
     with_original_language: "hi",
     sort_by: "popularity.desc",
+    "primary_release_date.gte": threeYearsAgo.toISOString().slice(0, 10),
     page: String(page),
   });
   return data.results.map((m: TmdbMovie) => mapTmdbToCard(m));
