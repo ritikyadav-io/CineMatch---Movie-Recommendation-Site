@@ -25,6 +25,18 @@ const ActressDetailPage = lazy(() => import("./pages/ActressDetail"));
 const SearchPage = lazy(() => import("./pages/Search"));
 const TrailersPage = lazy(() => import("./pages/Trailers"));
 
+// Prefetch map for route-based chunk preloading
+export const routePrefetchMap: Record<string, () => Promise<any>> = {
+  "/auth": () => import("./pages/Auth"),
+  "/browse": () => import("./pages/Browse"),
+  "/discover": () => import("./pages/Discover"),
+  "/quiz": () => import("./pages/Quiz"),
+  "/actresses": () => import("./pages/Actresses"),
+  "/search": () => import("./pages/Search"),
+  "/trailers": () => import("./pages/Trailers"),
+  "/profile": () => import("./pages/Profile"),
+};
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
