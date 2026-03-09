@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, Loader2, Calendar, MapPin, Heart, Film, Tv } from "lucide-react";
+import { ArrowLeft, Loader2, Calendar, MapPin, Heart, Film, Tv, Clapperboard } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
@@ -13,6 +13,7 @@ interface MediaItem {
   release_date?: string;
   vote_average?: number;
   media_type: "movie" | "tv";
+  character?: string;
 }
 
 interface ActressData {
@@ -23,6 +24,7 @@ interface ActressData {
   deathday: string | null;
   place_of_birth: string | null;
   also_known_as: string[];
+  currentProjects: MediaItem[];
   movies: MediaItem[];
   tvShows: MediaItem[];
 }
@@ -43,29 +45,51 @@ async function fetchActressDetail(id: number): Promise<ActressData> {
   if (!res.ok) throw new Error("Failed to fetch");
   const data = await res.json();
 
-  const movies = (data.movie_credits?.cast || [])
-    .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
-    .slice(0, 20)
-    .map((m: any) => ({
-      id: m.id,
-      title: m.title,
-      poster_path: m.poster_path,
-      release_date: m.release_date,
-      vote_average: m.vote_average,
-      media_type: "movie" as const,
-    }));
+  const now = new Date();
+  const sixMonthsAgo = new Date(now);
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+  const threeMonthsAhead = new Date(now);
+  threeMonthsAhead.setMonth(threeMonthsAhead.getMonth() + 3);
 
-  const tvShows = (data.tv_credits?.cast || [])
+  const mapMovie = (m: any) => ({
+    id: m.id,
+    title: m.title || m.name,
+    poster_path: m.poster_path,
+    release_date: m.release_date || m.first_air_date,
+    vote_average: m.vote_average,
+    media_type: (m.first_air_date ? "tv" : "movie") as "movie" | "tv",
+    character: m.character || m.roles?.[0]?.character || "",
+  });
+
+  const allMovies = (data.movie_credits?.cast || []).map(mapMovie);
+  const allTv = (data.tv_credits?.cast || []).map((m: any) => ({
+    ...mapMovie(m),
+    title: m.name || m.title,
+    release_date: m.first_air_date,
+    media_type: "tv" as const,
+    character: m.roles?.[0]?.character || m.character || "",
+  }));
+
+  // Current projects: released in last 6 months OR upcoming within 3 months
+  const isCurrent = (item: MediaItem) => {
+    if (!item.release_date) return false;
+    const rd = new Date(item.release_date);
+    return rd >= sixMonthsAgo && rd <= threeMonthsAhead;
+  };
+
+  const currentProjects = [...allMovies, ...allTv]
+    .filter(isCurrent)
+    .filter((a, i, arr) => arr.findIndex(b => b.id === a.id && b.media_type === a.media_type) === i)
+    .sort((a, b) => new Date(b.release_date || "").getTime() - new Date(a.release_date || "").getTime());
+
+  const movies = allMovies
+    .sort((a: any, b: any) => (b.vote_average || 0) * (b.vote_average || 0) + (b.popularity || 0) - ((a.vote_average || 0) * (a.vote_average || 0) + (a.popularity || 0)))
+    .slice(0, 20);
+
+  const tvShows = allTv
+    .filter((a: any, i: number, arr: any[]) => arr.findIndex((b: any) => b.id === a.id) === i)
     .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
-    .slice(0, 12)
-    .map((m: any) => ({
-      id: m.id,
-      title: m.name || m.title,
-      poster_path: m.poster_path,
-      release_date: m.first_air_date,
-      vote_average: m.vote_average,
-      media_type: "tv" as const,
-    }));
+    .slice(0, 12);
 
   return {
     name: data.name,
@@ -75,6 +99,7 @@ async function fetchActressDetail(id: number): Promise<ActressData> {
     deathday: data.deathday,
     place_of_birth: data.place_of_birth,
     also_known_as: data.also_known_as || [],
+    currentProjects,
     movies,
     tvShows,
   };
@@ -111,6 +136,9 @@ function MediaCard({ item }: { item: MediaItem }) {
       </div>
       <div className="p-1.5 sm:p-2 space-y-0.5">
         <h3 className="text-[10px] sm:text-xs font-semibold text-foreground line-clamp-2">{item.title}</h3>
+        {item.character && (
+          <p className="text-[8px] sm:text-[9px] text-primary line-clamp-1">as {item.character}</p>
+        )}
         <div className="flex items-center gap-1.5 text-[8px] sm:text-[10px] text-muted-foreground">
           {item.release_date && <span>{item.release_date.slice(0, 4)}</span>}
           {item.vote_average ? <span>⭐ {item.vote_average.toFixed(1)}</span> : null}
@@ -224,6 +252,22 @@ const ActressDetailPage = () => {
                 )}
               </div>
             </div>
+
+            {/* ── Currently Working On ── */}
+            {d?.currentProjects && d.currentProjects.length > 0 && (
+              <section className="mb-8">
+                <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-1">
+                  <Clapperboard className="size-4 text-primary" />
+                  Currently Working On
+                </h2>
+                <p className="text-[10px] sm:text-xs text-muted-foreground mb-3">Recent & current projects</p>
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
+                  {d.currentProjects.map((item) => (
+                    <MediaCard key={`cur-${item.media_type}-${item.id}`} item={item} />
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* ── Movies ── */}
             {d?.movies && d.movies.length > 0 && (
