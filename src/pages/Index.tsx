@@ -235,7 +235,7 @@ const Index = () => {
                 <Link to="/quiz"><Play className="size-4 sm:size-4 lg:size-5 fill-current" /> Discover By Mood</Link>
               </Button>
               <Button asChild variant="heroSecondary" size="default" className="sm:!h-11 sm:!px-6 sm:!text-sm lg:!h-13 lg:!px-8 lg:!text-base">
-                <Link to="/browse"><Film className="size-4 sm:size-4 lg:size-5" /> Browse All</Link>
+                <Link to="/actresses"><Users className="size-4 sm:size-4 lg:size-5" /> Actresses</Link>
               </Button>
             </div>
           </motion.div>
