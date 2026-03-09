@@ -251,6 +251,41 @@ const ActressDetailPage = () => {
                     {d.also_known_as.slice(0, 4).join(", ")}
                   </div>
                 )}
+
+                {/* Relationships */}
+                {(() => {
+                  const rel = ACTRESS_RELATIONSHIPS[numId];
+                  if (!rel) return null;
+                  return (
+                    <div className="space-y-1.5">
+                      {rel.current && (
+                        <div className="flex items-center gap-1.5 text-xs">
+                          <Heart className="size-3 text-pink-500 fill-pink-500" />
+                          <span className="font-semibold text-foreground">
+                            {rel.current.type === "married" ? "Married to" : rel.current.type === "engaged" ? "Engaged to" : "Dating"}:
+                          </span>
+                          <span className="text-muted-foreground">{rel.current.name}</span>
+                          {rel.current.since && <span className="text-muted-foreground/60">(since {rel.current.since})</span>}
+                        </div>
+                      )}
+                      {rel.exes && rel.exes.length > 0 && (
+                        <div className="flex items-start gap-1.5 text-xs">
+                          <Heart className="size-3 text-muted-foreground mt-0.5" />
+                          <div>
+                            <span className="font-semibold text-foreground">Ex: </span>
+                            <span className="text-muted-foreground">
+                              {rel.exes.map((ex, i) => (
+                                <span key={ex.name}>
+                                  {ex.name}{ex.years ? ` (${ex.years})` : ""}{i < rel.exes!.length - 1 ? ", " : ""}
+                                </span>
+                              ))}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
             </div>
 
