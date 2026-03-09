@@ -4,6 +4,7 @@ import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
 
 export const TMDB_ACTRESSES = [
+  // ── Hollywood ──
   { id: 90633, name: "Gal Gadot", img: "/fBJducGBcmrcIOQdhm4t0A2nEMj.jpg" },
   { id: 1245, name: "Scarlett Johansson", img: "/6NsMbJXRlDZuDzatN2akFdGuTvx.jpg" },
   { id: 224513, name: "Ana de Armas", img: "/3vxvsmYLTf4jnr163SUlBIw51ee.jpg" },
@@ -38,10 +39,6 @@ export const TMDB_ACTRESSES = [
   { id: 8944, name: "Jamie Lee Curtis", img: "/rredGSFvDlO7mVzgelFf5qOZerg.jpg" },
   { id: 5081, name: "Emily Blunt", img: "/nPJXaVulnkBLEJBFcoSLycZnODx.jpg" },
   { id: 17277, name: "Rachel McAdams", img: "/2xytu5MOVrmbccJhgQzGCrwdOvR.jpg" },
-  { id: 86009, name: "Deepika Padukone", img: "/v09kwLjjXGmQzSPw2MHIT3zGkdE.jpg" },
-  { id: 28782, name: "Priyanka Chopra", img: "/1EJiyVO9FPxPccWPa14mh1IHmwn.jpg" },
-  { id: 1181313, name: "Alia Bhatt", img: "/mCYgMpMAAAAlTq7YfE6aWlAoUsl.jpg" },
-  { id: 237405, name: "Shraddha Kapoor", img: "/8tTjGXvd7jG0gKjHWrCL76mLbRR.jpg" },
   { id: 1734071, name: "Millie Bobby Brown", img: "/3iIkM2i4GB4fGMzXBjE3FBxOoJT.jpg" },
   { id: 4587, name: "Halle Berry", img: "/vb0yrVz7Oo0lxEYAuAp70ynEHlj.jpg" },
   { id: 6886, name: "Sandra Bullock", img: "/hB2WJnnt3NgFnlmcVS8vpbf87Lj.jpg" },
@@ -59,8 +56,58 @@ export const TMDB_ACTRESSES = [
   { id: 14386, name: "Eva Mendes", img: "/cLrMrsGnVDwfHBH8gnEDdsDOzOJ.jpg" },
   { id: 19034, name: "Evangeline Lilly", img: "/pFjKjBJX2C3FQ8p3MXaGn2Ua1iR.jpg" },
   { id: 1231790, name: "Daisy Ridley", img: "/vHmTsSFsFJoeIXAXEJsmaJIyb3y.jpg" },
-  { id: 5830, name: "Penélope Cruz", img: "/uUlWOPViVBfwRqEVWH0pORaFjOd.jpg" },
   { id: 1180099, name: "Gugu Mbatha-Raw", img: "/2n0LtoRPB1XYaBbW0WLCw6b1gWk.jpg" },
+  { id: 1190668, name: "Timothée Chalamet", img: "" }, // actor, skip
+
+  // ── Bollywood ──
+  { id: 86009, name: "Deepika Padukone", img: "/v09kwLjjXGmQzSPw2MHIT3zGkdE.jpg" },
+  { id: 28782, name: "Priyanka Chopra", img: "/1EJiyVO9FPxPccWPa14mh1IHmwn.jpg" },
+  { id: 1181313, name: "Alia Bhatt", img: "/mCYgMpMAAAAlTq7YfE6aWlAoUsl.jpg" },
+  { id: 237405, name: "Shraddha Kapoor", img: "/8tTjGXvd7jG0gKjHWrCL76mLbRR.jpg" },
+  { id: 35742, name: "Katrina Kaif", img: "/9RHkkYpCqzoPSwOHSaLPFbNqREP.jpg" },
+  { id: 1620122, name: "Kiara Advani", img: "/sTBrMkFOGiVMsH2O6EttfAlJeWu.jpg" },
+  { id: 1428630, name: "Kriti Sanon", img: "/hKftgz8raqPJuGMNgz7IBmfJd32.jpg" },
+  { id: 1267329, name: "Janhvi Kapoor", img: "/kSEEW8uvCHuaEhZFHEGwGq11ZHq.jpg" },
+  { id: 9058, name: "Aishwarya Rai", img: "/tnaSiF0XqMUGnFNfBJ5slliITQB.jpg" },
+  { id: 1024395, name: "Samantha Ruth Prabhu", img: "/xHYkHSPxBfMah5vWKmJfkTAvfcq.jpg" },
+  { id: 1085686, name: "Anushka Sharma", img: "/6k6lrmrJSj6xC3C0ICzVV2NFqki.jpg" },
+  { id: 1539921, name: "Disha Patani", img: "/gExq66s4pCdCnEAUlIsCIvIL3h8.jpg" },
+  { id: 1283752, name: "Nora Fatehi", img: "/oJeyXdkjXEiRplGSrA1tYJKsCHV.jpg" },
+  { id: 1428633, name: "Sara Ali Khan", img: "/cDXBhsKMM5pQauhLNOBrLMGLMwh.jpg" },
+  { id: 1565451, name: "Rashmika Mandanna", img: "/gX3x39kYCjP58R9OTXZ66woNBGI.jpg" },
+  { id: 1456970, name: "Pooja Hegde", img: "/3LG2VFQHBvJFhTVkhtUa9zKccaJ.jpg" },
+  { id: 1466968, name: "Tara Sutaria", img: "/9VrjwiMO4Oqtt7q5Fv7zk0KwJJG.jpg" },
+  { id: 1506450, name: "Mrunal Thakur", img: "/eLoNQzln9hUsmYOgfnQFRRiy9eQ.jpg" },
+  { id: 85916, name: "Kareena Kapoor", img: "/drMB6T6hFAVngxNSv7B9jxBCihH.jpg" },
+  { id: 1241197, name: "Kangana Ranaut", img: "/6O5OWJiMOCbsSQq18g9OVvIKSSe.jpg" },
+  { id: 1164259, name: "Taapsee Pannu", img: "/qPCFfbHc1X0bwL8CZ2Rip3WUDCQ.jpg" },
+
+  // ── Korean ──
+  { id: 1251768, name: "Samara Weaving", img: "" }, // already above, skip dupe
+  { id: 1302851, name: "Bae Suzy", img: "/tJw97TbhLkuTOIxETh5bYnMvxBW.jpg" },
+  { id: 1197220, name: "Han So-hee", img: "/4aICs0SLfPs0TbsCiynWpHYc7cE.jpg" },
+  { id: 1372068, name: "Kim Yoo-jung", img: "/4Ns4v6IxHLvkPuHpPKf4kA0kYNF.jpg" },
+  { id: 1141197, name: "Jun Ji-hyun", img: "/vqELxqF73CbPbgSXOmIq8k6nDgR.jpg" },
+  { id: 1215070, name: "Song Hye-kyo", img: "/kFoZS8BF7NMIxqmA0GHCwl5lNKi.jpg" },
+  { id: 1586047, name: "Kim Ji-won", img: "/v3HmJZpMu6TWBHhNjVPLGSVKhsc.jpg" },
+  { id: 1457244, name: "IU (Lee Ji-eun)", img: "/q1eglxOXHXWBwJRmrIKAFjhGp0B.jpg" },
+  { id: 1395379, name: "Park Shin-hye", img: "/xJX90xgX9UjjlISnzgPMdBfFaIK.jpg" },
+
+  // ── Spanish / Latin ──
+  { id: 5830, name: "Penélope Cruz", img: "/uUlWOPViVBfwRqEVWH0pORaFjOd.jpg" },
+  { id: 1397778, name: "Zendaya", img: "" }, // dupe, skip
+  { id: 55085, name: "Eiza González", img: "/4HLMdGnm5OAEnNspFPoXcI46VTy.jpg" },
+  { id: 59174, name: "Úrsula Corberó", img: "/j2CVMUIkfixFX4X10dC5Ha1kPSz.jpg" },
+  { id: 1267, name: "Salma Hayek", img: "/6o1bSBrfIz3OT1DVLB5JixEZJ2L.jpg" },
+  { id: 234722, name: "Blanca Suárez", img: "/fXdCJ8HVoFl4fW4IjUGwK1E2kFR.jpg" },
+
+  // ── Australian ──
+  { id: 5081, name: "Emily Blunt", img: "" }, // British already listed, skip dupe
+  { id: 17647, name: "Naomi Watts", img: "/8htgF8lxHIuhYOUKR7txYcEVIhB.jpg" },
+  { id: 6613, name: "Rebel Wilson", img: "/5R1pMO4UPIT3w1mNvjykgaJXxCN.jpg" },
+  { id: 10978, name: "Isla Fisher", img: "/ijw64p4cVApbFGwb3OkBxmjmllD.jpg" },
+  { id: 23931, name: "Teresa Palmer", img: "/4GpPKNTm4CDkyVdPNwl2hKQ8lhG.jpg" },
+  { id: 17604, name: "Rose Byrne", img: "/xmjGAk3gGLuoJZIemOGMlsTZp1i.jpg" },
 ].filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
   .filter((a) => a.img)
   .sort((a, b) => a.name.localeCompare(b.name));
@@ -74,7 +121,7 @@ const ActressesPage = () => {
         <div className="space-y-1 mb-6">
           <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">A to Z</span>
           <h1 className="text-xl sm:text-3xl font-black tracking-tight text-foreground">Famous Actresses</h1>
-          <p className="text-xs sm:text-sm text-muted-foreground">Tap to see their top movies. {TMDB_ACTRESSES.length} actresses listed.</p>
+          <p className="text-xs sm:text-sm text-muted-foreground">Tap to see their top movies. {TMDB_ACTRESSES.length} actresses from Hollywood, Bollywood, Korea, Spain & Australia.</p>
         </div>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3">
