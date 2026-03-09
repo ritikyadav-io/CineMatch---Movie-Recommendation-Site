@@ -216,7 +216,7 @@ function ActressCard({ actress }: { actress: { id: number; name: string } }) {
     // Prefetch the API data
     queryClient.prefetchQuery({
       queryKey: ["actress-detail-v2", actress.id],
-      queryFn: () => fetchActressDetailData(actress.id),
+      queryFn: () => fetchActressDetailForPrefetch(actress.id),
       staleTime: 1000 * 60 * 60,
     });
   }, [actress.id, queryClient]);
