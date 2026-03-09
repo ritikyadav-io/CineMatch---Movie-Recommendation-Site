@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
@@ -177,14 +178,56 @@ function ActressPhoto({ id, name, onFailed }: { id: number; name: string; onFail
   );
 }
 
+// Preload the ActressDetail chunk so it's ready when user taps
+const actressDetailChunk = () => import("./ActressDetail");
+
+function fetchActressDetailForPrefetch(id: number) {
+  const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/tmdb-proxy`;
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      endpoint: `/person/${id}`,
+      params: { append_to_response: "movie_credits,tv_credits" },
+    }),
+  }).then(r => r.json()).then(data => {
+    const movies = (data.movie_credits?.cast || [])
+      .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
+      .slice(0, 20)
+      .map((m: any) => ({ id: m.id, title: m.title, poster_path: m.poster_path, release_date: m.release_date, vote_average: m.vote_average, media_type: "movie" as const }));
+    const tvShows = (data.tv_credits?.cast || [])
+      .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
+      .slice(0, 12)
+      .map((m: any) => ({ id: m.id, title: m.name || m.title, poster_path: m.poster_path, release_date: m.first_air_date, vote_average: m.vote_average, media_type: "tv" as const }));
+    return { name: data.name, profile_path: data.profile_path, biography: data.biography || "", birthday: data.birthday, deathday: data.deathday, place_of_birth: data.place_of_birth, also_known_as: data.also_known_as || [], movies, tvShows };
+  });
+}
+
 function ActressCard({ actress }: { actress: { id: number; name: string } }) {
   const [hidden, setHidden] = useState(failedIds.has(actress.id));
+  const queryClient = useQueryClient();
+
+  const prefetch = useCallback(() => {
+    // Prefetch the JS chunk
+    actressDetailChunk();
+    // Prefetch the API data
+    queryClient.prefetchQuery({
+      queryKey: ["actress-detail-v2", actress.id],
+      queryFn: () => fetchActressDetailForPrefetch(actress.id),
+      staleTime: 1000 * 60 * 60,
+    });
+  }, [actress.id, queryClient]);
 
   if (hidden) return null;
 
   return (
     <Link
       to={`/actress/${actress.id}`}
+      onMouseEnter={prefetch}
+      onTouchStart={prefetch}
       className="group relative flex flex-col items-center gap-1.5 rounded-lg p-2 sm:p-3 bg-card hover:bg-muted transition-all duration-200"
     >
       <div className="relative size-16 sm:size-20 md:size-24 overflow-hidden rounded-full bg-muted ring-2 ring-border group-hover:ring-primary/50 transition">
