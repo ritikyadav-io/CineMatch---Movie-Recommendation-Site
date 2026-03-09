@@ -13,6 +13,7 @@ interface MediaItem {
   release_date?: string;
   vote_average?: number;
   media_type: "movie" | "tv";
+  character?: string;
 }
 
 interface ActressData {
@@ -23,6 +24,7 @@ interface ActressData {
   deathday: string | null;
   place_of_birth: string | null;
   also_known_as: string[];
+  currentProjects: MediaItem[];
   movies: MediaItem[];
   tvShows: MediaItem[];
 }
