@@ -38,12 +38,10 @@ export const TMDB_ACTRESSES = [
   { id: 8944, name: "Jamie Lee Curtis", img: "/rredGSFvDlO7mVzgelFf5qOZerg.jpg" },
   { id: 5081, name: "Emily Blunt", img: "/nPJXaVulnkBLEJBFcoSLycZnODx.jpg" },
   { id: 17277, name: "Rachel McAdams", img: "/2xytu5MOVrmbccJhgQzGCrwdOvR.jpg" },
-  // Bollywood
   { id: 86009, name: "Deepika Padukone", img: "/v09kwLjjXGmQzSPw2MHIT3zGkdE.jpg" },
   { id: 28782, name: "Priyanka Chopra", img: "/1EJiyVO9FPxPccWPa14mh1IHmwn.jpg" },
   { id: 1181313, name: "Alia Bhatt", img: "/mCYgMpMAAAAlTq7YfE6aWlAoUsl.jpg" },
   { id: 237405, name: "Shraddha Kapoor", img: "/8tTjGXvd7jG0gKjHWrCL76mLbRR.jpg" },
-  // More Hollywood
   { id: 1734071, name: "Millie Bobby Brown", img: "/3iIkM2i4GB4fGMzXBjE3FBxOoJT.jpg" },
   { id: 4587, name: "Halle Berry", img: "/vb0yrVz7Oo0lxEYAuAp70ynEHlj.jpg" },
   { id: 6886, name: "Sandra Bullock", img: "/hB2WJnnt3NgFnlmcVS8vpbf87Lj.jpg" },
@@ -57,8 +55,12 @@ export const TMDB_ACTRESSES = [
   { id: 16866, name: "Amanda Seyfried", img: "/jwkOOUrLbkGLWzqMDr7EPbB1jEb.jpg" },
   { id: 1749, name: "Reese Witherspoon", img: "/6J6nyN3LIAZv4gkiLACZ9RdG1Pj.jpg" },
   { id: 2227, name: "Drew Barrymore", img: "/xfWVIkROdrC18ng1WzVaHkRpVsn.jpg" },
-  { id: 30614, name: "Ryan Gosling's Partner Eva Mendes", img: "" },
   { id: 1625558, name: "Alexandra Daddario", img: "/lh5lbisD4oDbEKBMaI7YjKXlPiE.jpg" },
+  { id: 14386, name: "Eva Mendes", img: "/cLrMrsGnVDwfHBH8gnEDdsDOzOJ.jpg" },
+  { id: 19034, name: "Evangeline Lilly", img: "/pFjKjBJX2C3FQ8p3MXaGn2Ua1iR.jpg" },
+  { id: 1231790, name: "Daisy Ridley", img: "/vHmTsSFsFJoeIXAXEJsmaJIyb3y.jpg" },
+  { id: 5830, name: "Penélope Cruz", img: "/uUlWOPViVBfwRqEVWH0pORaFjOd.jpg" },
+  { id: 1180099, name: "Gugu Mbatha-Raw", img: "/2n0LtoRPB1XYaBbW0WLCw6b1gWk.jpg" },
 ].filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
   .filter((a) => a.img)
   .sort((a, b) => a.name.localeCompare(b.name));
@@ -72,7 +74,7 @@ const ActressesPage = () => {
         <div className="space-y-1 mb-6">
           <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">A to Z</span>
           <h1 className="text-xl sm:text-3xl font-black tracking-tight text-foreground">Famous Actresses</h1>
-          <p className="text-xs sm:text-sm text-muted-foreground">Tap to see their top movies. {TMDB_ACTRESSES.length}+ actresses listed.</p>
+          <p className="text-xs sm:text-sm text-muted-foreground">Tap to see their top movies. {TMDB_ACTRESSES.length} actresses listed.</p>
         </div>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3">
@@ -82,7 +84,7 @@ const ActressesPage = () => {
               to={`/actress/${actress.id}`}
               className="group relative flex flex-col items-center gap-1.5 rounded-lg p-2 sm:p-3 bg-card hover:bg-muted transition-all duration-200"
             >
-              <div className="relative size-16 sm:size-20 md:size-24 overflow-hidden rounded-full bg-muted">
+              <div className="relative size-16 sm:size-20 md:size-24 overflow-hidden rounded-full bg-muted ring-2 ring-border group-hover:ring-primary/50 transition">
                 <img
                   src={`https://image.tmdb.org/t/p/w185${actress.img}`}
                   alt={actress.name}

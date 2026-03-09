@@ -235,8 +235,8 @@ const Index = () => {
 
       {/* ═══════════ MOVIE ROWS (horizontal scroll) ═══════════ */}
       <main className="container px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 lg:space-y-10 pt-8 sm:pt-12 lg:pt-16">
-        {sections.map((s) => (
-          <LazyMovieRow key={s.queryKey} title={s.title} fetchFn={s.fetchFn} link={s.link} queryKey={s.queryKey} />
+        {sections.map((s, i) => (
+          <LazyMovieRow key={s.queryKey} title={s.title} fetchFn={s.fetchFn} link={s.link} queryKey={s.queryKey} eager={i < 2} />
         ))}
       </main>
 
