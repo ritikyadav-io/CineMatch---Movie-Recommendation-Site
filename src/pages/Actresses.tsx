@@ -11,7 +11,7 @@ const ACTRESS_LIST = [
   { id: 90633, name: "Gal Gadot" },
   { id: 1245, name: "Scarlett Johansson" },
   { id: 224513, name: "Ana de Armas" },
-  { id: 1397778, name: "Zendaya" },
+  { id: 505710, name: "Zendaya" },               // fixed: was 1397778
   { id: 115440, name: "Sydney Sweeney" },
   { id: 71580, name: "Florence Pugh" },
   { id: 54693, name: "Emma Stone" },
@@ -24,7 +24,7 @@ const ACTRESS_LIST = [
   { id: 8691, name: "Zoe Saldana" },
   { id: 17018, name: "Angelina Jolie" },
   { id: 72129, name: "Jennifer Lawrence" },
-  { id: 118545, name: "Dakota Johnson" },       // fixed: was 9780
+  { id: 118545, name: "Dakota Johnson" },
   { id: 1283, name: "Helena Bonham Carter" },
   { id: 205, name: "Kirsten Dunst" },
   { id: 36662, name: "Emilia Clarke" },
@@ -32,13 +32,13 @@ const ACTRESS_LIST = [
   { id: 1903874, name: "Anya Taylor-Joy" },
   { id: 10990, name: "Emma Watson" },
   { id: 1038, name: "Jodie Foster" },
-  { id: 4491, name: "Jennifer Aniston" },       // fixed: was 6161
-  { id: 5916, name: "Rosario Dawson" },          // fixed: was 9827
-  { id: 9273, name: "Amy Adams" },               // fixed: was 8896
-  { id: 60073, name: "Brie Larson" },            // fixed: was 5588
-  { id: 3489, name: "Naomi Watts" },             // fixed: was 17647
-  { id: 71070, name: "Amanda Seyfried" },        // fixed: was 51329
-  { id: 1315036, name: "Daisy Ridley" },         // fixed: was 11701
+  { id: 4491, name: "Jennifer Aniston" },
+  { id: 5916, name: "Rosario Dawson" },
+  { id: 9273, name: "Amy Adams" },
+  { id: 60073, name: "Brie Larson" },
+  { id: 3489, name: "Naomi Watts" },
+  { id: 71070, name: "Amanda Seyfried" },
+  { id: 1315036, name: "Daisy Ridley" },
   // ── Bollywood (all IDs verified from themoviedb.org) ──
   { id: 81869, name: "Katrina Kaif" },
   { id: 1340978, name: "Kiara Advani" },
@@ -55,6 +55,15 @@ const ACTRESS_LIST = [
   { id: 1848952, name: "Sara Ali Khan" },
   { id: 130991, name: "Shraddha Kapoor" },
   { id: 1488785, name: "Nora Fatehi" },
+  { id: 86030, name: "Adah Sharma" },
+  { id: 237040, name: "Ileana D'Cruz" },
+  { id: 85721, name: "Tamannaah Bhatia" },
+  { id: 587753, name: "Pooja Hegde" },
+  { id: 1766034, name: "Mrunal Thakur" },
+  { id: 2030881, name: "Tara Sutaria" },
+  { id: 1973077, name: "Ananya Panday" },
+  { id: 88167, name: "Anushka Shetty" },
+  { id: 1756851, name: "Sanya Malhotra" },
   // ── Korean ──
   { id: 1457244, name: "IU (Lee Ji-eun)" },
   { id: 1254899, name: "Bae Suzy" },
@@ -64,15 +73,22 @@ const ACTRESS_LIST = [
   { id: 1329674, name: "Jun Ji-hyun" },
   { id: 1339531, name: "Song Hye-kyo" },
   // ── Spanish / Latin ──
-  { id: 955, name: "Penélope Cruz" },            // fixed: was 4785
+  { id: 955, name: "Penélope Cruz" },
   { id: 59174, name: "Úrsula Corberó" },
   { id: 1267, name: "Salma Hayek" },
   { id: 234722, name: "Blanca Suárez" },
   // ── Australian ──
-  { id: 221581, name: "Rebel Wilson" },           // fixed: was 6613
+  { id: 221581, name: "Rebel Wilson" },
   { id: 10978, name: "Isla Fisher" },
-  { id: 20374, name: "Teresa Palmer" },           // fixed: was 23931
+  { id: 20374, name: "Teresa Palmer" },
   { id: 17604, name: "Rose Byrne" },
+  // ── Anime Voice Actresses (Japanese) ──
+  { id: 119143, name: "Kana Hanazawa" },
+  { id: 1492982, name: "Rie Takahashi" },
+  { id: 1325949, name: "Inori Minase" },
+  { id: 221773, name: "Saori Hayami" },
+  { id: 9711, name: "Maaya Sakamoto" },
+  { id: 40325, name: "Megumi Hayashibara" },
 ]
   .filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
   .sort((a, b) => a.name.localeCompare(b.name));
