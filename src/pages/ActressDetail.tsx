@@ -1,20 +1,33 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, Calendar, MapPin, Heart, Film, Tv } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
 import { TMDB_ACTRESSES } from "@/pages/Actresses";
 
-interface MovieItem {
+interface MediaItem {
   id: number;
   title: string;
   poster_path: string | null;
   release_date?: string;
   vote_average?: number;
+  media_type: "movie" | "tv";
 }
 
-async function fetchActressMovies(id: number): Promise<{ name: string; profile_path: string | null; movies: MovieItem[] }> {
+interface ActressData {
+  name: string;
+  profile_path: string | null;
+  biography: string;
+  birthday: string | null;
+  deathday: string | null;
+  place_of_birth: string | null;
+  also_known_as: string[];
+  movies: MediaItem[];
+  tvShows: MediaItem[];
+}
+
+async function fetchActressDetail(id: number): Promise<ActressData> {
   const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/tmdb-proxy`;
   const res = await fetch(url, {
     method: "POST",
@@ -22,21 +35,89 @@ async function fetchActressMovies(id: number): Promise<{ name: string; profile_p
       Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ endpoint: `/person/${id}`, params: { append_to_response: "movie_credits" } }),
+    body: JSON.stringify({
+      endpoint: `/person/${id}`,
+      params: { append_to_response: "movie_credits,tv_credits" },
+    }),
   });
   if (!res.ok) throw new Error("Failed to fetch");
   const data = await res.json();
+
   const movies = (data.movie_credits?.cast || [])
     .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
-    .slice(0, 12)
+    .slice(0, 20)
     .map((m: any) => ({
       id: m.id,
       title: m.title,
       poster_path: m.poster_path,
       release_date: m.release_date,
       vote_average: m.vote_average,
+      media_type: "movie" as const,
     }));
-  return { name: data.name, profile_path: data.profile_path, movies };
+
+  const tvShows = (data.tv_credits?.cast || [])
+    .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
+    .slice(0, 12)
+    .map((m: any) => ({
+      id: m.id,
+      title: m.name || m.title,
+      poster_path: m.poster_path,
+      release_date: m.first_air_date,
+      vote_average: m.vote_average,
+      media_type: "tv" as const,
+    }));
+
+  return {
+    name: data.name,
+    profile_path: data.profile_path,
+    biography: data.biography || "",
+    birthday: data.birthday,
+    deathday: data.deathday,
+    place_of_birth: data.place_of_birth,
+    also_known_as: data.also_known_as || [],
+    movies,
+    tvShows,
+  };
+}
+
+function calcAge(birthday: string, deathday?: string | null): number {
+  const end = deathday ? new Date(deathday) : new Date();
+  const birth = new Date(birthday);
+  let age = end.getFullYear() - birth.getFullYear();
+  const m = end.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && end.getDate() < birth.getDate())) age--;
+  return age;
+}
+
+function MediaCard({ item }: { item: MediaItem }) {
+  const linkPath = item.media_type === "tv" ? `/movie/tmdb-tv-${item.id}` : `/movie/tmdb-${item.id}`;
+  return (
+    <Link
+      to={linkPath}
+      className="group relative overflow-hidden rounded-md bg-card transition-all duration-200 hover:scale-[1.03] hover:ring-1 hover:ring-muted-foreground/30"
+    >
+      <div className="aspect-[2/3] bg-muted">
+        {item.poster_path ? (
+          <img
+            src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
+            alt={item.title}
+            className="h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-muted-foreground text-[10px]">No Poster</div>
+        )}
+      </div>
+      <div className="p-1.5 sm:p-2 space-y-0.5">
+        <h3 className="text-[10px] sm:text-xs font-semibold text-foreground line-clamp-2">{item.title}</h3>
+        <div className="flex items-center gap-1.5 text-[8px] sm:text-[10px] text-muted-foreground">
+          {item.release_date && <span>{item.release_date.slice(0, 4)}</span>}
+          {item.vote_average ? <span>⭐ {item.vote_average.toFixed(1)}</span> : null}
+        </div>
+      </div>
+    </Link>
+  );
 }
 
 const ActressDetailPage = () => {
@@ -46,19 +127,20 @@ const ActressDetailPage = () => {
   const staticData = TMDB_ACTRESSES.find((a) => a.id === numId);
 
   const query = useQuery({
-    queryKey: ["actress-detail", numId],
-    queryFn: () => fetchActressMovies(numId),
+    queryKey: ["actress-detail-v2", numId],
+    queryFn: () => fetchActressDetail(numId),
     staleTime: 1000 * 60 * 60,
     enabled: !!numId,
   });
 
-  const name = query.data?.name || staticData?.name || "Actress";
+  const d = query.data;
+  const name = d?.name || staticData?.name || "Actress";
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DNANav />
 
-      <main className="container pt-16 pb-8 sm:pt-20 sm:pb-12 px-4 sm:px-6">
+      <main className="container pt-16 pb-8 sm:pt-20 sm:pb-12 px-4 sm:px-6 max-w-4xl">
         {/* Back button */}
         <button
           onClick={() => navigate("/actresses")}
@@ -68,59 +150,111 @@ const ActressDetailPage = () => {
           Back to Actresses
         </button>
 
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
-          {query.data?.profile_path && (
-            <div className="size-16 sm:size-20 overflow-hidden rounded-full bg-muted shrink-0">
-              <img
-                src={`https://image.tmdb.org/t/p/w185${query.data.profile_path}`}
-                alt={name}
-                className="h-full w-full object-cover"
-              />
-            </div>
-          )}
-          <div>
-            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">Filmography</span>
-            <h1 className="text-xl sm:text-3xl font-black tracking-tight text-foreground">{name}</h1>
-            <p className="text-xs text-muted-foreground">Top movies sorted by popularity</p>
-          </div>
-        </div>
-
         {query.isLoading ? (
           <div className="flex items-center gap-2 py-16 text-muted-foreground text-xs">
             <Loader2 className="size-4 animate-spin text-primary" />
-            Loading movies...
+            Loading...
           </div>
         ) : (
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
-            {(query.data?.movies || []).map((movie) => (
-              <Link
-                key={movie.id}
-                to={`/movie/tmdb-${movie.id}`}
-                className="group relative overflow-hidden rounded-md bg-card transition-all duration-200 hover:scale-[1.03] hover:ring-1 hover:ring-muted-foreground/30"
-              >
-                <div className="aspect-[2/3] bg-muted">
-                  {movie.poster_path ? (
+          <>
+            {/* ── Hero / Bio ── */}
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-8">
+              {d?.profile_path && (
+                <div className="shrink-0 mx-auto sm:mx-0">
+                  <div className="size-28 sm:size-36 overflow-hidden rounded-full bg-muted ring-2 ring-primary/30">
                     <img
-                      src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
-                      alt={movie.title}
+                      src={`https://image.tmdb.org/t/p/w342${d.profile_path}`}
+                      alt={name}
                       className="h-full w-full object-cover"
-                      loading="lazy"
                     />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center text-muted-foreground text-[10px]">No Poster</div>
-                  )}
-                </div>
-                <div className="p-1.5 sm:p-2 space-y-0.5">
-                  <h3 className="text-[10px] sm:text-xs font-semibold text-foreground line-clamp-2">{movie.title}</h3>
-                  <div className="flex items-center gap-1.5 text-[8px] sm:text-[10px] text-muted-foreground">
-                    {movie.release_date && <span>{movie.release_date.slice(0, 4)}</span>}
-                    {movie.vote_average ? <span>⭐ {movie.vote_average.toFixed(1)}</span> : null}
                   </div>
                 </div>
-              </Link>
-            ))}
-          </div>
+              )}
+
+              <div className="flex-1 space-y-3">
+                <div>
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">Actress Profile</span>
+                  <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground">{name}</h1>
+                </div>
+
+                {/* Quick facts */}
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                  {d?.birthday && (
+                    <span className="flex items-center gap-1">
+                      <Calendar className="size-3 text-primary" />
+                      {new Date(d.birthday).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                      {" "}({calcAge(d.birthday, d.deathday)} yrs{d.deathday ? ", deceased" : ""})
+                    </span>
+                  )}
+                  {d?.place_of_birth && (
+                    <span className="flex items-center gap-1">
+                      <MapPin className="size-3 text-primary" />
+                      {d.place_of_birth}
+                    </span>
+                  )}
+                </div>
+
+                {/* Stats */}
+                <div className="flex gap-3">
+                  <div className="flex items-center gap-1 text-xs bg-card rounded-md px-2.5 py-1.5">
+                    <Film className="size-3 text-primary" />
+                    <span className="font-bold text-foreground">{d?.movies.length || 0}</span>
+                    <span className="text-muted-foreground">Movies</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-xs bg-card rounded-md px-2.5 py-1.5">
+                    <Tv className="size-3 text-primary" />
+                    <span className="font-bold text-foreground">{d?.tvShows.length || 0}</span>
+                    <span className="text-muted-foreground">TV Shows</span>
+                  </div>
+                </div>
+
+                {/* Bio */}
+                {d?.biography && (
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-6 sm:line-clamp-none">
+                    {d.biography}
+                  </p>
+                )}
+
+                {/* Also known as */}
+                {d?.also_known_as && d.also_known_as.length > 0 && (
+                  <div className="text-[10px] text-muted-foreground">
+                    <span className="font-semibold text-foreground">Also known as: </span>
+                    {d.also_known_as.slice(0, 4).join(", ")}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* ── Movies ── */}
+            {d?.movies && d.movies.length > 0 && (
+              <section className="mb-8">
+                <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-3">
+                  <Film className="size-4 text-primary" />
+                  Movies
+                </h2>
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
+                  {d.movies.map((movie) => (
+                    <MediaCard key={`m-${movie.id}`} item={movie} />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* ── TV Shows ── */}
+            {d?.tvShows && d.tvShows.length > 0 && (
+              <section className="mb-8">
+                <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-3">
+                  <Tv className="size-4 text-primary" />
+                  TV Shows & Series
+                </h2>
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
+                  {d.tvShows.map((show) => (
+                    <MediaCard key={`tv-${show.id}`} item={show} />
+                  ))}
+                </div>
+              </section>
+            )}
+          </>
         )}
       </main>
       <DNAFooter />
