@@ -194,15 +194,17 @@ function fetchActressDetailForPrefetch(id: number) {
       params: { append_to_response: "movie_credits,tv_credits" },
     }),
   }).then(r => r.json()).then(data => {
-    const movies = (data.movie_credits?.cast || [])
-      .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
-      .slice(0, 20)
-      .map((m: any) => ({ id: m.id, title: m.title, poster_path: m.poster_path, release_date: m.release_date, vote_average: m.vote_average, media_type: "movie" as const }));
-    const tvShows = (data.tv_credits?.cast || [])
-      .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
-      .slice(0, 12)
-      .map((m: any) => ({ id: m.id, title: m.name || m.title, poster_path: m.poster_path, release_date: m.first_air_date, vote_average: m.vote_average, media_type: "tv" as const }));
-    return { name: data.name, profile_path: data.profile_path, biography: data.biography || "", birthday: data.birthday, deathday: data.deathday, place_of_birth: data.place_of_birth, also_known_as: data.also_known_as || [], movies, tvShows };
+    const mapItem = (m: any, isTv = false) => ({ id: m.id, title: isTv ? (m.name || m.title) : m.title, poster_path: m.poster_path, release_date: isTv ? m.first_air_date : m.release_date, vote_average: m.vote_average, media_type: (isTv ? "tv" : "movie") as "movie" | "tv", character: m.character || m.roles?.[0]?.character || "" });
+    const allMovies = (data.movie_credits?.cast || []).map((m: any) => mapItem(m));
+    const allTv = (data.tv_credits?.cast || []).map((m: any) => mapItem(m, true));
+    const now = new Date();
+    const sixMonthsAgo = new Date(now); sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+    const threeMonthsAhead = new Date(now); threeMonthsAhead.setMonth(threeMonthsAhead.getMonth() + 3);
+    const isCurrent = (item: any) => { if (!item.release_date) return false; const rd = new Date(item.release_date); return rd >= sixMonthsAgo && rd <= threeMonthsAhead; };
+    const currentProjects = [...allMovies, ...allTv].filter(isCurrent).filter((a: any, i: number, arr: any[]) => arr.findIndex((b: any) => b.id === a.id && b.media_type === a.media_type) === i).sort((a: any, b: any) => new Date(b.release_date || "").getTime() - new Date(a.release_date || "").getTime());
+    const movies = allMovies.sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0)).slice(0, 20);
+    const tvShows = allTv.filter((a: any, i: number, arr: any[]) => arr.findIndex((b: any) => b.id === a.id) === i).sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0)).slice(0, 12);
+    return { name: data.name, profile_path: data.profile_path, biography: data.biography || "", birthday: data.birthday, deathday: data.deathday, place_of_birth: data.place_of_birth, also_known_as: data.also_known_as || [], currentProjects, movies, tvShows };
   });
 }
 
