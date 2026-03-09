@@ -5,7 +5,7 @@ import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
 import { supabase } from "@/integrations/supabase/client";
 
-// Only store id + name. Images will be fetched live from TMDB.
+// Only store id + name. Images fetched live from TMDB.
 const ACTRESS_LIST = [
   // ── Hollywood ──
   { id: 90633, name: "Gal Gadot" },
@@ -35,13 +35,10 @@ const ACTRESS_LIST = [
   { id: 6161, name: "Jennifer Aniston" },
   { id: 9827, name: "Rosario Dawson" },
   { id: 8896, name: "Amy Adams" },
-  { id: 10859, name: "Ryan Reynolds" }, // removed – male
-  { id: 234352, name: "Margot Robbie" }, // dupe
   { id: 5588, name: "Brie Larson" },
   { id: 17647, name: "Naomi Watts" },
   { id: 51329, name: "Amanda Seyfried" },
   { id: 11701, name: "Daisy Ridley" },
-  { id: 1373737, name: "Florence Pugh" }, // dupe
   // ── Bollywood ──
   { id: 35742, name: "Katrina Kaif" },
   { id: 1445926, name: "Kiara Advani" },
@@ -60,7 +57,6 @@ const ACTRESS_LIST = [
   { id: 1193657, name: "Nora Fatehi" },
   // ── Korean ──
   { id: 1457244, name: "IU (Lee Ji-eun)" },
-  { id: 1397778, name: "Zendaya" }, // dupe
   { id: 1254899, name: "Bae Suzy" },
   { id: 2056938, name: "Han So-hee" },
   { id: 1298103, name: "Kim Yoo-jung" },
