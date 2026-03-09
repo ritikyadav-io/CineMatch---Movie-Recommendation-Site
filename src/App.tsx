@@ -35,6 +35,8 @@ export const routePrefetchMap: Record<string, () => Promise<any>> = {
   "/search": () => import("./pages/Search"),
   "/trailers": () => import("./pages/Trailers"),
   "/profile": () => import("./pages/Profile"),
+  "/movie": () => import("./pages/MovieDetail"),
+  "/actress": () => import("./pages/ActressDetail"),
 };
 
 // Prefetch top routes after idle
@@ -42,6 +44,7 @@ if (typeof window !== "undefined" && "requestIdleCallback" in window) {
   (window as any).requestIdleCallback(() => {
     routePrefetchMap["/browse"]();
     routePrefetchMap["/actresses"]();
+    routePrefetchMap["/movie"]();
     routePrefetchMap["/quiz"]();
   }, { timeout: 3000 });
 }
