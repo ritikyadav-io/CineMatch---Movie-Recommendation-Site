@@ -84,13 +84,11 @@ async function fetchActressDetail(id: number): Promise<ActressData> {
     .sort((a, b) => new Date(b.release_date || "").getTime() - new Date(a.release_date || "").getTime());
 
   const movies = allMovies
-    .sort((a: any, b: any) => (b.vote_average || 0) * (b.vote_average || 0) + (b.popularity || 0) - ((a.vote_average || 0) * (a.vote_average || 0) + (a.popularity || 0)))
-    .slice(0, 20);
+    .sort((a: any, b: any) => (b.vote_average || 0) * (b.vote_average || 0) + (b.popularity || 0) - ((a.vote_average || 0) * (a.vote_average || 0) + (a.popularity || 0)));
 
   const tvShows = allTv
     .filter((a: any, i: number, arr: any[]) => arr.findIndex((b: any) => b.id === a.id) === i)
-    .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
-    .slice(0, 12);
+    .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0));
 
   return {
     name: data.name,
@@ -310,7 +308,7 @@ const ActressDetailPage = () => {
               <section className="mb-8">
                 <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-3">
                   <Film className="size-4 text-primary" />
-                  Movies
+                  Movies <span className="text-xs font-normal text-muted-foreground">({d.movies.length} total)</span>
                 </h2>
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
                   {d.movies.map((movie) => (
@@ -325,7 +323,7 @@ const ActressDetailPage = () => {
               <section className="mb-8">
                 <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-3">
                   <Tv className="size-4 text-primary" />
-                  TV Shows & Series
+                  TV Shows & Series <span className="text-xs font-normal text-muted-foreground">({d.tvShows.length} total)</span>
                 </h2>
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
                   {d.tvShows.map((show) => (
