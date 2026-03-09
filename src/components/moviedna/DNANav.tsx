@@ -108,8 +108,8 @@ export function DNANav() {
           )}
 
           {/* Logo */}
-          <Link to="/" className="shrink-0 text-base sm:text-xl font-black tracking-tight text-foreground">
-            Movies <span className="text-primary">DNA</span>
+          <Link to="/" className="shrink-0">
+            <img src={logo} alt="Movies DNA" className="h-7 sm:h-9 w-auto rounded" />
           </Link>
 
           {/* Desktop nav links */}
