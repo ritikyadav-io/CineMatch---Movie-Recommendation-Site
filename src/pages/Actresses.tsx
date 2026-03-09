@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
