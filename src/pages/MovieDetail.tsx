@@ -31,20 +31,51 @@ import { getWatchSearchUrl } from "@/lib/omdb";
 import { supabase } from "@/integrations/supabase/client";
 
 const PROVIDER_URLS: Record<string, (t: string) => string> = {
+  // Global
   "Netflix": (t) => `https://www.netflix.com/search?q=${encodeURIComponent(t)}`,
   "Amazon Prime Video": (t) => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`,
-  "Disney Plus": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
+  "Amazon Video": (t) => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`,
+  "Apple TV": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
+  "Apple TV Plus": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
+  "Apple iTunes": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
+  "Google Play Movies": (t) => `https://play.google.com/store/search?q=${encodeURIComponent(t)}&c=movies`,
+  "YouTube": (t) => `https://www.youtube.com/results?search_query=${encodeURIComponent(t + " full movie")}`,
+  "YouTube Premium": (t) => `https://www.youtube.com/results?search_query=${encodeURIComponent(t + " full movie")}`,
+  "Microsoft Store": (t) => `https://www.microsoft.com/en-us/search?q=${encodeURIComponent(t)}`,
+  "Vudu": (t) => `https://www.vudu.com/content/movies/search?searchString=${encodeURIComponent(t)}`,
+  // US
+  "Disney Plus": (t) => `https://www.disneyplus.com/search/${encodeURIComponent(t)}`,
+  "Hulu": (t) => `https://www.hulu.com/search?q=${encodeURIComponent(t)}`,
+  "Max": (t) => `https://play.max.com/search?q=${encodeURIComponent(t)}`,
+  "HBO Max": (t) => `https://play.max.com/search?q=${encodeURIComponent(t)}`,
+  "Peacock": (t) => `https://www.peacocktv.com/search?q=${encodeURIComponent(t)}`,
+  "Peacock Premium": (t) => `https://www.peacocktv.com/search?q=${encodeURIComponent(t)}`,
+  "Paramount Plus": (t) => `https://www.paramountplus.com/search/?q=${encodeURIComponent(t)}`,
+  "Paramount+ Amazon Channel": (t) => `https://www.paramountplus.com/search/?q=${encodeURIComponent(t)}`,
+  "Starz": (t) => `https://www.starz.com/search?q=${encodeURIComponent(t)}`,
+  "Showtime": (t) => `https://www.sho.com/search?q=${encodeURIComponent(t)}`,
+  "Tubi": (t) => `https://tubitv.com/search/${encodeURIComponent(t)}`,
+  "Pluto TV": (t) => `https://pluto.tv/en/search/details/${encodeURIComponent(t)}`,
+  "Crunchyroll": (t) => `https://www.crunchyroll.com/search?q=${encodeURIComponent(t)}`,
+  "Funimation": (t) => `https://www.funimation.com/search/?q=${encodeURIComponent(t)}`,
+  // India
   "Disney+ Hotstar": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
   "Hotstar": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
   "JioCinema": (t) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`,
   "Jio Cinema": (t) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`,
-  "Apple TV": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
-  "Apple TV Plus": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
-  "Hulu": (t) => `https://www.hulu.com/search?q=${encodeURIComponent(t)}`,
   "Zee5": (t) => `https://www.zee5.com/search?q=${encodeURIComponent(t)}`,
   "SonyLIV": (t) => `https://www.sonyliv.com/search?q=${encodeURIComponent(t)}`,
   "MX Player": (t) => `https://www.mxplayer.in/search?q=${encodeURIComponent(t)}`,
+  "Voot": (t) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`,
+  "Eros Now": (t) => `https://erosnow.com/search?q=${encodeURIComponent(t)}`,
+  "Lionsgate Play": (t) => `https://www.lionsgateplay.com/search?q=${encodeURIComponent(t)}`,
+  "MUBI": (t) => `https://mubi.com/search?query=${encodeURIComponent(t)}`,
 };
+
+// Fallback: Google search for streaming
+function getFallbackUrl(providerName: string, title: string): string {
+  return `https://www.google.com/search?q=${encodeURIComponent(`watch "${title}" on ${providerName}`)}`;
+}
 
 const MovieDetailPage = () => {
   const { imdbID = "" } = useParams();
