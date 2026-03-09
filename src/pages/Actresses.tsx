@@ -39,22 +39,22 @@ const ACTRESS_LIST = [
   { id: 3489, name: "Naomi Watts" },             // fixed: was 17647
   { id: 71070, name: "Amanda Seyfried" },        // fixed: was 51329
   { id: 1315036, name: "Daisy Ridley" },         // fixed: was 11701
-  // ── Bollywood ──
-  { id: 35742, name: "Katrina Kaif" },
-  { id: 1445926, name: "Kiara Advani" },
-  { id: 1267329, name: "Kriti Sanon" },
-  { id: 1413953, name: "Janhvi Kapoor" },
-  { id: 9058, name: "Aishwarya Rai" },
-  { id: 1636854, name: "Samantha Ruth Prabhu" },
-  { id: 1382186, name: "Rashmika Mandanna" },
-  { id: 86009, name: "Deepika Padukone" },
-  { id: 1024395, name: "Alia Bhatt" },
-  { id: 62561, name: "Priyanka Chopra" },
-  { id: 1186027, name: "Anushka Sharma" },
-  { id: 1209499, name: "Disha Patani" },
-  { id: 1536926, name: "Sara Ali Khan" },
-  { id: 1100569, name: "Shraddha Kapoor" },
-  { id: 1488785, name: "Nora Fatehi" },          // fixed: was 1193657
+  // ── Bollywood (all IDs verified from themoviedb.org) ──
+  { id: 81869, name: "Katrina Kaif" },
+  { id: 1340978, name: "Kiara Advani" },
+  { id: 1285028, name: "Kriti Sanon" },
+  { id: 1974970, name: "Janhvi Kapoor" },
+  { id: 87773, name: "Aishwarya Rai Bachchan" },
+  { id: 225312, name: "Samantha Ruth Prabhu" },
+  { id: 1752056, name: "Rashmika Mandanna" },
+  { id: 53975, name: "Deepika Padukone" },
+  { id: 1108120, name: "Alia Bhatt" },
+  { id: 77234, name: "Priyanka Chopra" },
+  { id: 81928, name: "Anushka Sharma" },
+  { id: 1546398, name: "Disha Patani" },
+  { id: 1848952, name: "Sara Ali Khan" },
+  { id: 130991, name: "Shraddha Kapoor" },
+  { id: 1488785, name: "Nora Fatehi" },
   // ── Korean ──
   { id: 1457244, name: "IU (Lee Ji-eun)" },
   { id: 1254899, name: "Bae Suzy" },
