@@ -37,6 +37,15 @@ export const routePrefetchMap: Record<string, () => Promise<any>> = {
   "/profile": () => import("./pages/Profile"),
 };
 
+// Prefetch top routes after idle
+if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+  (window as any).requestIdleCallback(() => {
+    routePrefetchMap["/browse"]();
+    routePrefetchMap["/actresses"]();
+    routePrefetchMap["/quiz"]();
+  }, { timeout: 3000 });
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
