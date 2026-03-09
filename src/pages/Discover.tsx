@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, RefreshCw, Shuffle, Star } from "lucide-react";
-import { useState } from "react";
+import { Bookmark, BookmarkCheck, Loader2, RefreshCw, Shuffle, Star } from "lucide-react";
+import { useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 import heroDiscover from "@/assets/hero-discover.jpg";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
+import { WatchlistButton } from "@/components/moviedna/WatchlistButton";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { Button } from "@/components/ui/button";
 import { defaultQuizAnswers, sectionMap } from "@/data/cinematchCatalog";
@@ -13,7 +14,7 @@ import { fetchOmdbBatch } from "@/lib/omdb";
 import { fetchQuizRecommendations } from "@/lib/tmdb-quiz";
 import { fetchTmdbTrending, fetchTmdbTopRated } from "@/lib/tmdb";
 import { fetchTmdbFullDetail, TmdbFullDetail } from "@/lib/tmdb-detail";
-import { DiscoverSectionKey, QuizAnswers } from "@/types/cinematch";
+import { DiscoverSectionKey, MediaCardData, QuizAnswers } from "@/types/cinematch";
 
 /* ── Helper: pick one random movie and fetch full details ── */
 async function fetchSuggestion(seed: number): Promise<{ detail: TmdbFullDetail; similar: any[] }> {
