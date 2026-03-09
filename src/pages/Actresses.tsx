@@ -84,13 +84,16 @@ const TMDB_IMG = "https://image.tmdb.org/t/p/w185";
 
 // Cache fetched profile images in memory
 const profileCache = new Map<number, string>();
+// Track IDs that failed so we can hide them
+const failedIds = new Set<number>();
 
-function ActressPhoto({ id, name }: { id: number; name: string }) {
+function ActressPhoto({ id, name, onFailed }: { id: number; name: string; onFailed: () => void }) {
   const [src, setSrc] = useState<string | null>(profileCache.get(id) || null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (src) return; // already loaded
+    if (failedIds.has(id)) { onFailed(); return; }
+    if (src) return;
     let cancelled = false;
 
     (async () => {
@@ -105,30 +108,18 @@ function ActressPhoto({ id, name }: { id: number; name: string }) {
           profileCache.set(id, url);
           setSrc(url);
         } else {
-          setError(true);
+          failedIds.add(id);
+          onFailed();
         }
       } catch {
-        if (!cancelled) setError(true);
+        if (!cancelled) { failedIds.add(id); onFailed(); }
       }
     })();
 
     return () => { cancelled = true; };
-  }, [id, src]);
+  }, [id]);
 
-  const initials = name
-    .split(" ")
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-
-  if (error || !src) {
-    return (
-      <div className="h-full w-full flex items-center justify-center bg-muted text-muted-foreground font-bold text-sm">
-        {initials}
-      </div>
-    );
-  }
+  if (error || !src) return null;
 
   return (
     <img
@@ -137,8 +128,28 @@ function ActressPhoto({ id, name }: { id: number; name: string }) {
       className="h-full w-full object-cover"
       loading="lazy"
       decoding="async"
-      onError={() => setError(true)}
+      onError={() => { failedIds.add(id); setError(true); onFailed(); }}
     />
+  );
+}
+
+function ActressCard({ actress }: { actress: { id: number; name: string } }) {
+  const [hidden, setHidden] = useState(failedIds.has(actress.id));
+
+  if (hidden) return null;
+
+  return (
+    <Link
+      to={`/actress/${actress.id}`}
+      className="group relative flex flex-col items-center gap-1.5 rounded-lg p-2 sm:p-3 bg-card hover:bg-muted transition-all duration-200"
+    >
+      <div className="relative size-16 sm:size-20 md:size-24 overflow-hidden rounded-full bg-muted ring-2 ring-border group-hover:ring-primary/50 transition">
+        <ActressPhoto id={actress.id} name={actress.name} onFailed={() => setHidden(true)} />
+      </div>
+      <span className="text-[10px] sm:text-xs font-semibold text-foreground text-center line-clamp-2 leading-tight">
+        {actress.name}
+      </span>
+    </Link>
   );
 }
 
@@ -151,23 +162,12 @@ const ActressesPage = () => {
         <div className="space-y-1 mb-6">
           <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">A to Z</span>
           <h1 className="text-xl sm:text-3xl font-black tracking-tight text-foreground">Famous Actresses</h1>
-          <p className="text-xs sm:text-sm text-muted-foreground">Tap to see their top movies. {ACTRESS_LIST.length} actresses from Hollywood, Bollywood, Korea, Spain & Australia.</p>
+          <p className="text-xs sm:text-sm text-muted-foreground">Tap to see their top movies. Actresses from Hollywood, Bollywood, Korea, Spain & Australia.</p>
         </div>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3">
           {ACTRESS_LIST.map((actress) => (
-            <Link
-              key={actress.id}
-              to={`/actress/${actress.id}`}
-              className="group relative flex flex-col items-center gap-1.5 rounded-lg p-2 sm:p-3 bg-card hover:bg-muted transition-all duration-200"
-            >
-              <div className="relative size-16 sm:size-20 md:size-24 overflow-hidden rounded-full bg-muted ring-2 ring-border group-hover:ring-primary/50 transition">
-                <ActressPhoto id={actress.id} name={actress.name} />
-              </div>
-              <span className="text-[10px] sm:text-xs font-semibold text-foreground text-center line-clamp-2 leading-tight">
-                {actress.name}
-              </span>
-            </Link>
+            <ActressCard key={actress.id} actress={actress} />
           ))}
         </div>
       </main>
