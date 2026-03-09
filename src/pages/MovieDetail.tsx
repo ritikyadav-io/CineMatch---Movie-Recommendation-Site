@@ -179,15 +179,22 @@ const MovieDetailPage = () => {
   };
   const levels = certLevels[movie.certification] || { nudity: "Unknown", action: "Unknown" };
 
-  const allProviders = [
+  const dedup = (arr: WatchProvider[]) => arr.filter((p, i, a) => a.findIndex(x => x.provider_id === p.provider_id) === i);
+  
+  const streamProviders = dedup([
     ...(movie.watch_providers_us?.flatrate || []),
     ...(movie.watch_providers_in?.flatrate || []),
+  ]);
+  const rentProviders = dedup([
     ...(movie.watch_providers_us?.rent || []),
     ...(movie.watch_providers_in?.rent || []),
-  ];
-  const uniqueProviders = allProviders.filter(
-    (p, i, arr) => arr.findIndex((x) => x.provider_id === p.provider_id) === i
-  ).slice(0, 8);
+  ]).filter(p => !streamProviders.some(s => s.provider_id === p.provider_id));
+  const buyProviders = dedup([
+    ...(movie.watch_providers_us?.buy || []),
+    ...(movie.watch_providers_in?.buy || []),
+  ]).filter(p => !streamProviders.some(s => s.provider_id === p.provider_id) && !rentProviders.some(r => r.provider_id === p.provider_id));
+
+  const hasProviders = streamProviders.length > 0 || rentProviders.length > 0 || buyProviders.length > 0;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
