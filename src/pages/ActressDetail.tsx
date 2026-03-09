@@ -308,7 +308,7 @@ const ActressDetailPage = () => {
               <section className="mb-8">
                 <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-3">
                   <Film className="size-4 text-primary" />
-                  Movies
+                  Movies <span className="text-xs font-normal text-muted-foreground">({d.movies.length} total)</span>
                 </h2>
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
                   {d.movies.map((movie) => (
