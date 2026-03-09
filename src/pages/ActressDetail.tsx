@@ -28,6 +28,9 @@ interface ActressData {
   currentProjects: MediaItem[];
   movies: MediaItem[];
   tvShows: MediaItem[];
+  totalMovies: number;
+  totalTvShows: number;
+  latestMovie: MediaItem | null;
 }
 
 async function fetchActressDetail(id: number): Promise<ActressData> {
