@@ -174,7 +174,7 @@ const Index = () => {
 
       {/* ═══════════ HERO ═══════════ */}
       <section className="relative overflow-hidden h-[45vh] min-h-[280px] max-h-[820px] sm:h-[65vh] lg:h-[90vh]">
-        <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
+        <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" fetchPriority="high" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent" />
