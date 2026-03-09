@@ -84,13 +84,11 @@ async function fetchActressDetail(id: number): Promise<ActressData> {
     .sort((a, b) => new Date(b.release_date || "").getTime() - new Date(a.release_date || "").getTime());
 
   const movies = allMovies
-    .sort((a: any, b: any) => (b.vote_average || 0) * (b.vote_average || 0) + (b.popularity || 0) - ((a.vote_average || 0) * (a.vote_average || 0) + (a.popularity || 0)))
-    .slice(0, 20);
+    .sort((a: any, b: any) => (b.vote_average || 0) * (b.vote_average || 0) + (b.popularity || 0) - ((a.vote_average || 0) * (a.vote_average || 0) + (a.popularity || 0)));
 
   const tvShows = allTv
     .filter((a: any, i: number, arr: any[]) => arr.findIndex((b: any) => b.id === a.id) === i)
-    .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0))
-    .slice(0, 12);
+    .sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0));
 
   return {
     name: data.name,
