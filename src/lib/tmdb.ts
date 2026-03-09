@@ -91,11 +91,19 @@ export async function fetchTmdbByGenre(genreId: number, page = 1): Promise<Media
   return data.results.map((m: TmdbMovie) => mapTmdbToCard(m));
 }
 
+function recentCutoff(years: number): string {
+  const d = new Date();
+  d.setFullYear(d.getFullYear() - years);
+  return d.toISOString().slice(0, 10);
+}
+
 // ── Bollywood / Hindi ──
 export async function fetchTmdbBollywood(page = 1): Promise<MediaCardData[]> {
+  const cutoff = recentCutoff(3);
   const data = await tmdbFetch("/discover/movie", {
     with_original_language: "hi",
     sort_by: "popularity.desc",
+    "primary_release_date.gte": cutoff,
     page: String(page),
   });
   return data.results.map((m: TmdbMovie) => mapTmdbToCard(m));
@@ -103,10 +111,12 @@ export async function fetchTmdbBollywood(page = 1): Promise<MediaCardData[]> {
 
 // ── Anime (Japanese animation) ──
 export async function fetchTmdbAnime(page = 1): Promise<MediaCardData[]> {
+  const cutoff = recentCutoff(3);
   const data = await tmdbFetch("/discover/movie", {
     with_genres: "16",
     with_original_language: "ja",
     sort_by: "popularity.desc",
+    "primary_release_date.gte": cutoff,
     page: String(page),
   });
   return data.results.map((m: TmdbMovie) => mapTmdbToCard(m));
@@ -114,10 +124,12 @@ export async function fetchTmdbAnime(page = 1): Promise<MediaCardData[]> {
 
 // ── Superhero ──
 export async function fetchTmdbSuperhero(page = 1): Promise<MediaCardData[]> {
+  const cutoff = recentCutoff(3);
   const data = await tmdbFetch("/discover/movie", {
     with_genres: "28",
     with_keywords: "9715|180547",
     sort_by: "popularity.desc",
+    "primary_release_date.gte": cutoff,
     page: String(page),
   });
   return data.results.map((m: TmdbMovie) => mapTmdbToCard(m));
@@ -125,9 +137,11 @@ export async function fetchTmdbSuperhero(page = 1): Promise<MediaCardData[]> {
 
 // ── Sci-Fi ──
 export async function fetchTmdbSciFi(page = 1): Promise<MediaCardData[]> {
+  const cutoff = recentCutoff(3);
   const data = await tmdbFetch("/discover/movie", {
     with_genres: "878",
     sort_by: "popularity.desc",
+    "primary_release_date.gte": cutoff,
     page: String(page),
   });
   return data.results.map((m: TmdbMovie) => mapTmdbToCard(m));
@@ -135,9 +149,11 @@ export async function fetchTmdbSciFi(page = 1): Promise<MediaCardData[]> {
 
 // ── Horror ──
 export async function fetchTmdbHorror(page = 1): Promise<MediaCardData[]> {
+  const cutoff = recentCutoff(3);
   const data = await tmdbFetch("/discover/movie", {
     with_genres: "27",
     sort_by: "popularity.desc",
+    "primary_release_date.gte": cutoff,
     page: String(page),
   });
   return data.results.map((m: TmdbMovie) => mapTmdbToCard(m));
