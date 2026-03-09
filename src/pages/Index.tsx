@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { motion, useInView } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import {
   ArrowRight,
   ChevronRight,
@@ -9,6 +9,7 @@ import {
   Flame,
   Heart,
   Play,
+  RefreshCw,
   Rocket,
   Search,
   Sparkles,
