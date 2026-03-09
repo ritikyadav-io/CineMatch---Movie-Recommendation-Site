@@ -206,7 +206,7 @@ const ActressesPage = () => {
         <div className="space-y-1 mb-6">
           <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-primary">A to Z</span>
           <h1 className="text-xl sm:text-3xl font-black tracking-tight text-foreground">Famous Actresses</h1>
-          <p className="text-xs sm:text-sm text-muted-foreground">Tap to see their top movies. Actresses from Hollywood, Bollywood, Korea, Spain & Australia.</p>
+          <p className="text-xs sm:text-sm text-muted-foreground">Tap to see their top movies. Actresses from Hollywood, Bollywood, Korea, Japan, Pakistan, Spain & Australia.</p>
         </div>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3">
