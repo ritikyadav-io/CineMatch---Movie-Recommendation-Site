@@ -77,6 +77,27 @@ function getFallbackUrl(providerName: string, title: string): string {
   return `https://www.google.com/search?q=${encodeURIComponent(`watch "${title}" on ${providerName}`)}`;
 }
 
+function ProviderLink({ provider, title }: { provider: WatchProvider; title: string }) {
+  const urlFn = PROVIDER_URLS[provider.provider_name];
+  const href = urlFn ? urlFn(title) : getFallbackUrl(provider.provider_name, title);
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-1.5 rounded-md bg-card border border-border px-2.5 py-1.5 transition hover:border-primary hover:bg-secondary"
+    >
+      {provider.logo_path ? (
+        <img src={`https://image.tmdb.org/t/p/w92${provider.logo_path}`} alt={provider.provider_name} className="size-6 rounded" />
+      ) : (
+        <div className="flex size-6 items-center justify-center rounded bg-muted"><Tv className="size-3 text-muted-foreground" /></div>
+      )}
+      <span className="text-[10px] sm:text-xs font-medium text-foreground">{provider.provider_name}</span>
+      <ExternalLink className="size-2.5 text-muted-foreground" />
+    </a>
+  );
+}
+
 const MovieDetailPage = () => {
   const { imdbID = "" } = useParams();
   const [showTrailer, setShowTrailer] = useState(false);
