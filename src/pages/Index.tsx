@@ -69,7 +69,7 @@ function SkeletonRow() {
 }
 
 /* ── Lazy-loaded movie row — only fetches when visible ── */
-function LazyMovieRow({ title, fetchFn, link, queryKey }: { title: string; fetchFn: () => Promise<any[]>; link: string; queryKey: string }) {
+function LazyMovieRow({ title, fetchFn, link, queryKey, eager = false }: { title: string; fetchFn: () => Promise<any[]>; link: string; queryKey: string; eager?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const isVisible = useInView(ref, { once: true, margin: "200px" });
 
@@ -77,7 +77,7 @@ function LazyMovieRow({ title, fetchFn, link, queryKey }: { title: string; fetch
     queryKey: [queryKey],
     queryFn: fetchFn,
     staleTime: 1000 * 60 * 30,
-    enabled: isVisible,
+    enabled: eager || isVisible,
   });
 
   return (
@@ -156,6 +156,7 @@ function StatsGrid() {
 
 /* ── Main page ── */
 const Index = () => {
+  // Only first 2 rows load eagerly; rest are lazy-loaded on scroll
   const sections = [
     { title: "🔥 Trending Now", fetchFn: () => fetchTmdbTrending(1), link: "/browse?cat=trending", queryKey: "home-trending" },
     { title: "🎬 Now Playing", fetchFn: () => fetchTmdbNowPlaying(1), link: "/browse?cat=nowplaying", queryKey: "home-nowplaying" },
@@ -234,8 +235,8 @@ const Index = () => {
 
       {/* ═══════════ MOVIE ROWS (horizontal scroll) ═══════════ */}
       <main className="container px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 lg:space-y-10 pt-8 sm:pt-12 lg:pt-16">
-        {sections.map((s) => (
-          <LazyMovieRow key={s.queryKey} title={s.title} fetchFn={s.fetchFn} link={s.link} queryKey={s.queryKey} />
+        {sections.map((s, i) => (
+          <LazyMovieRow key={s.queryKey} title={s.title} fetchFn={s.fetchFn} link={s.link} queryKey={s.queryKey} eager={i < 2} />
         ))}
       </main>
 
