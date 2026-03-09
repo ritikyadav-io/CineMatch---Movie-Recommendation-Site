@@ -69,7 +69,7 @@ function SkeletonRow() {
 }
 
 /* ── Lazy-loaded movie row — only fetches when visible ── */
-function LazyMovieRow({ title, fetchFn, link, queryKey }: { title: string; fetchFn: () => Promise<any[]>; link: string; queryKey: string }) {
+function LazyMovieRow({ title, fetchFn, link, queryKey, eager = false }: { title: string; fetchFn: () => Promise<any[]>; link: string; queryKey: string; eager?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const isVisible = useInView(ref, { once: true, margin: "200px" });
 
@@ -77,7 +77,7 @@ function LazyMovieRow({ title, fetchFn, link, queryKey }: { title: string; fetch
     queryKey: [queryKey],
     queryFn: fetchFn,
     staleTime: 1000 * 60 * 30,
-    enabled: isVisible,
+    enabled: eager || isVisible,
   });
 
   return (
