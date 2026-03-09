@@ -212,7 +212,7 @@ export function DNANav() {
           <div className="absolute left-0 top-0 bottom-0 w-52 bg-card shadow-2xl animate-slide-in-left flex flex-col">
             {/* Header */}
             <div className="flex items-center justify-between p-3 border-b border-border">
-              <img src={logo} alt="Movies DNA" className="h-6 w-auto rounded" />
+              <span className="text-sm font-black tracking-tight text-foreground">Movies <span className="text-primary">DNA</span></span>
               <button
                 onClick={() => setMobileOpen(false)}
                 className="p-1.5 rounded-full hover:bg-muted text-foreground"
