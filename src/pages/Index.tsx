@@ -183,16 +183,26 @@ function StatsGrid() {
 
 /* ── Main page ── */
 const Index = () => {
-  // Only first 2 rows load eagerly; rest are lazy-loaded on scroll
+  const [seed, setSeed] = useState(() => Date.now());
+  const [isSpinning, setIsSpinning] = useState(false);
+  const queryClient = useQueryClient();
+
+  const handleShuffle = () => {
+    setIsSpinning(true);
+    setSeed(Date.now());
+    queryClient.removeQueries({ predicate: (q) => (q.queryKey[0] as string)?.startsWith("home-") });
+    setTimeout(() => setIsSpinning(false), 600);
+  };
+
   const sections = [
-    { title: "🔥 Trending Now", fetchFn: () => fetchTmdbTrending(1), link: "/browse?cat=trending", queryKey: "home-trending" },
-    { title: "🎬 Now Playing", fetchFn: () => fetchTmdbNowPlaying(1), link: "/browse?cat=nowplaying", queryKey: "home-nowplaying" },
-    { title: "⭐ Top Rated", fetchFn: () => fetchTmdbTopRated(1), link: "/browse?cat=toprated", queryKey: "home-toprated" },
-    { title: "🇮🇳 Bollywood", fetchFn: () => fetchTmdbBollywood(1), link: "/browse?cat=bollywood", queryKey: "home-bollywood" },
-    { title: "🦸 Superhero", fetchFn: () => fetchTmdbSuperhero(1), link: "/browse?cat=superhero", queryKey: "home-superhero" },
-    { title: "🌸 Anime", fetchFn: () => fetchTmdbAnime(1), link: "/browse?cat=anime", queryKey: "home-anime" },
-    { title: "🚀 Sci-Fi", fetchFn: () => fetchTmdbSciFi(1), link: "/browse?cat=scifi", queryKey: "home-scifi" },
-    { title: "👻 Horror", fetchFn: () => fetchTmdbHorror(1), link: "/browse?cat=horror", queryKey: "home-horror" },
+    { title: "🔥 Trending Now", fetchFn: fetchTmdbTrending, link: "/browse?cat=trending", queryKey: "home-trending" },
+    { title: "🎬 Now Playing", fetchFn: fetchTmdbNowPlaying, link: "/browse?cat=nowplaying", queryKey: "home-nowplaying" },
+    { title: "⭐ Top Rated", fetchFn: fetchTmdbTopRated, link: "/browse?cat=toprated", queryKey: "home-toprated" },
+    { title: "🇮🇳 Bollywood", fetchFn: fetchTmdbBollywood, link: "/browse?cat=bollywood", queryKey: "home-bollywood" },
+    { title: "🦸 Superhero", fetchFn: fetchTmdbSuperhero, link: "/browse?cat=superhero", queryKey: "home-superhero" },
+    { title: "🌸 Anime", fetchFn: fetchTmdbAnime, link: "/browse?cat=anime", queryKey: "home-anime" },
+    { title: "🚀 Sci-Fi", fetchFn: fetchTmdbSciFi, link: "/browse?cat=scifi", queryKey: "home-scifi" },
+    { title: "👻 Horror", fetchFn: fetchTmdbHorror, link: "/browse?cat=horror", queryKey: "home-horror" },
   ];
 
   return (
