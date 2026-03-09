@@ -136,6 +136,9 @@ function MediaCard({ item }: { item: MediaItem }) {
       </div>
       <div className="p-1.5 sm:p-2 space-y-0.5">
         <h3 className="text-[10px] sm:text-xs font-semibold text-foreground line-clamp-2">{item.title}</h3>
+        {item.character && (
+          <p className="text-[8px] sm:text-[9px] text-primary line-clamp-1">as {item.character}</p>
+        )}
         <div className="flex items-center gap-1.5 text-[8px] sm:text-[10px] text-muted-foreground">
           {item.release_date && <span>{item.release_date.slice(0, 4)}</span>}
           {item.vote_average ? <span>⭐ {item.vote_average.toFixed(1)}</span> : null}
