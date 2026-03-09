@@ -69,17 +69,43 @@ function SkeletonRow() {
   );
 }
 
+/** Fisher-Yates shuffle seeded by a number */
+function shuffleArray<T>(arr: T[], seed: number): T[] {
+  const copy = [...arr];
+  let s = seed;
+  for (let i = copy.length - 1; i > 0; i--) {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    const j = Math.abs(s) % (i + 1);
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
 /* ── Lazy-loaded movie row — only fetches when visible ── */
-function LazyMovieRow({ title, fetchFn, link, queryKey, eager = false }: { title: string; fetchFn: () => Promise<any[]>; link: string; queryKey: string; eager?: boolean }) {
+function LazyMovieRow({ title, fetchFn, link, queryKey, eager = false, seed }: { title: string; fetchFn: (page?: number) => Promise<any[]>; link: string; queryKey: string; eager?: boolean; seed: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const isVisible = useInView(ref, { once: true, margin: "200px" });
 
+  // Random page derived from seed
+  const randomPage = useMemo(() => {
+    let s = seed + queryKey.charCodeAt(3);
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    return (Math.abs(s) % 5) + 1;
+  }, [seed, queryKey]);
+
   const { data, isLoading } = useQuery({
-    queryKey: [queryKey],
-    queryFn: fetchFn,
-    staleTime: 1000 * 60 * 30,
+    queryKey: [queryKey, seed],
+    queryFn: () => fetchFn(randomPage),
+    staleTime: 0,
+    gcTime: 0,
     enabled: eager || isVisible,
   });
+
+  // Shuffle results based on seed
+  const displayed = useMemo(() => {
+    if (!data?.length) return [];
+    return shuffleArray(data, seed + queryKey.charCodeAt(5)).slice(0, 15);
+  }, [data, seed, queryKey]);
 
   return (
     <div ref={ref}>
@@ -91,9 +117,9 @@ function LazyMovieRow({ title, fetchFn, link, queryKey, eager = false }: { title
       </div>
       {!isVisible || isLoading ? (
         <SkeletonRow />
-      ) : data?.length ? (
+      ) : displayed?.length ? (
         <div className="flex gap-2.5 sm:gap-3 lg:gap-4 overflow-x-auto pb-2 scrollbar-hide">
-          {data.slice(0, 15).map((item) => (
+          {displayed.map((item) => (
             <div key={item.imdbID} className="shrink-0 w-[110px] sm:w-[130px] lg:w-[170px] xl:w-[190px]">
               <CineMovieCard item={item} />
             </div>
