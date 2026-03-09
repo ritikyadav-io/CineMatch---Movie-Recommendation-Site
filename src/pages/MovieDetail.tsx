@@ -24,27 +24,58 @@ import { DNANav } from "@/components/moviedna/DNANav";
 import { MovieDetailSkeleton } from "@/components/moviedna/MovieDetailSkeleton";
 import { Button } from "@/components/ui/button";
 import { WatchlistButton } from "@/components/moviedna/WatchlistButton";
-import { fetchTmdbFullDetail, fetchTmdbFullDetailByImdb, TmdbFullDetail } from "@/lib/tmdb-detail";
+import { fetchTmdbFullDetail, fetchTmdbFullDetailByImdb, TmdbFullDetail, WatchProvider } from "@/lib/tmdb-detail";
 import { fetchTmdbSimilar } from "@/lib/tmdb";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { getWatchSearchUrl } from "@/lib/omdb";
 import { supabase } from "@/integrations/supabase/client";
 
 const PROVIDER_URLS: Record<string, (t: string) => string> = {
+  // Global
   "Netflix": (t) => `https://www.netflix.com/search?q=${encodeURIComponent(t)}`,
   "Amazon Prime Video": (t) => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`,
-  "Disney Plus": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
+  "Amazon Video": (t) => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`,
+  "Apple TV": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
+  "Apple TV Plus": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
+  "Apple iTunes": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
+  "Google Play Movies": (t) => `https://play.google.com/store/search?q=${encodeURIComponent(t)}&c=movies`,
+  "YouTube": (t) => `https://www.youtube.com/results?search_query=${encodeURIComponent(t + " full movie")}`,
+  "YouTube Premium": (t) => `https://www.youtube.com/results?search_query=${encodeURIComponent(t + " full movie")}`,
+  "Microsoft Store": (t) => `https://www.microsoft.com/en-us/search?q=${encodeURIComponent(t)}`,
+  "Vudu": (t) => `https://www.vudu.com/content/movies/search?searchString=${encodeURIComponent(t)}`,
+  // US
+  "Disney Plus": (t) => `https://www.disneyplus.com/search/${encodeURIComponent(t)}`,
+  "Hulu": (t) => `https://www.hulu.com/search?q=${encodeURIComponent(t)}`,
+  "Max": (t) => `https://play.max.com/search?q=${encodeURIComponent(t)}`,
+  "HBO Max": (t) => `https://play.max.com/search?q=${encodeURIComponent(t)}`,
+  "Peacock": (t) => `https://www.peacocktv.com/search?q=${encodeURIComponent(t)}`,
+  "Peacock Premium": (t) => `https://www.peacocktv.com/search?q=${encodeURIComponent(t)}`,
+  "Paramount Plus": (t) => `https://www.paramountplus.com/search/?q=${encodeURIComponent(t)}`,
+  "Paramount+ Amazon Channel": (t) => `https://www.paramountplus.com/search/?q=${encodeURIComponent(t)}`,
+  "Starz": (t) => `https://www.starz.com/search?q=${encodeURIComponent(t)}`,
+  "Showtime": (t) => `https://www.sho.com/search?q=${encodeURIComponent(t)}`,
+  "Tubi": (t) => `https://tubitv.com/search/${encodeURIComponent(t)}`,
+  "Pluto TV": (t) => `https://pluto.tv/en/search/details/${encodeURIComponent(t)}`,
+  "Crunchyroll": (t) => `https://www.crunchyroll.com/search?q=${encodeURIComponent(t)}`,
+  "Funimation": (t) => `https://www.funimation.com/search/?q=${encodeURIComponent(t)}`,
+  // India
   "Disney+ Hotstar": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
   "Hotstar": (t) => `https://www.hotstar.com/in/search?q=${encodeURIComponent(t)}`,
   "JioCinema": (t) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`,
   "Jio Cinema": (t) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`,
-  "Apple TV": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
-  "Apple TV Plus": (t) => `https://tv.apple.com/search?term=${encodeURIComponent(t)}`,
-  "Hulu": (t) => `https://www.hulu.com/search?q=${encodeURIComponent(t)}`,
   "Zee5": (t) => `https://www.zee5.com/search?q=${encodeURIComponent(t)}`,
   "SonyLIV": (t) => `https://www.sonyliv.com/search?q=${encodeURIComponent(t)}`,
   "MX Player": (t) => `https://www.mxplayer.in/search?q=${encodeURIComponent(t)}`,
+  "Voot": (t) => `https://www.jiocinema.com/search/${encodeURIComponent(t)}`,
+  "Eros Now": (t) => `https://erosnow.com/search?q=${encodeURIComponent(t)}`,
+  "Lionsgate Play": (t) => `https://www.lionsgateplay.com/search?q=${encodeURIComponent(t)}`,
+  "MUBI": (t) => `https://mubi.com/search?query=${encodeURIComponent(t)}`,
 };
+
+// Fallback: Google search for streaming
+function getFallbackUrl(providerName: string, title: string): string {
+  return `https://www.google.com/search?q=${encodeURIComponent(`watch "${title}" on ${providerName}`)}`;
+}
 
 const MovieDetailPage = () => {
   const { imdbID = "" } = useParams();
@@ -148,15 +179,22 @@ const MovieDetailPage = () => {
   };
   const levels = certLevels[movie.certification] || { nudity: "Unknown", action: "Unknown" };
 
-  const allProviders = [
+  const dedup = (arr: WatchProvider[]) => arr.filter((p, i, a) => a.findIndex(x => x.provider_id === p.provider_id) === i);
+  
+  const streamProviders = dedup([
     ...(movie.watch_providers_us?.flatrate || []),
     ...(movie.watch_providers_in?.flatrate || []),
+  ]);
+  const rentProviders = dedup([
     ...(movie.watch_providers_us?.rent || []),
     ...(movie.watch_providers_in?.rent || []),
-  ];
-  const uniqueProviders = allProviders.filter(
-    (p, i, arr) => arr.findIndex((x) => x.provider_id === p.provider_id) === i
-  ).slice(0, 8);
+  ]).filter(p => !streamProviders.some(s => s.provider_id === p.provider_id));
+  const buyProviders = dedup([
+    ...(movie.watch_providers_us?.buy || []),
+    ...(movie.watch_providers_in?.buy || []),
+  ]).filter(p => !streamProviders.some(s => s.provider_id === p.provider_id) && !rentProviders.some(r => r.provider_id === p.provider_id));
+
+  const hasProviders = streamProviders.length > 0 || rentProviders.length > 0 || buyProviders.length > 0;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -264,44 +302,43 @@ const MovieDetailPage = () => {
         </section>
 
 
-        {/* ═══ Watch Online — only actual providers ═══ */}
-        {uniqueProviders.length > 0 && (
-          <section className="space-y-2 sm:space-y-3">
+        {/* ═══ Watch Online — categorized ═══ */}
+        {hasProviders && (
+          <section className="space-y-3">
             <h2 className="text-sm sm:text-lg font-bold text-foreground">🔗 Watch Online</h2>
-            <div className="flex flex-wrap gap-2">
-              {uniqueProviders.map((p) => {
-                const urlFn = PROVIDER_URLS[p.provider_name];
-                return urlFn ? (
-                  <a
-                    key={p.provider_id}
-                    href={urlFn(movie.title)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 rounded-md bg-card border border-border px-2.5 py-1.5 transition hover:border-primary hover:bg-secondary"
-                  >
-                    {p.logo_path ? (
-                      <img src={`https://image.tmdb.org/t/p/w92${p.logo_path}`} alt={p.provider_name} className="size-6 rounded" />
-                    ) : (
-                      <div className="flex size-6 items-center justify-center rounded bg-muted"><Tv className="size-3 text-muted-foreground" /></div>
-                    )}
-                    <span className="text-[10px] sm:text-xs font-medium text-foreground">{p.provider_name}</span>
-                    <ExternalLink className="size-2.5 text-muted-foreground" />
-                  </a>
-                ) : (
-                  <div
-                    key={p.provider_id}
-                    className="flex items-center gap-1.5 rounded-md bg-card border border-border px-2.5 py-1.5"
-                  >
-                    {p.logo_path ? (
-                      <img src={`https://image.tmdb.org/t/p/w92${p.logo_path}`} alt={p.provider_name} className="size-6 rounded" />
-                    ) : (
-                      <div className="flex size-6 items-center justify-center rounded bg-muted"><Tv className="size-3 text-muted-foreground" /></div>
-                    )}
-                    <span className="text-[10px] sm:text-xs font-medium text-foreground">{p.provider_name}</span>
-                  </div>
-                );
-              })}
-            </div>
+            
+            {streamProviders.length > 0 && (
+              <div>
+                <p className="text-[9px] sm:text-xs font-semibold text-primary mb-1.5">▶ Stream</p>
+                <div className="flex flex-wrap gap-2">
+                  {streamProviders.map((p) => (
+                    <ProviderLink key={`s-${p.provider_id}`} provider={p} title={movie.title} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {rentProviders.length > 0 && (
+              <div>
+                <p className="text-[9px] sm:text-xs font-semibold text-muted-foreground mb-1.5">💰 Rent</p>
+                <div className="flex flex-wrap gap-2">
+                  {rentProviders.map((p) => (
+                    <ProviderLink key={`r-${p.provider_id}`} provider={p} title={movie.title} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {buyProviders.length > 0 && (
+              <div>
+                <p className="text-[9px] sm:text-xs font-semibold text-muted-foreground mb-1.5">🛒 Buy</p>
+                <div className="flex flex-wrap gap-2">
+                  {buyProviders.map((p) => (
+                    <ProviderLink key={`b-${p.provider_id}`} provider={p} title={movie.title} />
+                  ))}
+                </div>
+              </div>
+            )}
           </section>
         )}
 
