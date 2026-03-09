@@ -114,7 +114,7 @@ const DiscoverPage = () => {
       <DNANav />
 
       {/* Hero Banner */}
-      <div className="relative h-36 sm:h-44 lg:h-52 overflow-hidden">
+      <div className="relative mt-14 sm:mt-16 h-36 sm:h-44 lg:h-52 overflow-hidden">
         <img
           src={isSuggestionMode && suggestion?.detail.backdrop_path ? `https://image.tmdb.org/t/p/w1280${suggestion.detail.backdrop_path}` : heroDiscover}
           alt=""
