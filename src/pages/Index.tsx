@@ -39,7 +39,7 @@ import {
 
 /* ── Feature cards data ── */
 const features = [
-  { icon: Sparkles, title: "Smart Quiz", desc: "Answer 5 questions, get perfect recommendations", link: "/quiz" },
+  { icon: Star, title: "My Suggestions", desc: "Get a personalized top movie pick just for you", link: "/discover" },
   { icon: Search, title: "Deep Search", desc: "Find any movie by title, actor, or genre", link: "/search" },
   { icon: Tv, title: "Where to Watch", desc: "See which platform streams every movie", link: "/browse" },
   { icon: Zap, title: "Instant Details", desc: "Budget, cast, ratings, trailers — all in one tap", link: "/browse?cat=trending" },
