@@ -1,6 +1,6 @@
-import { Sparkles } from "lucide-react";
+import { LogIn, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import heroImage from "@/assets/moviedna-hero.jpg";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
