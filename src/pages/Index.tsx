@@ -156,6 +156,7 @@ function StatsGrid() {
 
 /* ── Main page ── */
 const Index = () => {
+  // Only first 2 rows load eagerly; rest are lazy-loaded on scroll
   const sections = [
     { title: "🔥 Trending Now", fetchFn: () => fetchTmdbTrending(1), link: "/browse?cat=trending", queryKey: "home-trending" },
     { title: "🎬 Now Playing", fetchFn: () => fetchTmdbNowPlaying(1), link: "/browse?cat=nowplaying", queryKey: "home-nowplaying" },
