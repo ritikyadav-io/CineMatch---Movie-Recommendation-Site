@@ -348,32 +348,24 @@ const ActressDetailPage = () => {
 
             {/* ── Movies ── */}
             {d?.movies && d.movies.length > 0 && (
-              <section className="mb-8">
-                <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-3">
-                  <Film className="size-4 text-primary" />
-                  Movies <span className="text-xs font-normal text-muted-foreground">({d.totalMovies} total)</span>
-                </h2>
-                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
-                  {d.movies.map((movie) => (
-                    <MediaCard key={`m-${movie.id}`} item={movie} />
-                  ))}
-                </div>
-              </section>
+              <CollapsibleMediaSection
+                icon={<Film className="size-4 text-primary" />}
+                title="Movies"
+                totalCount={d.totalMovies}
+                items={d.movies}
+                keyPrefix="m"
+              />
             )}
 
             {/* ── TV Shows ── */}
             {d?.tvShows && d.tvShows.length > 0 && (
-              <section className="mb-8">
-                <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-3">
-                  <Tv className="size-4 text-primary" />
-                  TV Shows & Series <span className="text-xs font-normal text-muted-foreground">({d.totalTvShows} total)</span>
-                </h2>
-                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
-                  {d.tvShows.map((show) => (
-                    <MediaCard key={`tv-${show.id}`} item={show} />
-                  ))}
-                </div>
-              </section>
+              <CollapsibleMediaSection
+                icon={<Tv className="size-4 text-primary" />}
+                title="TV Shows & Series"
+                totalCount={d.totalTvShows}
+                items={d.tvShows}
+                keyPrefix="tv"
+              />
             )}
           </>
         )}
