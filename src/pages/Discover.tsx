@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, RefreshCw, Shuffle, Star } from "lucide-react";
-import { useState } from "react";
+import { Bookmark, BookmarkCheck, Loader2, RefreshCw, Shuffle, Star } from "lucide-react";
+import { useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 import heroDiscover from "@/assets/hero-discover.jpg";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
+import { WatchlistButton } from "@/components/moviedna/WatchlistButton";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { Button } from "@/components/ui/button";
 import { defaultQuizAnswers, sectionMap } from "@/data/cinematchCatalog";
@@ -13,7 +14,7 @@ import { fetchOmdbBatch } from "@/lib/omdb";
 import { fetchQuizRecommendations } from "@/lib/tmdb-quiz";
 import { fetchTmdbTrending, fetchTmdbTopRated } from "@/lib/tmdb";
 import { fetchTmdbFullDetail, TmdbFullDetail } from "@/lib/tmdb-detail";
-import { DiscoverSectionKey, QuizAnswers } from "@/types/cinematch";
+import { DiscoverSectionKey, MediaCardData, QuizAnswers } from "@/types/cinematch";
 
 /* ── Helper: pick one random movie and fetch full details ── */
 async function fetchSuggestion(seed: number): Promise<{ detail: TmdbFullDetail; similar: any[] }> {
@@ -231,17 +232,31 @@ const DiscoverPage = () => {
                   </div>
                 )}
 
-                <div className="flex gap-2 pt-1 sm:pt-2">
+                <div className="flex items-center gap-2 pt-1 sm:pt-2">
                   <Button asChild variant="hero" size="sm" className="text-[10px] sm:text-sm !h-7 sm:!h-9 !px-3 sm:!px-4">
                     <Link to={`/movie/${suggestion.detail.imdbID}`}>View Full Details</Link>
                   </Button>
                   {suggestion.detail.trailer && (
                     <Button asChild variant="heroSecondary" size="sm" className="text-[10px] sm:text-sm !h-7 sm:!h-9 !px-3 sm:!px-4">
                       <a href={`https://www.youtube.com/watch?v=${suggestion.detail.trailer}`} target="_blank" rel="noopener noreferrer">
-                        ▶ Watch Trailer
+                        ▶ Trailer
                       </a>
                     </Button>
                   )}
+                  <WatchlistButton
+                    movie={{
+                      imdbID: suggestion.detail.imdbID,
+                      title: suggestion.detail.title,
+                      year: suggestion.detail.year,
+                      rating: suggestion.detail.rating,
+                      genres: suggestion.detail.genres,
+                      poster: suggestion.detail.poster,
+                      overview: suggestion.detail.overview,
+                      language: suggestion.detail.language,
+                      type: "movie",
+                    }}
+                    className="!p-2"
+                  />
                 </div>
               </div>
             </section>
