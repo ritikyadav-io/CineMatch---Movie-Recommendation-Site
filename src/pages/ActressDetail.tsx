@@ -70,10 +70,10 @@ const ActressDetailPage = () => {
 
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
-          {(query.data?.profile_path || staticData?.img) && (
+          {query.data?.profile_path && (
             <div className="size-16 sm:size-20 overflow-hidden rounded-full bg-muted shrink-0">
               <img
-                src={`https://image.tmdb.org/t/p/w185${query.data?.profile_path || staticData?.img}`}
+                src={`https://image.tmdb.org/t/p/w185${query.data.profile_path}`}
                 alt={name}
                 className="h-full w-full object-cover"
               />
