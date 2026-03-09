@@ -37,19 +37,27 @@ interface ActressData {
 
 async function fetchActressDetail(id: number): Promise<ActressData> {
   const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/tmdb-proxy`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      endpoint: `/person/${id}`,
-      params: { append_to_response: "movie_credits,tv_credits" },
-    }),
-  });
-  if (!res.ok) throw new Error("Failed to fetch");
-  const data = await res.json();
+  const headers = {
+    Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+    "Content-Type": "application/json",
+  };
+
+  // Fetch person info, movie credits, and TV credits in parallel
+  const [personRes, movieCreditsRes, tvCreditsRes] = await Promise.all([
+    fetch(url, { method: "POST", headers, body: JSON.stringify({ endpoint: `/person/${id}` }) }),
+    fetch(url, { method: "POST", headers, body: JSON.stringify({ endpoint: `/person/${id}/movie_credits` }) }),
+    fetch(url, { method: "POST", headers, body: JSON.stringify({ endpoint: `/person/${id}/tv_credits` }) }),
+  ]);
+
+  if (!personRes.ok) throw new Error("Failed to fetch");
+  const [data, movieCredits, tvCredits] = await Promise.all([
+    personRes.json(),
+    movieCreditsRes.json(),
+    tvCreditsRes.json(),
+  ]);
+
+  data.movie_credits = movieCredits;
+  data.tv_credits = tvCredits;
 
   const now = new Date();
   const sixMonthsAgo = new Date(now);
