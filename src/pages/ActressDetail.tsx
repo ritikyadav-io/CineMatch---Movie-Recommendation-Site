@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Loader2, Calendar, MapPin, Heart, Film, Tv, Clapperboard } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { fetchTmdbFullDetail } from "@/lib/tmdb-detail";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
