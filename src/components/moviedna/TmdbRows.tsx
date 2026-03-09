@@ -57,12 +57,13 @@ function MovieRow({ config, seed }: { config: RowConfig; seed: number }) {
   }, [seed, config.queryKey]);
 
   const { data, isLoading } = useQuery({
-    queryKey: [config.queryKey, randomPage],
+    queryKey: [config.queryKey, "home", seed],
     queryFn: () => config.fetcher(randomPage),
-    staleTime: 0, // always refetch on new visit
+    staleTime: 0,
+    gcTime: 0, // don't cache for landing page rows
   });
 
-  // Shuffle once per mount (seed is stable per page visit, changes on each new visit)
+  // Shuffle once per mount
   const displayed = useMemo(() => {
     if (!data?.length) return [];
     return shuffleArray(data, seed + config.queryKey.charCodeAt(5)).slice(0, 6);
