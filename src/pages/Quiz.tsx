@@ -1,6 +1,6 @@
-import { Sparkles } from "lucide-react";
+import { LogIn, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import heroImage from "@/assets/moviedna-hero.jpg";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
@@ -91,7 +91,11 @@ const QuizPage = () => {
             <div>
               <p className="text-[10px] sm:text-xs font-bold text-foreground">Ready for your results?</p>
               <p className="text-[8px] sm:text-[10px] text-muted-foreground">
-                {user ? "Your results will be saved to your profile." : "Sign in to save your results."}
+                {user ? "Your results will be saved to your profile." : (
+                  <Link to="/auth" className="inline-flex items-center gap-1 text-primary hover:underline">
+                    <LogIn className="size-3" /> Sign in to save your results
+                  </Link>
+                )}
               </p>
             </div>
             <Button onClick={handleSubmit} variant="hero" size="sm" className="self-start text-[10px] sm:text-xs">

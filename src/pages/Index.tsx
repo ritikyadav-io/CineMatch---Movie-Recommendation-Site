@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { motion, useInView } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import {
   ArrowRight,
   ChevronRight,
@@ -9,6 +9,7 @@ import {
   Flame,
   Heart,
   Play,
+  RefreshCw,
   Rocket,
   Search,
   Sparkles,
@@ -68,17 +69,43 @@ function SkeletonRow() {
   );
 }
 
+/** Fisher-Yates shuffle seeded by a number */
+function shuffleArray<T>(arr: T[], seed: number): T[] {
+  const copy = [...arr];
+  let s = seed;
+  for (let i = copy.length - 1; i > 0; i--) {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    const j = Math.abs(s) % (i + 1);
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
 /* ── Lazy-loaded movie row — only fetches when visible ── */
-function LazyMovieRow({ title, fetchFn, link, queryKey, eager = false }: { title: string; fetchFn: () => Promise<any[]>; link: string; queryKey: string; eager?: boolean }) {
+function LazyMovieRow({ title, fetchFn, link, queryKey, eager = false, seed }: { title: string; fetchFn: (page?: number) => Promise<any[]>; link: string; queryKey: string; eager?: boolean; seed: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const isVisible = useInView(ref, { once: true, margin: "200px" });
 
+  // Random page derived from seed
+  const randomPage = useMemo(() => {
+    let s = seed + queryKey.charCodeAt(3);
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    return (Math.abs(s) % 5) + 1;
+  }, [seed, queryKey]);
+
   const { data, isLoading } = useQuery({
-    queryKey: [queryKey],
-    queryFn: fetchFn,
-    staleTime: 1000 * 60 * 30,
+    queryKey: [queryKey, seed],
+    queryFn: () => fetchFn(randomPage),
+    staleTime: 0,
+    gcTime: 0,
     enabled: eager || isVisible,
   });
+
+  // Shuffle results based on seed
+  const displayed = useMemo(() => {
+    if (!data?.length) return [];
+    return shuffleArray(data, seed + queryKey.charCodeAt(5)).slice(0, 15);
+  }, [data, seed, queryKey]);
 
   return (
     <div ref={ref}>
@@ -90,9 +117,9 @@ function LazyMovieRow({ title, fetchFn, link, queryKey, eager = false }: { title
       </div>
       {!isVisible || isLoading ? (
         <SkeletonRow />
-      ) : data?.length ? (
+      ) : displayed?.length ? (
         <div className="flex gap-2.5 sm:gap-3 lg:gap-4 overflow-x-auto pb-2 scrollbar-hide">
-          {data.slice(0, 15).map((item) => (
+          {displayed.map((item) => (
             <div key={item.imdbID} className="shrink-0 w-[110px] sm:w-[130px] lg:w-[170px] xl:w-[190px]">
               <CineMovieCard item={item} />
             </div>
@@ -156,16 +183,26 @@ function StatsGrid() {
 
 /* ── Main page ── */
 const Index = () => {
-  // Only first 2 rows load eagerly; rest are lazy-loaded on scroll
+  const [seed, setSeed] = useState(() => Date.now());
+  const [isSpinning, setIsSpinning] = useState(false);
+  const queryClient = useQueryClient();
+
+  const handleShuffle = () => {
+    setIsSpinning(true);
+    setSeed(Date.now());
+    queryClient.removeQueries({ predicate: (q) => (q.queryKey[0] as string)?.startsWith("home-") });
+    setTimeout(() => setIsSpinning(false), 600);
+  };
+
   const sections = [
-    { title: "🔥 Trending Now", fetchFn: () => fetchTmdbTrending(1), link: "/browse?cat=trending", queryKey: "home-trending" },
-    { title: "🎬 Now Playing", fetchFn: () => fetchTmdbNowPlaying(1), link: "/browse?cat=nowplaying", queryKey: "home-nowplaying" },
-    { title: "⭐ Top Rated", fetchFn: () => fetchTmdbTopRated(1), link: "/browse?cat=toprated", queryKey: "home-toprated" },
-    { title: "🇮🇳 Bollywood", fetchFn: () => fetchTmdbBollywood(1), link: "/browse?cat=bollywood", queryKey: "home-bollywood" },
-    { title: "🦸 Superhero", fetchFn: () => fetchTmdbSuperhero(1), link: "/browse?cat=superhero", queryKey: "home-superhero" },
-    { title: "🌸 Anime", fetchFn: () => fetchTmdbAnime(1), link: "/browse?cat=anime", queryKey: "home-anime" },
-    { title: "🚀 Sci-Fi", fetchFn: () => fetchTmdbSciFi(1), link: "/browse?cat=scifi", queryKey: "home-scifi" },
-    { title: "👻 Horror", fetchFn: () => fetchTmdbHorror(1), link: "/browse?cat=horror", queryKey: "home-horror" },
+    { title: "🔥 Trending Now", fetchFn: fetchTmdbTrending, link: "/browse?cat=trending", queryKey: "home-trending" },
+    { title: "🎬 Now Playing", fetchFn: fetchTmdbNowPlaying, link: "/browse?cat=nowplaying", queryKey: "home-nowplaying" },
+    { title: "⭐ Top Rated", fetchFn: fetchTmdbTopRated, link: "/browse?cat=toprated", queryKey: "home-toprated" },
+    { title: "🇮🇳 Bollywood", fetchFn: fetchTmdbBollywood, link: "/browse?cat=bollywood", queryKey: "home-bollywood" },
+    { title: "🦸 Superhero", fetchFn: fetchTmdbSuperhero, link: "/browse?cat=superhero", queryKey: "home-superhero" },
+    { title: "🌸 Anime", fetchFn: fetchTmdbAnime, link: "/browse?cat=anime", queryKey: "home-anime" },
+    { title: "🚀 Sci-Fi", fetchFn: fetchTmdbSciFi, link: "/browse?cat=scifi", queryKey: "home-scifi" },
+    { title: "👻 Horror", fetchFn: fetchTmdbHorror, link: "/browse?cat=horror", queryKey: "home-horror" },
   ];
 
   return (
@@ -235,8 +272,14 @@ const Index = () => {
 
       {/* ═══════════ MOVIE ROWS (horizontal scroll) ═══════════ */}
       <main className="container px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 lg:space-y-10 pt-8 sm:pt-12 lg:pt-16">
+        <div className="flex items-center justify-end">
+          <Button variant="outline" size="sm" onClick={handleShuffle} className="gap-1.5 text-xs">
+            <RefreshCw className={`size-3.5 transition-transform duration-500 ${isSpinning ? "animate-spin" : ""}`} />
+            Shuffle
+          </Button>
+        </div>
         {sections.map((s, i) => (
-          <LazyMovieRow key={s.queryKey} title={s.title} fetchFn={s.fetchFn} link={s.link} queryKey={s.queryKey} eager={i < 2} />
+          <LazyMovieRow key={s.queryKey} title={s.title} fetchFn={s.fetchFn} link={s.link} queryKey={s.queryKey} eager={i < 2} seed={seed} />
         ))}
       </main>
 
