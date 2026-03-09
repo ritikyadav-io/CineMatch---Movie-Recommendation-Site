@@ -127,24 +127,28 @@ export const TMDB_ACTRESSES = ACTRESS_LIST;
 
 const TMDB_IMG = "https://image.tmdb.org/t/p/w185";
 
-// Cache fetched profile images in memory
+// Cache fetched profile images + latest movie in memory
 const profileCache = new Map<number, string>();
+const latestMovieCache = new Map<number, string>();
 // Track IDs that failed so we can hide them
 const failedIds = new Set<number>();
 
-function ActressPhoto({ id, name, onFailed }: { id: number; name: string; onFailed: () => void }) {
+function ActressPhoto({ id, name, onFailed, onData }: { id: number; name: string; onFailed: () => void; onData?: (latestMovie: string) => void }) {
   const [src, setSrc] = useState<string | null>(profileCache.get(id) || null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     if (failedIds.has(id)) { onFailed(); return; }
-    if (src) return;
+    if (src) {
+      if (onData && latestMovieCache.has(id)) onData(latestMovieCache.get(id)!);
+      return;
+    }
     let cancelled = false;
 
     (async () => {
       try {
         const { data } = await supabase.functions.invoke("tmdb-proxy", {
-          body: { endpoint: `/person/${id}`, params: {} },
+          body: { endpoint: `/person/${id}`, params: { append_to_response: "movie_credits" } },
         });
         if (cancelled) return;
         const path = data?.profile_path;
@@ -152,6 +156,15 @@ function ActressPhoto({ id, name, onFailed }: { id: number; name: string; onFail
           const url = `${TMDB_IMG}${path}`;
           profileCache.set(id, url);
           setSrc(url);
+          // Extract latest movie by release date
+          const movies = (data?.movie_credits?.cast || [])
+            .filter((m: any) => m.release_date && new Date(m.release_date) <= new Date())
+            .sort((a: any, b: any) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
+          const latest = movies[0]?.title || "";
+          if (latest) {
+            latestMovieCache.set(id, latest);
+            if (onData) onData(latest);
+          }
         } else {
           failedIds.add(id);
           onFailed();
