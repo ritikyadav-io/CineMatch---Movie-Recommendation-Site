@@ -48,6 +48,12 @@ export function DNANav() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const prefetchRoute = useCallback((to: string) => {
+    const basePath = to.split("?")[0];
+    const loader = routePrefetchMap[basePath];
+    if (loader) loader();
+  }, []);
+
   const isHome = location.pathname === "/";
 
   useEffect(() => {
