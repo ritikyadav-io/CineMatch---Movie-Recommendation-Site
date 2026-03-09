@@ -13,7 +13,7 @@ const ACTRESS_LIST = [
   { id: 224513, name: "Ana de Armas" },
   { id: 505710, name: "Zendaya" },               // fixed: was 1397778
   { id: 115440, name: "Sydney Sweeney" },
-  { id: 71580, name: "Florence Pugh" },
+  { id: 1373737, name: "Florence Pugh" },
   { id: 54693, name: "Emma Stone" },
   { id: 1813, name: "Anne Hathaway" },
   { id: 6885, name: "Charlize Theron" },
