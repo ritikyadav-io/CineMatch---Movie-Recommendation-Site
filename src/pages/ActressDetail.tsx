@@ -1,6 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Loader2, Calendar, MapPin, Heart, Film, Tv, Clapperboard } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useCallback } from "react";
+import { fetchTmdbFullDetail } from "@/lib/tmdb-detail";
 
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
@@ -128,10 +130,23 @@ function calcAge(birthday: string, deathday?: string | null): number {
 }
 
 function MediaCard({ item }: { item: MediaItem }) {
-  const linkPath = item.media_type === "tv" ? `/movie/tmdb-tv-${item.id}` : `/movie/tmdb-${item.id}`;
+  const queryClient = useQueryClient();
+  const imdbID = item.media_type === "tv" ? `tmdb-tv-${item.id}` : `tmdb-${item.id}`;
+  const linkPath = `/movie/${imdbID}`;
+
+  const prefetch = useCallback(() => {
+    queryClient.prefetchQuery({
+      queryKey: ["movie-detail", imdbID],
+      queryFn: () => fetchTmdbFullDetail(item.id, item.media_type),
+      staleTime: 1000 * 60 * 60,
+    });
+  }, [item.id, item.media_type, imdbID, queryClient]);
+
   return (
     <Link
       to={linkPath}
+      onMouseEnter={prefetch}
+      onTouchStart={prefetch}
       className="group relative overflow-hidden rounded-md bg-card transition-all duration-200 hover:scale-[1.03] hover:ring-1 hover:ring-muted-foreground/30"
     >
       <div className="aspect-[2/3] bg-muted">
