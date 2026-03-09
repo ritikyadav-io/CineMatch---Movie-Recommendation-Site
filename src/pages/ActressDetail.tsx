@@ -28,6 +28,9 @@ interface ActressData {
   currentProjects: MediaItem[];
   movies: MediaItem[];
   tvShows: MediaItem[];
+  totalMovies: number;
+  totalTvShows: number;
+  latestMovie: MediaItem | null;
 }
 
 async function fetchActressDetail(id: number): Promise<ActressData> {
@@ -83,6 +86,14 @@ async function fetchActressDetail(id: number): Promise<ActressData> {
     .filter((a, i, arr) => arr.findIndex(b => b.id === a.id && b.media_type === a.media_type) === i)
     .sort((a, b) => new Date(b.release_date || "").getTime() - new Date(a.release_date || "").getTime());
 
+  const totalMovies = allMovies.length;
+  const totalTvShows = allTv.filter((a: any, i: number, arr: any[]) => arr.findIndex((b: any) => b.id === a.id) === i).length;
+
+  // Latest movie: most recent by release date that has already been released
+  const latestMovie = [...allMovies]
+    .filter(m => m.release_date && new Date(m.release_date) <= now)
+    .sort((a, b) => new Date(b.release_date || "").getTime() - new Date(a.release_date || "").getTime())[0] || null;
+
   const movies = allMovies
     .sort((a: any, b: any) => (b.vote_average || 0) * (b.vote_average || 0) + (b.popularity || 0) - ((a.vote_average || 0) * (a.vote_average || 0) + (a.popularity || 0)));
 
@@ -101,6 +112,9 @@ async function fetchActressDetail(id: number): Promise<ActressData> {
     currentProjects,
     movies,
     tvShows,
+    totalMovies,
+    totalTvShows,
+    latestMovie,
   };
 }
 
@@ -222,18 +236,32 @@ const ActressDetailPage = () => {
                 </div>
 
                 {/* Stats */}
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-3">
                   <div className="flex items-center gap-1 text-xs bg-card rounded-md px-2.5 py-1.5">
                     <Film className="size-3 text-primary" />
-                    <span className="font-bold text-foreground">{d?.movies.length || 0}</span>
+                    <span className="font-bold text-foreground">{d?.totalMovies || 0}</span>
                     <span className="text-muted-foreground">Movies</span>
                   </div>
                   <div className="flex items-center gap-1 text-xs bg-card rounded-md px-2.5 py-1.5">
                     <Tv className="size-3 text-primary" />
-                    <span className="font-bold text-foreground">{d?.tvShows.length || 0}</span>
+                    <span className="font-bold text-foreground">{d?.totalTvShows || 0}</span>
                     <span className="text-muted-foreground">TV Shows</span>
                   </div>
                 </div>
+
+                {/* Latest Movie */}
+                {d?.latestMovie && (
+                  <Link
+                    to={`/movie/tmdb-${d.latestMovie.id}`}
+                    className="flex items-center gap-2 bg-card rounded-md px-2.5 py-1.5 hover:bg-muted transition w-fit"
+                  >
+                    <span className="text-[10px] sm:text-xs text-primary font-semibold">🎬 Latest:</span>
+                    <span className="text-[10px] sm:text-xs text-foreground font-medium">{d.latestMovie.title}</span>
+                    {d.latestMovie.release_date && (
+                      <span className="text-[9px] text-muted-foreground">({d.latestMovie.release_date.slice(0, 4)})</span>
+                    )}
+                  </Link>
+                )}
 
                 {/* Bio */}
                 {d?.biography && (
@@ -308,7 +336,7 @@ const ActressDetailPage = () => {
               <section className="mb-8">
                 <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-3">
                   <Film className="size-4 text-primary" />
-                  Movies <span className="text-xs font-normal text-muted-foreground">({d.movies.length} total)</span>
+                  Movies <span className="text-xs font-normal text-muted-foreground">({d.totalMovies} total)</span>
                 </h2>
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
                   {d.movies.map((movie) => (
@@ -323,7 +351,7 @@ const ActressDetailPage = () => {
               <section className="mb-8">
                 <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-3">
                   <Tv className="size-4 text-primary" />
-                  TV Shows & Series <span className="text-xs font-normal text-muted-foreground">({d.tvShows.length} total)</span>
+                  TV Shows & Series <span className="text-xs font-normal text-muted-foreground">({d.totalTvShows} total)</span>
                 </h2>
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
                   {d.tvShows.map((show) => (
