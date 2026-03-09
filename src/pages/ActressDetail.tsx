@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
 import { TMDB_ACTRESSES } from "@/pages/Actresses";
+import { ACTRESS_RELATIONSHIPS } from "@/data/actressRelationships";
 
 interface MediaItem {
   id: number;
