@@ -118,6 +118,7 @@ export function DNANav() {
               <NavLink
                 key={item.to}
                 to={item.to}
+                onMouseEnter={() => prefetchRoute(item.to)}
                 className={({ isActive }) =>
                   [
                     "px-3 py-1.5 rounded transition-colors duration-200 hover:text-foreground",
