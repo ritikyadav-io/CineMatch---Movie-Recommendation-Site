@@ -7,31 +7,10 @@ import { DNAFooter } from "@/components/moviedna/DNAFooter";
 import { DNANav } from "@/components/moviedna/DNANav";
 import { CineMovieCard } from "@/components/cinematch/CineMovieCard";
 import { Button } from "@/components/ui/button";
-import { catalogById, defaultQuizAnswers, filterCatalogByQuiz, getRandomCatalogPick, sectionMap } from "@/data/cinematchCatalog";
-import { fetchOmdbBatch, fetchOmdbTitle } from "@/lib/omdb";
-import { DiscoverSectionKey, MediaCardData, QuizAnswers } from "@/types/cinematch";
-
-/** Convert catalog entries to MediaCardData instantly (no network) */
-function catalogToCards(ids: string[]): MediaCardData[] {
-  return ids
-    .map((id) => {
-      const entry = catalogById[id];
-      if (!entry) return null;
-      return {
-        imdbID: entry.imdbID,
-        title: entry.title,
-        year: String(entry.year),
-        rating: "—",
-        genres: entry.genres,
-        poster: `https://img.omdbapi.com/?apikey=6a2ef45d&i=${entry.imdbID}`,
-        overview: entry.shortDescription,
-        language: entry.language,
-        type: entry.type,
-        actors: entry.actors,
-      } satisfies MediaCardData;
-    })
-    .filter(Boolean) as MediaCardData[];
-}
+import { defaultQuizAnswers, sectionMap } from "@/data/cinematchCatalog";
+import { fetchOmdbBatch } from "@/lib/omdb";
+import { fetchQuizRecommendations } from "@/lib/tmdb-quiz";
+import { DiscoverSectionKey, QuizAnswers } from "@/types/cinematch";
 
 const DiscoverPage = () => {
   const [searchParams] = useSearchParams();
@@ -53,11 +32,15 @@ const DiscoverPage = () => {
     animeStyle: (searchParams.get("animeStyle") as QuizAnswers["animeStyle"]) || defaultQuizAnswers.animeStyle,
   };
 
-  // For quiz mode, use catalog data directly (instant) — no OMDb calls
-  const quizEntries = mode === "quiz" ? filterCatalogByQuiz(quizAnswers).slice(0, 12) : [];
-  const quizCards = mode === "quiz" ? catalogToCards(quizEntries.map((e) => e.imdbID)) : [];
+  // Quiz mode: use TMDB discover API for fresh, accurate results
+  const quizQuery = useQuery({
+    queryKey: ["quiz-discover", quizAnswers.contentType, quizAnswers.genre, quizAnswers.language, quizAnswers.mood, quizAnswers.violence, quizAnswers.releasePeriod, quizAnswers.runtime],
+    queryFn: () => fetchQuizRecommendations(quizAnswers),
+    staleTime: 1000 * 60 * 5,
+    enabled: mode === "quiz",
+  });
 
-  // For section mode, still use OMDb (fewer items, already cached)
+  // For section mode, still use OMDb
   const sectionIds = section && sectionMap[section] ? sectionMap[section].ids.slice(0, 12) : [];
 
   const sectionQuery = useQuery({
@@ -67,20 +50,12 @@ const DiscoverPage = () => {
     enabled: mode !== "quiz" && mode !== "random" && sectionIds.length > 0,
   });
 
-  const surpriseQuery = useQuery({
-    queryKey: ["discover", "surprise"],
-    queryFn: () => fetchOmdbTitle(getRandomCatalogPick().imdbID),
-    staleTime: 1000 * 60 * 60,
-    enabled: mode !== "quiz", // skip in quiz mode for faster load
-  });
-
-  // Determine which data to use
   const isQuizMode = mode === "quiz";
-  const recommendations = isQuizMode ? quizCards : sectionQuery.data || [];
-  const isLoading = isQuizMode ? false : sectionQuery.isLoading;
+  const recommendations = isQuizMode ? (quizQuery.data || []) : (sectionQuery.data || []);
+  const isLoading = isQuizMode ? quizQuery.isLoading : sectionQuery.isLoading;
 
   const headline = mode === "quiz"
-    ? "Your Results"
+    ? `${quizAnswers.genre} ${quizAnswers.contentType === "series" ? "Series" : "Movies"} — ${quizAnswers.mood}`
     : mode === "random"
       ? "Surprise Me"
       : section && sectionMap[section]
@@ -88,7 +63,7 @@ const DiscoverPage = () => {
         : "Discover";
 
   const description = mode === "quiz"
-    ? "A top recommendation plus supporting picks tuned to your taste."
+    ? `${quizAnswers.language !== "Any" ? quizAnswers.language + " " : ""}${quizAnswers.releasePeriod} • ${quizAnswers.runtime} • ${quizAnswers.complexity}`
     : mode === "random"
       ? "A wildcard pick for instant movie-night energy."
       : section && sectionMap[section]
@@ -114,12 +89,19 @@ const DiscoverPage = () => {
               <h1 className="text-xl sm:text-4xl font-black tracking-tight text-foreground">{headline}</h1>
               <p className="max-w-2xl text-xs sm:text-sm text-muted-foreground mt-1">{description}</p>
             </div>
-            <Button asChild variant="heroSecondary" size="default" className="self-start text-xs">
-              <Link to="/discover?mode=random">
-                <Shuffle className="size-3.5" />
-                Surprise Me
-              </Link>
-            </Button>
+            <div className="flex gap-2 self-start">
+              <Button asChild variant="heroSecondary" size="default" className="text-xs">
+                <Link to="/quiz">
+                  Retake Quiz
+                </Link>
+              </Button>
+              <Button asChild variant="heroSecondary" size="default" className="text-xs">
+                <Link to="/discover?mode=random">
+                  <Shuffle className="size-3.5" />
+                  Surprise Me
+                </Link>
+              </Button>
+            </div>
           </section>
         </div>
       </div>
@@ -128,7 +110,7 @@ const DiscoverPage = () => {
         {isLoading ? (
           <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground text-xs">
             <Loader2 className="size-4 animate-spin text-primary" />
-            Loading recommendations...
+            Finding the best matches for you...
           </div>
         ) : topPick ? (
           <>
@@ -136,23 +118,20 @@ const DiscoverPage = () => {
               <img src={topPick.poster} alt={`${topPick.title} poster`} className="w-full h-full object-cover" loading="eager" />
               <div className="p-3 sm:p-6 lg:p-8 space-y-2 sm:space-y-4 flex flex-col justify-center">
                 <span className="text-[8px] sm:text-xs font-bold uppercase tracking-wider text-primary">
-                  Top {topPick.type === "series" ? "Series" : "Movie"}
+                  Top {topPick.type === "series" ? "Series" : "Movie"} Pick
                 </span>
                 <h2 className="text-base sm:text-3xl font-black tracking-tight text-foreground">{topPick.title}</h2>
                 <p className="text-[10px] sm:text-sm text-muted-foreground line-clamp-3 sm:line-clamp-none">{topPick.overview}</p>
                 <div className="flex flex-wrap gap-1 sm:gap-2 text-[8px] sm:text-xs">
                   <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground">{topPick.year}</span>
-                  {topPick.rating !== "—" && (
-                    <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground">IMDb {topPick.rating}</span>
+                  {topPick.rating !== "—" && topPick.rating !== "N/A" && (
+                    <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground">⭐ {topPick.rating}</span>
                   )}
                   <span className="rounded bg-secondary px-1.5 sm:px-3 py-0.5 sm:py-1 text-secondary-foreground">{topPick.genres.slice(0, 2).join(" • ")}</span>
                 </div>
                 <div className="flex gap-2 pt-1 sm:pt-2">
                   <Button asChild variant="hero" size="sm" className="text-[10px] sm:text-sm !h-7 sm:!h-9 !px-3 sm:!px-4">
                     <Link to={`/movie/${topPick.imdbID}`}>View Details</Link>
-                  </Button>
-                  <Button asChild variant="heroSecondary" size="sm" className="text-[10px] sm:text-sm !h-7 sm:!h-9 !px-3 sm:!px-4">
-                    <Link to="/quiz">Retake Quiz</Link>
                   </Button>
                 </div>
               </div>
@@ -171,19 +150,6 @@ const DiscoverPage = () => {
           </>
         ) : (
           <div className="py-12 text-center text-muted-foreground text-xs">No results matched. Try a broader genre or language.</div>
-        )}
-
-        {surpriseQuery.data && (
-          <section className="flex flex-col gap-2 sm:gap-3 rounded-lg bg-card p-3 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <span className="text-[8px] sm:text-xs font-bold uppercase tracking-wider text-primary">Wildcard</span>
-              <h2 className="text-sm sm:text-lg font-bold text-foreground">Tonight's Surprise</h2>
-              <p className="text-[10px] sm:text-xs text-muted-foreground">{surpriseQuery.data.title} is standing by.</p>
-            </div>
-            <Button asChild variant="heroSecondary" size="sm" className="self-start text-xs">
-              <Link to={`/movie/${surpriseQuery.data.imdbID}`}>View Pick</Link>
-            </Button>
-          </section>
         )}
       </main>
       <DNAFooter />
