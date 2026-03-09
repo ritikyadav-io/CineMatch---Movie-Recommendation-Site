@@ -13,7 +13,7 @@ const ACTRESS_LIST = [
   { id: 224513, name: "Ana de Armas" },
   { id: 505710, name: "Zendaya" },               // fixed: was 1397778
   { id: 115440, name: "Sydney Sweeney" },
-  { id: 71580, name: "Florence Pugh" },
+  { id: 1373737, name: "Florence Pugh" },
   { id: 54693, name: "Emma Stone" },
   { id: 1813, name: "Anne Hathaway" },
   { id: 6885, name: "Charlize Theron" },
@@ -65,7 +65,7 @@ const ACTRESS_LIST = [
   { id: 88167, name: "Anushka Shetty" },
   { id: 1756851, name: "Sanya Malhotra" },
   // ── Korean ──
-  { id: 1457244, name: "IU (Lee Ji-eun)" },
+  { id: 1252318, name: "IU (Lee Ji-eun)" },
   { id: 1254899, name: "Bae Suzy" },
   { id: 2056938, name: "Han So-hee" },
   { id: 1298103, name: "Kim Yoo-jung" },
@@ -81,7 +81,7 @@ const ACTRESS_LIST = [
   { id: 221581, name: "Rebel Wilson" },
   { id: 10978, name: "Isla Fisher" },
   { id: 20374, name: "Teresa Palmer" },
-  { id: 17604, name: "Rose Byrne" },
+  { id: 9827, name: "Rose Byrne" },
   // ── Anime Voice Actresses (Japanese) ──
   { id: 119143, name: "Kana Hanazawa" },
   { id: 1492982, name: "Rie Takahashi" },
