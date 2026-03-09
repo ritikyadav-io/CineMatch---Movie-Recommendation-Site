@@ -49,10 +49,17 @@ function shuffleArray<T>(arr: T[], seed: number): T[] {
 }
 
 function MovieRow({ config, seed }: { config: RowConfig; seed: number }) {
+  // Random page per row per visit so movies are always different
+  const randomPage = useMemo(() => {
+    let s = seed + config.queryKey.charCodeAt(3);
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    return (Math.abs(s) % 5) + 1; // pages 1-5
+  }, [seed, config.queryKey]);
+
   const { data, isLoading } = useQuery({
-    queryKey: [config.queryKey],
-    queryFn: () => config.fetcher(1),
-    staleTime: 1000 * 60 * 30,
+    queryKey: [config.queryKey, randomPage],
+    queryFn: () => config.fetcher(randomPage),
+    staleTime: 0, // always refetch on new visit
   });
 
   // Shuffle once per mount (seed is stable per page visit, changes on each new visit)
