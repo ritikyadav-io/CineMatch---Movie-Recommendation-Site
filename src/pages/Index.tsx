@@ -15,6 +15,7 @@ import {
   Sparkles,
   Star,
   Tv,
+  Users,
   Zap,
 } from "lucide-react";
 import { Link } from "react-router-dom";
