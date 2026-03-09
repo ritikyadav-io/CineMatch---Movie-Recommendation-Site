@@ -223,7 +223,6 @@ function fetchActressDetailForPrefetch(id: number) {
 
 function ActressCard({ actress }: { actress: { id: number; name: string } }) {
   const [hidden, setHidden] = useState(failedIds.has(actress.id));
-  const [latestMovie, setLatestMovie] = useState<string>(latestMovieCache.get(actress.id) || "");
   const queryClient = useQueryClient();
 
   const prefetch = useCallback(() => {
@@ -245,16 +244,11 @@ function ActressCard({ actress }: { actress: { id: number; name: string } }) {
       className="group relative flex flex-col items-center gap-1 rounded-lg p-2 sm:p-3 bg-card hover:bg-muted transition-all duration-200"
     >
       <div className="relative size-16 sm:size-20 md:size-24 overflow-hidden rounded-full bg-muted ring-2 ring-border group-hover:ring-primary/50 transition">
-        <ActressPhoto id={actress.id} name={actress.name} onFailed={() => setHidden(true)} onData={(m) => setLatestMovie(m)} />
+        <ActressPhoto id={actress.id} name={actress.name} onFailed={() => setHidden(true)} />
       </div>
       <span className="text-[10px] sm:text-xs font-semibold text-foreground text-center line-clamp-2 leading-tight">
         {actress.name}
       </span>
-      {latestMovie && (
-        <span className="text-[7px] sm:text-[8px] text-primary font-medium text-center line-clamp-1 leading-tight">
-          🎬 {latestMovie}
-        </span>
-      )}
     </Link>
   );
 }

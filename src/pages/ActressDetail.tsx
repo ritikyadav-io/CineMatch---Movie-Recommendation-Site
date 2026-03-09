@@ -86,6 +86,14 @@ async function fetchActressDetail(id: number): Promise<ActressData> {
     .filter((a, i, arr) => arr.findIndex(b => b.id === a.id && b.media_type === a.media_type) === i)
     .sort((a, b) => new Date(b.release_date || "").getTime() - new Date(a.release_date || "").getTime());
 
+  const totalMovies = allMovies.length;
+  const totalTvShows = allTv.filter((a: any, i: number, arr: any[]) => arr.findIndex((b: any) => b.id === a.id) === i).length;
+
+  // Latest movie: most recent by release date that has already been released
+  const latestMovie = [...allMovies]
+    .filter(m => m.release_date && new Date(m.release_date) <= now)
+    .sort((a, b) => new Date(b.release_date || "").getTime() - new Date(a.release_date || "").getTime())[0] || null;
+
   const movies = allMovies
     .sort((a: any, b: any) => (b.vote_average || 0) * (b.vote_average || 0) + (b.popularity || 0) - ((a.vote_average || 0) * (a.vote_average || 0) + (a.popularity || 0)));
 
@@ -104,6 +112,9 @@ async function fetchActressDetail(id: number): Promise<ActressData> {
     currentProjects,
     movies,
     tvShows,
+    totalMovies,
+    totalTvShows,
+    latestMovie,
   };
 }
 
