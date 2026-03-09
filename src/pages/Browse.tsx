@@ -72,7 +72,7 @@ const BrowsePage = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent" />
         <div className="container relative flex items-end h-full pb-5 sm:pb-6 px-4 sm:px-4 lg:px-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">Browse</span>
+            
             <h1 className="text-xl sm:text-4xl font-black tracking-tight text-foreground">{category.title}</h1>
           </div>
         </div>
