@@ -23,9 +23,10 @@ async function fetchSuggestion(seed: number): Promise<{ detail: TmdbFullDetail; 
   const pool = [...trending, ...topRated];
   if (!pool.length) throw new Error("No movies found");
 
-  // Deterministic-ish pick based on seed
   const pick = pool[seed % pool.length];
-  const tmdbId = pick.tmdbId || parseInt(pick.imdbID?.replace("tt", "") || "0");
+  // imdbID is "tmdb-{id}" or "tmdb-tv-{id}"
+  const idStr = pick.imdbID.replace("tmdb-tv-", "").replace("tmdb-", "");
+  const tmdbId = parseInt(idStr, 10);
   const mediaType = pick.type === "series" ? "tv" : "movie";
 
   const detail = await fetchTmdbFullDetail(tmdbId, mediaType as "movie" | "tv");
