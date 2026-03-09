@@ -81,7 +81,7 @@ const ACTRESS_LIST = [
   { id: 221581, name: "Rebel Wilson" },
   { id: 10978, name: "Isla Fisher" },
   { id: 20374, name: "Teresa Palmer" },
-  { id: 17604, name: "Rose Byrne" },
+  { id: 9827, name: "Rose Byrne" },
   // ── Anime Voice Actresses (Japanese) ──
   { id: 119143, name: "Kana Hanazawa" },
   { id: 1492982, name: "Rie Takahashi" },
