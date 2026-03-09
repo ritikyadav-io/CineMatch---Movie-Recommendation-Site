@@ -1,7 +1,7 @@
 import { Heart, Popcorn, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import logo from "@/assets/moviedna-logo.png";
+import logo from "@/assets/dna-logo.jpeg";
 
 export function DNAFooter() {
   return (

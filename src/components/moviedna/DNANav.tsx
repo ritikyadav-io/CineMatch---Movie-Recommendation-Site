@@ -19,7 +19,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
-import logo from "@/assets/moviedna-logo.png";
+import logo from "@/assets/dna-logo.jpeg";
 import donateQr from "@/assets/donate-qr.jpeg";
 import { Button } from "@/components/ui/button";
 import { CineSearchBar } from "@/components/cinematch/CineSearchBar";
