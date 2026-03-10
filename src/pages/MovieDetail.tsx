@@ -223,7 +223,7 @@ const MovieDetailPage = () => {
 
       {/* Backdrop — compact */}
       {movie.backdrop_path && (
-        <div className="relative h-[25vh] sm:h-[35vh] lg:h-[45vh] overflow-hidden animate-fade-in">
+        <div className="relative mt-12 sm:mt-14 h-[25vh] sm:h-[35vh] lg:h-[45vh] overflow-hidden animate-fade-in">
           <img
             src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
             alt=""
