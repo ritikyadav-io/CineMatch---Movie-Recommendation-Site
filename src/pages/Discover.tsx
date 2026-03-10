@@ -171,11 +171,11 @@ const DiscoverPage = () => {
         ) : isSuggestionMode && suggestion ? (
           <>
             {/* ── Full detail card for the suggested movie ── */}
-            <section className="grid gap-4 sm:gap-6 grid-cols-[0.35fr_0.65fr] sm:grid-cols-[0.3fr_0.7fr] rounded-lg bg-card overflow-hidden">
+            <section className="grid gap-4 sm:gap-6 grid-cols-[0.35fr_0.65fr] sm:grid-cols-[0.25fr_0.75fr] lg:grid-cols-[0.2fr_0.8fr] rounded-lg bg-card overflow-hidden">
               <img
                 src={suggestion.detail.poster}
                 alt={`${suggestion.detail.title} poster`}
-                className="w-full h-full object-cover"
+                className="w-full h-full max-h-[500px] object-cover"
                 loading="eager"
               />
               <div className="p-3 sm:p-6 lg:p-8 space-y-2 sm:space-y-3 flex flex-col justify-center">
