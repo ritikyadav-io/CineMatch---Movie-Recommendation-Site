@@ -139,6 +139,25 @@ function calcAge(birthday: string, deathday?: string | null): number {
   return age;
 }
 
+function BioParagraph({ text }: { text: string }) {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <div>
+      <p className={`text-xs sm:text-sm text-muted-foreground leading-relaxed ${expanded ? "" : "line-clamp-5"}`}>
+        {text}
+      </p>
+      {text.length > 300 && (
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="mt-1 text-xs font-semibold text-primary hover:text-primary/80 transition"
+        >
+          {expanded ? "Show Less ▲" : "Show More ▼"}
+        </button>
+      )}
+    </div>
+  );
+}
+
 function MediaCard({ item }: { item: MediaItem }) {
   const queryClient = useQueryClient();
   const imdbID = item.media_type === "tv" ? `tmdb-tv-${item.id}` : `tmdb-${item.id}`;
@@ -325,11 +344,7 @@ const ActressDetailPage = () => {
                 )}
 
                 {/* Bio */}
-                {d?.biography && (
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3 sm:line-clamp-4">
-                    {d.biography.split('. ').slice(0, 3).join('. ')}{d.biography.split('. ').length > 3 ? '.' : ''}
-                  </p>
-                )}
+                {d?.biography && <BioParagraph text={d.biography} />}
 
                 {/* Also known as */}
                 {d?.also_known_as && d.also_known_as.length > 0 && (
