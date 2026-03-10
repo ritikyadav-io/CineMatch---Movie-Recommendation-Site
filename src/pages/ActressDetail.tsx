@@ -324,8 +324,8 @@ const ActressDetailPage = () => {
 
                 {/* Bio */}
                 {d?.biography && (
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-6 sm:line-clamp-none">
-                    {d.biography}
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3 sm:line-clamp-4">
+                    {d.biography.split('. ').slice(0, 3).join('. ')}{d.biography.split('. ').length > 3 ? '.' : ''}
                   </p>
                 )}
 
