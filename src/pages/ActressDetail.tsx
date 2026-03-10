@@ -96,8 +96,10 @@ async function fetchActressDetail(id: number): Promise<ActressData> {
     .filter((a, i, arr) => arr.findIndex(b => b.id === a.id && b.media_type === a.media_type) === i)
     .sort((a, b) => new Date(b.release_date || "").getTime() - new Date(a.release_date || "").getTime());
 
-  const totalMovies = allMovies.length;
-  const totalTvShows = allTv.filter((a: any, i: number, arr: any[]) => arr.findIndex((b: any) => b.id === a.id) === i).length;
+  const uniqueMovies = allMovies.filter((a: any, i: number, arr: any[]) => arr.findIndex((b: any) => b.id === a.id) === i);
+  const uniqueTv = allTv.filter((a: any, i: number, arr: any[]) => arr.findIndex((b: any) => b.id === a.id) === i);
+  const totalMovies = uniqueMovies.length;
+  const totalTvShows = uniqueTv.length;
 
   // Latest movie: most recent by release date that has already been released
   const latestMovie = [...allMovies]
@@ -324,8 +326,8 @@ const ActressDetailPage = () => {
 
                 {/* Bio */}
                 {d?.biography && (
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-6 sm:line-clamp-none">
-                    {d.biography}
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3 sm:line-clamp-4">
+                    {d.biography.split('. ').slice(0, 3).join('. ')}{d.biography.split('. ').length > 3 ? '.' : ''}
                   </p>
                 )}
 
@@ -379,9 +381,9 @@ const ActressDetailPage = () => {
               <section className="mb-8">
                 <h2 className="flex items-center gap-2 text-sm sm:text-base font-bold text-foreground mb-1">
                   <Clapperboard className="size-4 text-primary" />
-                  Currently Working On
+                  Recent Projects
                 </h2>
-                <p className="text-[10px] sm:text-xs text-muted-foreground mb-3">Recent & current projects</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground mb-3">Recent & upcoming projects</p>
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
                   {d.currentProjects.map((item) => (
                     <MediaCard key={`cur-${item.media_type}-${item.id}`} item={item} />
