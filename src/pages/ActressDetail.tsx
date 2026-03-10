@@ -326,9 +326,24 @@ const ActressDetailPage = () => {
 
                 {/* Bio */}
                 {d?.biography && (
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3 sm:line-clamp-4">
-                    {d.biography.split('. ').slice(0, 3).join('. ')}{d.biography.split('. ').length > 3 ? '.' : ''}
-                  </p>
+                {(() => {
+                    const [bioExpanded, setBioExpanded] = useState(false);
+                    return (
+                      <div>
+                        <p className={`text-xs sm:text-sm text-muted-foreground leading-relaxed ${bioExpanded ? "" : "line-clamp-5"}`}>
+                          {d.biography}
+                        </p>
+                        {d.biography.length > 300 && (
+                          <button
+                            onClick={() => setBioExpanded(!bioExpanded)}
+                            className="mt-1 text-xs font-semibold text-primary hover:text-primary/80 transition"
+                          >
+                            {bioExpanded ? "Show Less ▲" : "Show More ▼"}
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })()}
                 )}
 
                 {/* Also known as */}
