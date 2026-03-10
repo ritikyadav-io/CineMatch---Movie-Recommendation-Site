@@ -345,7 +345,6 @@ const ActressDetailPage = () => {
 
                 {/* Bio */}
                 {d?.biography && <BioParagraph text={d.biography} />}
-                )}
 
                 {/* Also known as */}
                 {d?.also_known_as && d.also_known_as.length > 0 && (
