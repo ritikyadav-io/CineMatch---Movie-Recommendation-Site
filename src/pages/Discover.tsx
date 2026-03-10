@@ -140,9 +140,10 @@ const DiscoverPage = () => {
                   size="default"
                   className="text-xs"
                   onClick={() => setSeed(Math.floor(Math.random() * 10000))}
+                  disabled={suggestionQuery.isFetching}
                 >
-                  <RefreshCw className="size-3.5" />
-                  New Suggestion
+                  <RefreshCw className={`size-3.5 ${suggestionQuery.isFetching ? "animate-spin" : ""}`} />
+                  {suggestionQuery.isFetching ? "Loading..." : "New Suggestion"}
                 </Button>
               )}
               {isQuizMode && (
