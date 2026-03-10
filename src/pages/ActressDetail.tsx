@@ -381,7 +381,7 @@ const ActressDetailPage = () => {
                   <Clapperboard className="size-4 text-primary" />
                   Recent Projects
                 </h2>
-                <p className="text-[10px] sm:text-xs text-muted-foreground mb-3">Recent & current projects</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground mb-3">Recent & upcoming projects</p>
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
                   {d.currentProjects.map((item) => (
                     <MediaCard key={`cur-${item.media_type}-${item.id}`} item={item} />
