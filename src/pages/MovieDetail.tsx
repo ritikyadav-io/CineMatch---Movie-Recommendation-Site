@@ -409,12 +409,12 @@ const MovieDetailPage = () => {
         {/* Trailer thumbnail */}
         {movie.trailer && !showTrailer && (
           <section>
-            <div className="overflow-hidden rounded-lg border border-border cursor-pointer" onClick={() => setShowTrailer(true)}>
+            <div className="overflow-hidden rounded-lg border border-border cursor-pointer max-w-2xl" onClick={() => setShowTrailer(true)}>
               <div className="relative aspect-video">
                 <img src={`https://img.youtube.com/vi/${movie.trailer}/maxresdefault.jpg`} alt={`${movie.title} trailer`} className="h-full w-full object-cover" />
                 <div className="absolute inset-0 flex items-center justify-center bg-background/30 transition hover:bg-background/10">
-                  <div className="flex size-12 sm:size-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg">
-                    <PlayCircle className="size-6 sm:size-8" />
+                  <div className="flex size-10 sm:size-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg">
+                    <PlayCircle className="size-5 sm:size-6" />
                   </div>
                 </div>
               </div>
