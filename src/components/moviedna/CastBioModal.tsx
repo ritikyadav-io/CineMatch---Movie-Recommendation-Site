@@ -97,7 +97,7 @@ export const CastBioModal = ({ actorId, onClose }: CastBioModalProps) => {
               <div>
                 <h4 className="text-[10px] sm:text-xs font-bold text-foreground mb-1">Biography</h4>
                 <p className="text-[10px] sm:text-xs leading-relaxed text-secondary-foreground whitespace-pre-line">
-                  {person.biography}
+                  {person.biography.split('. ').slice(0, 3).join('. ')}{person.biography.split('. ').length > 3 ? '.' : ''}
                 </p>
               </div>
             )}
