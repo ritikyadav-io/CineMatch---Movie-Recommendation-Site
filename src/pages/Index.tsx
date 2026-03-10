@@ -211,32 +211,32 @@ const Index = () => {
       <DNANav />
 
       {/* ═══════════ HERO ═══════════ */}
-      <section className="relative overflow-hidden h-[45vh] min-h-[280px] max-h-[820px] sm:h-[65vh] lg:h-[90vh]">
+      <section className="relative overflow-hidden h-[35vh] min-h-[240px] max-h-[700px] sm:h-[50vh] lg:h-[75vh]">
         <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" fetchPriority="high" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 bg-gradient-to-t from-background to-transparent" />
 
-        <div className="container relative flex h-full items-end pb-10 sm:pb-16 lg:items-center lg:pb-0 px-4 sm:px-6">
+        <div className="container relative flex h-full items-end pb-6 sm:pb-12 lg:items-center lg:pb-0 px-4 sm:px-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="max-w-xl space-y-3 sm:space-y-5"
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="max-w-lg space-y-2 sm:space-y-4"
           >
-            <h1 className="text-2xl sm:text-5xl lg:text-7xl font-black leading-[1.05] tracking-tight text-foreground">
+            <h1 className="text-xl sm:text-4xl lg:text-6xl font-black leading-[1.08] tracking-tight text-foreground">
               Discover Your<br />
               <span className="text-primary">Favourite Movies</span>
             </h1>
-            <p className="max-w-md text-xs sm:text-sm lg:text-base leading-relaxed text-secondary-foreground">
+            <p className="max-w-sm text-[10px] sm:text-sm lg:text-base leading-relaxed text-secondary-foreground">
               Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more.
             </p>
-            <div className="flex items-center gap-3 sm:gap-3 lg:gap-4">
-              <Button asChild variant="hero" size="default" className="sm:!h-11 sm:!px-6 sm:!text-sm lg:!h-13 lg:!px-8 lg:!text-base">
-                <Link to="/quiz"><Play className="size-4 sm:size-4 lg:size-5 fill-current" /> Discover By Mood</Link>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Button asChild variant="hero" size="sm" className="!h-8 !px-3 !text-[10px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
+                <Link to="/quiz"><Play className="size-3 sm:size-4 lg:size-5 fill-current" /> Discover By Mood</Link>
               </Button>
-              <Button asChild variant="heroSecondary" size="default" className="sm:!h-11 sm:!px-6 sm:!text-sm lg:!h-13 lg:!px-8 lg:!text-base">
-                <Link to="/actresses"><Users className="size-4 sm:size-4 lg:size-5" /> Actresses</Link>
+              <Button asChild variant="heroSecondary" size="sm" className="!h-8 !px-3 !text-[10px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
+                <Link to="/actresses"><Users className="size-3 sm:size-4 lg:size-5" /> Actresses</Link>
               </Button>
             </div>
           </motion.div>
