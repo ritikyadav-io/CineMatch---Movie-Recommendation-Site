@@ -211,35 +211,37 @@ const Index = () => {
       <DNANav />
 
       {/* ═══════════ HERO ═══════════ */}
-      <section className="relative overflow-hidden h-[35vh] min-h-[240px] max-h-[700px] sm:h-[50vh] lg:h-[75vh]">
+      <section className="relative overflow-hidden h-[28vh] min-h-[200px] max-h-[700px] sm:h-[50vh] lg:h-[75vh]">
         <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" loading="eager" fetchPriority="high" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-20 sm:h-32 bg-gradient-to-t from-background to-transparent" />
 
-        <div className="container relative flex h-full items-end pb-6 sm:pb-12 lg:items-center lg:pb-0 px-4 sm:px-6">
+        <div className="container relative flex h-full items-end pb-4 sm:pb-12 lg:items-center lg:pb-0 px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="max-w-lg space-y-2 sm:space-y-4"
+            className="max-w-lg space-y-1.5 sm:space-y-4"
           >
-            <h1 className="text-xl sm:text-4xl lg:text-6xl font-black leading-[1.08] tracking-tight text-foreground">
+            <h1 className="text-lg sm:text-4xl lg:text-6xl font-black leading-[1.08] tracking-tight text-foreground">
               Discover Your<br />
               <span className="text-primary">Favourite Movies</span>
             </h1>
-            <p className="max-w-sm text-[10px] sm:text-sm lg:text-base leading-relaxed text-secondary-foreground">
+            <p className="max-w-sm text-[9px] sm:text-sm lg:text-base leading-relaxed text-secondary-foreground">
               Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more.
             </p>
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 lg:gap-4">
-              <Button asChild variant="hero" size="sm" className="!h-8 !px-3 !text-[10px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
-                <Link to="/quiz"><Play className="size-3 sm:size-4 lg:size-5 fill-current" /> Discover By Mood</Link>
-              </Button>
-              <Button asChild variant="hero" size="sm" className="!h-8 !px-3 !text-[10px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
-                <Link to="/discover"><Star className="size-3 sm:size-4 lg:size-5" /> My Suggestion</Link>
-              </Button>
-              <Button asChild variant="heroSecondary" size="sm" className="!h-8 !px-3 !text-[10px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
-                <Link to="/actresses"><Users className="size-3 sm:size-4 lg:size-5" /> Actresses</Link>
+            <div className="flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 lg:gap-4">
+              <div className="flex items-center gap-2">
+                <Button asChild variant="hero" size="sm" className="!h-7 !px-2.5 !text-[9px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
+                  <Link to="/quiz"><Play className="size-2.5 sm:size-4 lg:size-5 fill-current" /> Discover By Mood</Link>
+                </Button>
+                <Button asChild variant="hero" size="sm" className="!h-7 !px-2.5 !text-[9px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
+                  <Link to="/discover"><Star className="size-2.5 sm:size-4 lg:size-5" /> My Suggestion</Link>
+                </Button>
+              </div>
+              <Button asChild variant="heroSecondary" size="sm" className="!h-7 !px-2.5 !text-[9px] w-fit sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
+                <Link to="/actresses"><Users className="size-2.5 sm:size-4 lg:size-5" /> Actresses</Link>
               </Button>
             </div>
           </motion.div>
