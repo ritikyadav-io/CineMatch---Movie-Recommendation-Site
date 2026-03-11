@@ -406,19 +406,34 @@ const MovieDetailPage = () => {
         </section>
 
 
-        {/* Trailer thumbnail */}
-        {movie.trailer && !showTrailer && (
-          <section>
-            <div className="overflow-hidden rounded-lg border border-border cursor-pointer max-w-2xl" onClick={() => setShowTrailer(true)}>
-              <div className="relative aspect-video">
-                <img src={`https://img.youtube.com/vi/${movie.trailer}/maxresdefault.jpg`} alt={`${movie.title} trailer`} className="h-full w-full object-cover" />
-                <div className="absolute inset-0 flex items-center justify-center bg-background/30 transition hover:bg-background/10">
-                  <div className="flex size-10 sm:size-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg">
-                    <PlayCircle className="size-5 sm:size-6" />
+        {/* Trailer — inline playback */}
+        {movie.trailer && (
+          <section className="space-y-2">
+            <h2 className="text-sm sm:text-lg font-bold text-foreground">🎥 Trailer</h2>
+            {showTrailer ? (
+              <div className="max-w-2xl">
+                <div className="relative aspect-video overflow-hidden rounded-lg border border-border bg-black">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${movie.trailer}?autoplay=1&rel=0&modestbranding=1`}
+                    className="h-full w-full"
+                    allowFullScreen
+                    allow="autoplay; encrypted-media"
+                    title={`${movie.title} trailer`}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="overflow-hidden rounded-lg border border-border cursor-pointer max-w-2xl" onClick={() => setShowTrailer(true)}>
+                <div className="relative aspect-video">
+                  <img src={`https://img.youtube.com/vi/${movie.trailer}/maxresdefault.jpg`} alt={`${movie.title} trailer`} className="h-full w-full object-cover" />
+                  <div className="absolute inset-0 flex items-center justify-center bg-background/30 transition hover:bg-background/10">
+                    <div className="flex size-10 sm:size-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg">
+                      <PlayCircle className="size-5 sm:size-6" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </section>
         )}
 
