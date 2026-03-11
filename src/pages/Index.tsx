@@ -273,12 +273,6 @@ const Index = () => {
 
       {/* ═══════════ MOVIE ROWS (horizontal scroll) ═══════════ */}
       <main className="container px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 lg:space-y-10 pt-8 sm:pt-12 lg:pt-16">
-        <div className="flex items-center justify-end">
-          <Button variant="outline" size="sm" onClick={handleShuffle} className="gap-1.5 text-xs">
-            <RefreshCw className={`size-3.5 transition-transform duration-500 ${isSpinning ? "animate-spin" : ""}`} />
-            Shuffle
-          </Button>
-        </div>
         {sections.map((s, i) => (
           <LazyMovieRow key={s.queryKey} title={s.title} fetchFn={s.fetchFn} link={s.link} queryKey={s.queryKey} eager={i < 2} seed={seed} />
         ))}
