@@ -53,8 +53,10 @@ function TrailerCard({ trailer, index }: { trailer: typeof trailers[number]; ind
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
-            <div className="absolute inset-0 flex items-center justify-center bg-background/30 group-hover:bg-background/10 transition">
-              <Play className="size-6 sm:size-8 text-primary-foreground drop-shadow-lg" />
+            <div className="absolute inset-0 flex items-center justify-center bg-background/20 group-hover:bg-background/10 transition">
+              <div className="size-8 sm:size-10 rounded-full bg-primary/80 flex items-center justify-center">
+                <Play className="size-3.5 sm:size-4 text-primary-foreground fill-primary-foreground" />
+              </div>
             </div>
           </div>
         ) : (
