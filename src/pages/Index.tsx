@@ -231,9 +231,12 @@ const Index = () => {
             <p className="max-w-sm text-[10px] sm:text-sm lg:text-base leading-relaxed text-secondary-foreground">
               Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more.
             </p>
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 lg:gap-4">
               <Button asChild variant="hero" size="sm" className="!h-8 !px-3 !text-[10px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
                 <Link to="/quiz"><Play className="size-3 sm:size-4 lg:size-5 fill-current" /> Discover By Mood</Link>
+              </Button>
+              <Button asChild variant="hero" size="sm" className="!h-8 !px-3 !text-[10px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
+                <Link to="/discover"><Star className="size-3 sm:size-4 lg:size-5" /> My Suggestion</Link>
               </Button>
               <Button asChild variant="heroSecondary" size="sm" className="!h-8 !px-3 !text-[10px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
                 <Link to="/actresses"><Users className="size-3 sm:size-4 lg:size-5" /> Actresses</Link>
