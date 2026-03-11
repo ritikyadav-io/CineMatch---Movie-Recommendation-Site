@@ -481,37 +481,6 @@ const MovieDetailPage = () => {
 
       <DNAFooter />
 
-      {/* Trailer Modal — YouTube-style */}
-      {showTrailer && movie.trailer && (
-        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col" onClick={() => setShowTrailer(false)}>
-          <div className="flex items-center justify-between px-3 sm:px-6 py-2 sm:py-3 bg-black/80" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center gap-2 min-w-0">
-              <PlayCircle className="size-4 sm:size-5 text-primary shrink-0" />
-              <h3 className="text-xs sm:text-sm font-bold text-white truncate">{movie.title} — Trailer</h3>
-            </div>
-            <button onClick={() => setShowTrailer(false)} className="shrink-0 rounded-full bg-white/10 p-1.5 sm:p-2 text-white hover:bg-white/20 transition" aria-label="Close">
-              <X className="size-4 sm:size-5" />
-            </button>
-          </div>
-          <div className="flex-1 flex items-start justify-center pt-0 sm:pt-4 px-0 sm:px-6" onClick={(e) => e.stopPropagation()}>
-            <div className="w-full max-w-5xl">
-              <div className="relative aspect-video overflow-hidden sm:rounded-lg bg-black">
-                <iframe
-                  src={`https://www.youtube.com/embed/${movie.trailer}?autoplay=1&rel=0&modestbranding=1`}
-                  className="h-full w-full"
-                  allowFullScreen
-                  allow="autoplay; encrypted-media"
-                  title={`${movie.title} trailer`}
-                />
-              </div>
-              <div className="px-3 sm:px-0 py-2 space-y-0.5">
-                <h4 className="text-sm sm:text-lg font-bold text-white">{movie.title}</h4>
-                <p className="text-[10px] sm:text-xs text-white/60">{movie.year} • {movie.genres?.join(", ")} • IMDb {movie.rating}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Cast Bio Modal */}
       {selectedActorId && (
