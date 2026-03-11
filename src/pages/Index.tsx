@@ -231,16 +231,11 @@ const Index = () => {
             <p className="max-w-sm text-[9px] sm:text-sm lg:text-base leading-relaxed text-secondary-foreground">
               Answer a quick quiz and get personalized movie picks from Hollywood, Bollywood, Anime, and more.
             </p>
-            <div className="flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 lg:gap-4">
-              <div className="flex items-center gap-2">
-                <Button asChild variant="hero" size="sm" className="!h-7 !px-2.5 !text-[9px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
-                  <Link to="/quiz"><Play className="size-2.5 sm:size-4 lg:size-5 fill-current" /> Discover By Mood</Link>
-                </Button>
-                <Button asChild variant="hero" size="sm" className="!h-7 !px-2.5 !text-[9px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
-                  <Link to="/discover"><Star className="size-2.5 sm:size-4 lg:size-5" /> My Suggestion</Link>
-                </Button>
-              </div>
-              <Button asChild variant="heroSecondary" size="sm" className="!h-7 !px-2.5 !text-[9px] w-fit sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
+            <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
+              <Button asChild variant="hero" size="sm" className="!h-7 !px-2.5 !text-[9px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
+                <Link to="/quiz"><Play className="size-2.5 sm:size-4 lg:size-5 fill-current" /> Discover By Mood</Link>
+              </Button>
+              <Button asChild variant="heroSecondary" size="sm" className="!h-7 !px-2.5 !text-[9px] sm:!h-10 sm:!px-5 sm:!text-sm lg:!h-12 lg:!px-7 lg:!text-base">
                 <Link to="/actresses"><Users className="size-2.5 sm:size-4 lg:size-5" /> Actresses</Link>
               </Button>
             </div>
