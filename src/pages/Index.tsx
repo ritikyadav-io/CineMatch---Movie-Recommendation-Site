@@ -244,7 +244,7 @@ const Index = () => {
       </section>
 
       {/* ═══════════ FEATURES ═══════════ */}
-      <section className="container px-4 sm:px-6 -mt-6 sm:-mt-12 lg:-mt-16 relative z-10">
+      <section className="container px-4 sm:px-6 mt-4 sm:-mt-12 lg:-mt-16 relative z-10">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-5">
           {features.map((f, i) => (
             <motion.div
