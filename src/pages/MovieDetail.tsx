@@ -12,7 +12,7 @@ import {
   Star,
   Tv,
   User,
-  X,
+  
 } from "lucide-react";
 import { useState } from "react";
 import { CastBioModal } from "@/components/moviedna/CastBioModal";
